@@ -17,6 +17,7 @@ __version__ = '0.1'
 
 
 def main(args):
+    makedirs(args.o)
     with h5py.File(args.first, "r") as f1:
         with h5py.File(args.second, "r") as f2:
             plot_h5diff(f1, f2, args.o, prefix=os.path.splitext(os.path.basename(args.first))[0], verbose=args.verbose)
