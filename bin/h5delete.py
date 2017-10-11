@@ -9,40 +9,21 @@ Examples:
 find . -iname '*.hdf5' -exec h5delete.py -p 32 {} +
 find . -path '*/coadd/*' -name '*.hdf5' -exec h5delete.py -p 32 {} +
 '''
-
-from __future__ import print_function
-
 import argparse
-import h5py
-import sys
-import os
 from functools import partial
+
+from dautil.util import get_map_parallel
+from dautil.h5IO import h5delete
 
 __version__ = '0.2'
 
 
-# will be overridden if args.p is > 1
-map_parallel = map
-
-
-def h5delete(dry_run, verbose, filename):
-    try:
-        with h5py.File(filename, "r") as f:
-            if verbose:
-                print(filename, 'is good.')
-    except IOError:
-        if verbose:
-            print(filename, 'is not good, and will be deleted.', file=sys.stderr)
-        else:
-            print(filename, file=sys.stderr)
-        if not dry_run:
-            os.remove(filename)
-
 def main(args):
-    map_parallel(partial(h5delete, args.dry_run, args.verbose), args.input)
+    map_parallel = get_map_parallel(args.p)
+    map_parallel(partial(h5delete, dry_run=args.dry_run, verbose=args.verbose), args.input)
 
 
-if __name__ == "__main__":
+def cli():
     parser = argparse.ArgumentParser(description='Delete HDF5 input if it cannot be opened.')
 
     parser.add_argument('input', nargs='+',
@@ -58,15 +39,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    # use multiprocessing if args.p > 1
-    if args.p > 1:
-        import multiprocessing
-        pool = multiprocessing.Pool(processes=args.p)
-        global map_parallel
-        map_parallel = pool.map
-    elif args.p < 1:
-        import sys
-        print('-p cannot be smaller than 1.', file=sys.stderr)
-        exit(1)
-
     main(args)
+
+if __name__ == "__main__":
+    cli()

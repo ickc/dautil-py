@@ -17,3 +17,15 @@ def summarize(data):
         else:
             summarized[i] = type(j)
     return summarized
+
+
+def get_map_parallel(processes):
+    '''return a map function
+    uses multiprocessing's Pool if processes != 1
+    '''
+    if processes == 1:
+        return map
+    else:
+        import multiprocessing
+        pool = multiprocessing.Pool(processes=processes)
+        return pool.map
