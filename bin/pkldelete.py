@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-Delete HDF5 files that cannot be opened.
+Delete pkl files that cannot be opened.
 One reason of this happening is when the file is saved, it got interupted/terminated.
 '''
 
@@ -15,8 +15,6 @@ import sys
 py2 = sys.version_info[0] == 2
 
 __version__ = '0.1'
-
-
 
 
 def main(args):
