@@ -69,3 +69,20 @@ def plot_h5diff(f1, f2, out_dir, prefix='', verbose=False):
             print('{} is group, entering...'.format(name))
         for i in f1:
             plot_h5diff(f1[i], f2[i], out_dir, prefix, verbose)
+
+
+def h5split(in_file, out_dir, verbose=False):
+    '''split each of the HDF5 group from in_file to individual ones in out_dir
+    '''
+    filename = os.path.splitext(os.path.basename(in_file))
+    with h5py.File(in_file, "r") as f_in:
+        for group in f_in:
+            out_file = os.path.join(out_dir, filename[0] + '_' + group + filename[1])
+            if verbose:
+                print(out_file)
+            with h5py.File(out_file, "x") as f_out:
+                for sub_group in f_in[group]:
+                    h5_path = group + '/' + sub_group
+                    if verbose:
+                        print(h5_path)
+                    f_in.copy(h5_path, f_out)
