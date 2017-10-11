@@ -1,5 +1,8 @@
 import os
 import pickle
+import sys
+
+PY2 = sys.version_info[0] == 2
 
 
 def read_pkl2(path):
