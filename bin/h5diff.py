@@ -10,34 +10,18 @@ from __future__ import print_function
 
 import argparse
 import h5py
-import numpy as np
 import sys
 
+from dautil.h5IO import h5assert
+
 __version__ = '0.1'
-
-
-def assert_hdf5(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
-    if isinstance(f1, h5py._hl.dataset.Dataset):
-        if verbose:
-            print('{}, {} are dataset, asserting...'.format(f1, f2))
-        temp1 = np.nan_to_num(f1)
-        temp2 = np.nan_to_num(f2)
-        np.testing.assert_allclose(temp1, temp2, rtol, atol)
-    elif isinstance(f1, h5py._hl.group.Group):
-        if verbose:
-            print('{} is group, entering...'.format(f1))
-        for i in f1:
-            try:
-                assert_hdf5(f1[i], f2[i], rtol, atol, verbose)
-            except KeyError:
-                raise AssertionError
 
 
 def main(args):
     with h5py.File(args.first, "r") as f1:
         with h5py.File(args.second, "r") as f2:
             try:
-                assert_hdf5(f1, f2, args.rtol, args.atol, verbose=args.verbose)
+                h5assert(f1, f2, args.rtol, args.atol, verbose=args.verbose)
             except AssertionError:
                 if args.silent:
                     print(args.first, file=sys.stderr)
