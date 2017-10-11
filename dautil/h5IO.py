@@ -18,6 +18,19 @@ def h5delete(filename, dry_run=True, verbose=False):
             os.remove(filename)
 
 
+def h5assert_nonzero(f, verbose=False):
+    if isinstance(f, h5py._hl.dataset.Dataset):
+        if verbose:
+            print('{} is dataset, asserting...'.format(f))
+        temp = np.nan_to_num(f)
+        assert temp.any()
+    elif isinstance(f, h5py._hl.group.Group):
+        if verbose:
+            print('{} is group, entering...'.format(f))
+        for i in f:
+            h5assert_nonzero(f[i], verbose)
+
+
 def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
     if isinstance(f1, h5py._hl.dataset.Dataset):
         if verbose:

@@ -11,30 +11,18 @@ from __future__ import print_function
 
 import argparse
 import h5py
-import numpy as np
 import sys
 
+from dautil.h5IO import h5assert_nonzero
+
 __version__ = '0.1'
-
-
-def assert_hdf5_nonzero(f, verbose=False):
-    if isinstance(f, h5py._hl.dataset.Dataset):
-        if verbose:
-            print('{} is dataset, asserting...'.format(f))
-        temp = np.nan_to_num(f)
-        assert temp.any()
-    elif isinstance(f, h5py._hl.group.Group):
-        if verbose:
-            print('{} is group, entering...'.format(f))
-        for i in f:
-            assert_hdf5_nonzero(f[i], verbose)
 
 
 def main(args):
     for filename in args.input:
         with h5py.File(filename, "r") as f:
             try:
-                assert_hdf5_nonzero(f, verbose=args.verbose)
+                h5assert_nonzero(f, verbose=args.verbose)
             except AssertionError:
                 print(filename, file=sys.stderr)
 
