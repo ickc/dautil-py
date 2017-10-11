@@ -9,10 +9,9 @@ from __future__ import print_function
 
 import argparse
 import os
-import pickle
 import sys
 
-py2 = sys.version_info[0] == 2
+from dautil.IO import read_pkl2
 
 __version__ = '0.1'
 
@@ -20,11 +19,9 @@ __version__ = '0.1'
 def main(args):
     for filename in args.input:
         try:
-            with open(filename, 'rb') as f:
-                temp = pickle.load(f) if PY2 else pickle.load(f, encoding='latin1')
-                del temp
-                if args.verbose:
-                    print(filename, 'is good.')
+            read_pkl2(filename)
+            if args.verbose:
+                print(filename, 'is good.')
         except IOError:
             if args.verbose:
                 print(filename, 'is not good, and will be deleted.', file=sys.stderr)
