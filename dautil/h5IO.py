@@ -1,6 +1,7 @@
 import h5py
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 import sys
 
 def h5delete(filename, dry_run=True, verbose=False):
@@ -32,3 +33,24 @@ def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
                 h5assert(f1[i], f2[i], rtol, atol, verbose)
             except KeyError:
                 raise AssertionError
+
+
+def plot_h5diff(f1, f2, out_dir, prefix='', verbose=False):
+    if isinstance(f1, h5py._hl.dataset.Dataset):
+        name = '-'.join([prefix] + f1.name.split('/')[1:])
+        if verbose:
+            print('{} is dataset, plotting...'.format(name))
+        temp1 = np.nan_to_num(f1)
+        temp2 = np.nan_to_num(f2)
+        temp3 = np.abs(temp2 - temp1)
+        # plt.plot(temp1)
+        # plt.plot(temp2)
+        plt.plot(temp3)
+        plt.savefig(os.path.join(out_dir, name + '.png'))
+        plt.close()
+    elif isinstance(f1, h5py._hl.group.Group):
+        if verbose:
+            name = '-'.join([prefix] + f1.name.split('/')[1:])
+            print('{} is group, entering...'.format(name))
+        for i in f1:
+            plot_h5diff(f1[i], f2[i], out_dir, prefix, verbose)

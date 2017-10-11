@@ -8,38 +8,18 @@ find smallest-test -path '*/coadd/*' -name '*.hdf5' | sed 's/^smallest-test\(.*\
 
 import argparse
 import h5py
-import numpy as np
-import matplotlib.pyplot as plt
 import os
 
+from dautil.h5IO import plot_h5diff
+from dautil.IO import makedirs
+
 __version__ = '0.1'
-
-
-def plot_diff_hdf5(f1, f2, out_dir, prefix='', verbose=False):
-    if isinstance(f1, h5py._hl.dataset.Dataset):
-        name = '-'.join([prefix] + f1.name.split('/')[1:])
-        if verbose:
-            print('{} is dataset, plotting...'.format(name))
-        temp1 = np.nan_to_num(f1)
-        temp2 = np.nan_to_num(f2)
-        temp3 = np.abs(temp2 - temp1)
-        # plt.plot(temp1)
-        # plt.plot(temp2)
-        plt.plot(temp3)
-        plt.savefig(os.path.join(out_dir, name + '.png'))
-        plt.close()
-    elif isinstance(f1, h5py._hl.group.Group):
-        if verbose:
-            name = '-'.join([prefix] + f1.name.split('/')[1:])
-            print('{} is group, entering...'.format(name))
-        for i in f1:
-            plot_diff_hdf5(f1[i], f2[i], out_dir, prefix, verbose)
 
 
 def main(args):
     with h5py.File(args.first, "r") as f1:
         with h5py.File(args.second, "r") as f2:
-            plot_diff_hdf5(f1, f2, args.o, prefix=os.path.splitext(os.path.basename(args.first))[0], verbose=args.verbose)
+            plot_h5diff(f1, f2, args.o, prefix=os.path.splitext(os.path.basename(args.first))[0], verbose=args.verbose)
 
 
 def cli():
