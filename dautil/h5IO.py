@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import sys
 
 def h5delete(filename, dry_run=True, verbose=False):
+    '''delete file if it is not a valid HDF5 file.
+    '''
     try:
         with h5py.File(filename, "r") as f:
             if verbose:
@@ -21,6 +23,8 @@ def h5delete(filename, dry_run=True, verbose=False):
 
 
 def h5assert_nonzero(f, verbose=False):
+    '''assert the arrays in the HDF5 file object f are not identically zero.
+    '''
     if isinstance(f, h5py._hl.dataset.Dataset):
         if verbose:
             print('{} is dataset, asserting...'.format(f))
@@ -34,6 +38,8 @@ def h5assert_nonzero(f, verbose=False):
 
 
 def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
+    '''assert the contents of the 2 HDF5 file objects f1 and f2 are identical up to rtol and atol
+    '''
     if isinstance(f1, h5py._hl.dataset.Dataset):
         if verbose:
             print('{}, {} are dataset, asserting...'.format(f1, f2))
@@ -51,6 +57,8 @@ def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
 
 
 def plot_h5diff(f1, f2, out_dir, prefix='', verbose=False):
+    '''plot the diff. of the arrays in the file objects f1 and f2 to the out_dir
+    '''
     if isinstance(f1, h5py._hl.dataset.Dataset):
         name = '-'.join([prefix] + f1.name.split('/')[1:])
         if verbose:
