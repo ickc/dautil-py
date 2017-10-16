@@ -1,5 +1,6 @@
 import numpy as np
 import operator
+import pandas as pd
 from functools import reduce
 
 # summarize ############################################################
@@ -124,3 +125,17 @@ def get_map_parallel(processes):
         import multiprocessing
         pool = multiprocessing.Pool(processes=processes)
         return pool.map
+
+########################################################################
+
+def insert_index_level(df, level, name, value):
+    '''For DataFrame df, add an index with name and value between level & (level + 1)'''
+    n = df.index.nlevels
+    order = list(range(n))
+    order.insert(level, n)
+
+    df = df.copy()
+    df[name] = value
+    df.set_index(name, append=True, inplace=True)
+
+    return df.reorder_levels(order)
