@@ -43,7 +43,7 @@ def save(f):
                           figureheight='\\figureheight',
                           figurewidth='\\figurewidth')
             else:
-                plt.savefig(filename)
+                plt.savefig(filename, bbox_inches='tight')
     return f_decorated
 
 # plot pandas DataFrame ################################################
