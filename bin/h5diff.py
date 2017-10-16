@@ -12,7 +12,7 @@ import argparse
 import h5py
 import sys
 
-from dautil.h5IO import h5assert
+from dautil.IO.h5 import h5assert
 
 __version__ = '0.1'
 

@@ -13,7 +13,7 @@ import argparse
 from functools import partial
 
 from dautil.util import get_map_parallel
-from dautil.h5IO import h5delete
+from dautil.IO.h5 import h5delete
 
 __version__ = '0.2'
 

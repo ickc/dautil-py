@@ -10,7 +10,7 @@ import argparse
 import h5py
 import os
 
-from dautil.h5IO import plot_h5diff
+from dautil.IO.h5 import plot_h5diff
 from dautil.IO import makedirs
 
 __version__ = '0.1'
