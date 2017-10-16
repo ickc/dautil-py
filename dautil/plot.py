@@ -47,6 +47,7 @@ def save(f):
 
 # plot pandas DataFrame ################################################
 
+@save
 def plot_unique(df, col_select, col_plot):
     '''plot the values of col_plot
     per unique value in col_select
@@ -56,6 +57,7 @@ def plot_unique(df, col_select, col_plot):
     plt.title(col_plot)
 
 
+@save
 def plot_unique_index(df, idx_select, col_plot):
     '''plot the values of col_plot
     per index from index level idx_select
@@ -70,6 +72,7 @@ def plot_unique_index(df, idx_select, col_plot):
     plt.title(col_plot)
 
 
+@save
 def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
     '''similar to plot_unique_index, but the values of index in level idx_select
     is binned instead
@@ -100,6 +103,7 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
 
 ########################################################################
 
+@save
 def plot_x_y_complex(x, y):
     '''x is a real array.
     y is a complex array.
