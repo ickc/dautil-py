@@ -30,6 +30,8 @@ def save(f):
                 "font.sans-serif": ["Latin Modern Sans"],
                 "font.monospace": ["Latin Modern Mono"]
             })
+        elif ext == 'png':
+            matplotlib.rcParams.update({"savefig.dpi": 240})
 
         f(*args, **kwargs)
 
