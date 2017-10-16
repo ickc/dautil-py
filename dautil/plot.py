@@ -19,7 +19,8 @@ def save(f):
     '''
     @wraps(f)
     def f_decorated(*args, filename=None, **kwargs):
-        makedirs(os.path.dirname(filename))
+        if filename:
+            makedirs(os.path.dirname(filename))
 
         ext = os.path.splitext(filename)[1][1:] if filename else None
 
