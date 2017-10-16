@@ -105,6 +105,13 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
 ########################################################################
 
 @save
+def plot_camb(df, figsize=(10, 12)):
+    '''plot DataFrame obtained by load_camb
+    '''
+    return df.plot(sharex=True, subplots=True, figsize=figsize)
+
+
+@save
 def plot_x_y_complex(x, y):
     '''x is a real array.
     y is a complex array.

@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sns
 
 
 def load_camb(path):
@@ -12,8 +11,3 @@ def load_camb(path):
                        header=None,
                        index_col=0,
                        names=('l', 'TT', 'EE', 'BB', 'TE'))
-
-def plot_camb(df, figsize=(10, 12)):
-    '''plot DataFrame obtained by load_camb
-    '''
-    return df.plot(sharex=True, subplots=True, figsize=figsize)
