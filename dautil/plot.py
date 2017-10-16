@@ -10,8 +10,6 @@ import seaborn as sns
 from functools import wraps
 # from matplotlib2tikz import save as tikz_save
 
-idx = pd.IndexSlice
-
 
 def save(f):
     '''a decorator to add keyword filename to the function args
@@ -61,41 +59,43 @@ def plot_unique(df, col_select, col_plot):
 def plot_unique_index(df, idx_select, col_plot):
     '''plot the values of col_plot
     per index from index level idx_select
-    TODO: currently, assuming df has 2 levels of MultiIndex. Generalize this.
     '''
+    indexslice = [slice(None)] * df.index.nlevels
+
     for value in df.index.levels[idx_select]:
-        if idx_select == 0:
-            indexslice = idx[value, :]
-        elif idx_select == 1:
-            indexslice = idx[:, value]
-        sns.kdeplot(df.loc[indexslice, :][col_plot], label=value)
+        # choose the current value
+        indexslice[idx_select] = slice(value)
+        sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=value)
+
     plt.title(col_plot)
 
 
-def plot_unique_index_binned(df, idx_select, col_plot, bin_width=None):
+def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
     '''similar to plot_unique_index, but the values of index in level idx_select
     is binned instead
-    TODO: currently, assuming df has 2 levels of MultiIndex. Generalize this.
+    Assumed df is sorted, else its behavior is undefined.
 
     Examples
     --------
-    >>> plot_unique_index_binned(df_masked, 0, 'ampparams2_1', bin_width=pd.Timedelta('10 days'))
+    >>> plot_unique_index_binned(df_masked, 0, 'ampparams2_1', binwidth=pd.Timedelta('10 days'))
     '''
+    indexslice = [slice(None)] * df.index.nlevels
+
     values = df.index.levels[idx_select]
     n = values.shape[0]
     idx_current = values[0]
     idx_end = values[-1]
+
     while idx_current <= idx_end:
-        idx_new = idx_current + bin_width
-        if idx_select == 0:
-            indexslice = idx[idx_current:idx_new, :]
-        elif idx_select == 1:
-            indexslice = idx[:, idx_current:idx_new]
+        idx_new = idx_current + binwidth
+        # choose the current value
+        indexslice[idx_select] = slice(idx_current, idx_new)
         try:
-            sns.kdeplot(df.loc[indexslice, :][col_plot], label=idx_current)
+            sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=idx_current)
         except (ValueError, ZeroDivisionError):
             print('No data between {} and {}.'.format(idx_current, idx_new))
         idx_current = idx_new
+
     plt.title(col_plot)
 
 ########################################################################
