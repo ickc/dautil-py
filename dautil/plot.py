@@ -49,17 +49,17 @@ def save(f):
 # plot pandas DataFrame ################################################
 
 @save
-def plot_unique(df, col_select, col_plot):
+def plot_unique(df, col_select, col_plot, **kwargs):
     '''plot the values of col_plot
     per unique value in col_select
     '''
     for value in df[col_select].unique():
-        sns.kdeplot(df[df[col_select] == value][col_plot], label=value)
+        sns.kdeplot(df[df[col_select] == value][col_plot], label=value, **kwargs)
     plt.title(col_plot)
 
 
 @save
-def plot_unique_index(df, idx_select, col_plot):
+def plot_unique_index(df, idx_select, col_plot, **kwargs):
     '''plot the values of col_plot
     per index from index level idx_select
     '''
@@ -68,13 +68,13 @@ def plot_unique_index(df, idx_select, col_plot):
     for value in df.index.levels[idx_select]:
         # choose the current value
         indexslice[idx_select] = slice(value)
-        sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=value)
+        sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=value, **kwargs)
 
     plt.title(col_plot)
 
 
 @save
-def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
+def plot_unique_index_binned(df, idx_select, col_plot, binwidth, **kwargs):
     '''similar to plot_unique_index, but the values of index in level idx_select
     is binned instead
     Assumed df is sorted, else its behavior is undefined.
@@ -95,7 +95,7 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
         # choose the current value
         indexslice[idx_select] = slice(idx_current, idx_new)
         try:
-            sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=idx_current)
+            sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=idx_current, **kwargs)
         except (ValueError, ZeroDivisionError):
             print('No data between {} and {}.'.format(idx_current, idx_new))
         idx_current = idx_new
@@ -105,29 +105,29 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth):
 ########################################################################
 
 @save
-def plot_camb(df, figsize=(10, 12)):
+def plot_camb(df, **kwargs):
     '''plot DataFrame obtained by load_camb
     '''
-    return df.plot(sharex=True, subplots=True, figsize=figsize)
+    return df.plot(sharex=True, subplots=True, **kwargs)
 
 
 @save
-def plot_x_y_complex(x, y):
+def plot_x_y_complex(x, y, **kwargs):
     '''x is a real array.
     y is a complex array.
     '''
     plt.figure()
-    sns.tsplot(x).set_title('x')
+    sns.tsplot(x).set_title('x', **kwargs)
     plt.figure()
-    sns.tsplot(np.real(y)).set_title('real(y)')
+    sns.tsplot(np.real(y)).set_title('real(y)', **kwargs)
     plt.figure()
-    sns.tsplot(np.imag(y)).set_title('imag(y)')
+    sns.tsplot(np.imag(y)).set_title('imag(y)', **kwargs)
 
-    sns.jointplot(x=x, y=np.real(y), kind='reg')
+    sns.jointplot(x=x, y=np.real(y), kind='reg', **kwargs)
     plt.title('real(y) vs. x')
-    sns.jointplot(x=x, y=np.imag(y), kind='reg')
+    sns.jointplot(x=x, y=np.imag(y), kind='reg', **kwargs)
     plt.title('imag(y) vs. x')
-    sns.jointplot(x=x, y=np.absolute(y), kind='reg')
+    sns.jointplot(x=x, y=np.absolute(y), kind='reg', **kwargs)
     plt.title('abs(y) vs. x')
-    sns.jointplot(x=x, y=np.angle(y), kind='reg')
+    sns.jointplot(x=x, y=np.angle(y), kind='reg', **kwargs)
     plt.title('arg(y) vs. x')
