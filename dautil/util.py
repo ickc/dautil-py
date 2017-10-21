@@ -116,6 +116,38 @@ def summarize(data):
 
 ########################################################################
 
+def get_box(array):
+    '''array: numpy.ndarray
+    return: per dim. in array, find the min. and max. index s.t.
+            the other dim. are identically zero.
+
+    This might be used when one want to trim out the empty "boundary" of an array to reduce size.
+    In principle, a trimmed array with this attribute can reconstruct the original array.
+
+    Note:
+    
+    - This might not make sense if ndim = 1
+    - This is relatively slow, that uses numpy only to walk through the array.
+    '''
+    ndim = array.ndim
+
+    result = np.empty((ndim, 2), dtype=np.int64)
+
+    for i in range(ndim):
+        axis = list(range(ndim))
+        axis.pop(i)
+        axis = tuple(axis)
+        # all but the i-axis
+        minmax = ~np.all(array == 0, axis=axis)
+        minmax_index = minmax * np.arange(minmax.shape[0])
+        minmax_index = minmax_index[minmax_index != 0]
+        for j in (0, -1):
+            result[i, j] = minmax_index[j]
+
+    return result
+
+########################################################################
+
 def get_map_parallel(processes):
     '''return a map function
     uses multiprocessing's Pool if processes != 1
