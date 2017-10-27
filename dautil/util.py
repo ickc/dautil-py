@@ -114,7 +114,7 @@ def summarize(data):
     else:
         return type(data)
 
-########################################################################
+# numpy array ##########################################################
 
 def get_box(array):
     '''array: numpy.ndarray
@@ -146,6 +146,24 @@ def get_box(array):
 
     return result
 
+
+def get_outer_box(x, y):
+    '''Given boxes from the output of get_box,
+    return the smallest box that contains both.
+    '''
+    return np.column_stack((np.minimum(x, y)[:, 0], np.maximum(x, y)[:, 1]))
+
+
+def to_levels(array, dtype=np.uint8, levels=256):
+    '''mapping the values of ``array`` between its min. and max. to ``levels``
+    with dtype ``dtype``
+    '''
+    _min = array.min()
+    _range = (array.max() - _min) or 1
+
+    result = (array - _min) * ((levels - 1) / _range)
+    return result.astype(dtype)
+
 ########################################################################
 
 def get_map_parallel(processes):
@@ -159,7 +177,7 @@ def get_map_parallel(processes):
         pool = multiprocessing.Pool(processes=processes)
         return pool.map
 
-########################################################################
+# pandas ###############################################################
 
 def insert_index_level(df, level, name, value):
     '''For DataFrame df, add an index with name and value between level & (level + 1)'''
@@ -173,7 +191,6 @@ def insert_index_level(df, level, name, value):
 
     return df.reorder_levels(order)
 
-########################################################################
 
 def df_linregress(df, grouplevel=0, regresslevel=1, regressindex=2, regressorder=2):
     '''per level ``grouplevel``, perform a linregress of each column vs. level ``regresslevel``
