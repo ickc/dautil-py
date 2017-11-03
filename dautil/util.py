@@ -3,6 +3,7 @@ import operator
 import pandas as pd
 from functools import reduce
 import scipy
+import types
 
 # summarize ############################################################
 
@@ -113,6 +114,16 @@ def summarize(data):
         return summarize_ndarray(data)
     else:
         return type(data)
+
+
+def get_variables(module):
+    '''Return a list of variable names from ``module``.
+    Currently, callables and modules are ignored.
+    '''
+    return [item for item in dir(module) if not
+        (item.startswith("__") or
+         isinstance(getattr(module, item), types.ModuleType) or
+         callable(getattr(module, item)))
 
 # numpy array ##########################################################
 
