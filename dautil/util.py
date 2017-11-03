@@ -123,7 +123,7 @@ def get_variables(module):
     return [item for item in dir(module) if not
         (item.startswith("__") or
          isinstance(getattr(module, item), types.ModuleType) or
-         callable(getattr(module, item)))
+         callable(getattr(module, item)))]
 
 # numpy array ##########################################################
 
