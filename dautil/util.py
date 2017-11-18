@@ -54,16 +54,15 @@ def shape_list(data):
     [2, 3]
     '''
     n = [len(data)]
+    # to be initialized
     m_0 = None
     for datum in data:
-        if isinstance(datum, (list, tuple)):
-            m = shape_list(datum)
-        else:
-            m = []
+        m = shape_list(datum) if isinstance(datum, (list, tuple)) else []
+        # initialize
         if m_0 is None:
             m_0 = m
-        if m_0 != m:
-            return []
+        elif m_0 != m:
+            m_0 = []
     return n + m_0
 
 
