@@ -174,6 +174,21 @@ def to_levels(array, dtype=np.uint8, levels=256):
     result = (array - _min) * ((levels - 1) / _range)
     return result.astype(dtype)
 
+
+def unpackbits(data, flags):
+    '''
+    data: 1d-array of type int
+    flags: 1d-array of "bits", e.g. numpy.array([1, 2, 4, 8, ...])
+    Return
+    ------
+    2d-array, where each element is the unpacked array of bits per datum.
+    Note
+    ----
+    With flags = numpy.arange(7, -1, -1), and data has dype = uint8,
+    this is the same as numpy.unpackbits
+    '''
+    return (data[:,None] & flags) != 0
+
 ########################################################################
 
 def get_map_parallel(processes):
@@ -224,3 +239,16 @@ def df_linregress(df, grouplevel=0, regresslevel=1, regressindex=2, regressorder
     df_final = pd.concat(dfs)
     df_final.sort_index(inplace=True)
     return df_final
+
+
+def df_unpackbits(data, flag_dict, index=None):
+    '''
+    data: 1d-array of type int
+    flag_dict: a dict with keys as name of the flag and values as the bit of the flag (e.g. 1024)
+    similar to unpackbits, but return a DataFrame instead.
+    '''
+    return pd.DataFrame(
+        unpackbits(data, np.array(list(flag_dict.values()))),
+        index=index,
+        columns=flag_dict.keys()
+    )
