@@ -102,6 +102,27 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth, **kwargs):
 
     plt.title(col_plot)
 
+
+@save
+def plot_corr(df, vmin=0., mask=None, triangle=True, **kwargs):
+    '''Assume df is a correlation matrix
+    if triangle, plot the lower-half triangle excluding diagonal only.
+    mask will be passed to seaborn's heatmap, data will not be shown in cells where ``mask`` is True.
+    '''
+    fig = plt.figure(**kwargs)
+
+    # Generate a mask for the upper triangle
+    if triangle:
+        mask_local = np.zeros_like(df, dtype=np.bool)
+        mask_local[np.triu_indices_from(mask_local)] = True
+        if mask is None:
+            mask = mask_local
+        else:
+            mask |= mask_local
+        del mask_local
+
+    sns.heatmap(df, vmin=vmin, mask=mask, square=True)
+
 ########################################################################
 
 @save
