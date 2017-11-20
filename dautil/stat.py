@@ -5,9 +5,9 @@ import pandas as pd
 
 
 @jit(nopython=True)
-def corr_biserial(x, y):
+def corr_custom(x, y):
     '''x, y: ndarray of dtype bool
-    return: biserial correlation between x, y
+    return: the difference between counts of x and y being agree or disagree.
     '''
     return 2. * np.count_nonzero(x == y) / x.shape[0] - 1.
 
@@ -61,12 +61,12 @@ def get_corr_matrix_func(corr_func):
     return corr_matrix
 
 
-def df_corr_matrix(df, method='biserial'):
+def df_corr_matrix(df, method='custom'):
     '''df: DataFrame of dtypes bool
-    method: biserial or pearson
+    method: custom or pearson
     return a DataFrame of the correlation matrix from columns of df
     '''
-    corr_func = corr_biserial if method == 'biserial' else corr_pearson
+    corr_func = corr_custom if method == 'custom' else corr_pearson
     corr_matrix_func = get_corr_matrix_func(corr_func)
     corr = corr_matrix_func(df.as_matrix())
     return pd.DataFrame(corr, index=df.columns, columns=df.columns)
