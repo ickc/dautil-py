@@ -30,6 +30,24 @@ def corr_pearson(x, y):
     return (n[2] - n[0] * n[1]) / np.sqrt(n[0] * (1 - n[0]) * n[1] * (1 - n[1]))
 
 
+@jit(nopython=True)
+def corr_kendall(x, y):
+    '''x, y: ndarray of dtype bool
+    return: Kendall correlation between x, y
+    Assume ``x.size == y.size``
+    '''
+    n_01 = float((~x & y).sum())
+    n_10 = float((x & ~y).sum())
+    n_11 = float((x & y).sum())
+    n_00 = x.size - n_01 - n_10 - n_11
+
+    P = n_00 * n_11
+    Q = n_01 * n_10
+    X0 = n_00 * n_01 + n_10 * n_11
+    Y0 = n_00 * n_10 + n_01 * n_11
+
+    return (P - Q) / np.sqrt((P + Q + X0) * (P + Q + Y0))
+
 
 def get_corr_matrix_func(corr_func):
     '''a higher order function that returns
