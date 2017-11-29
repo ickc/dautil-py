@@ -72,12 +72,23 @@ def get_corr_matrix_func(corr_func):
     return corr_matrix
 
 
-def df_corr_matrix(df, method='custom'):
+def df_corr_matrix(df, method='pearson'):
     '''df: DataFrame of dtypes bool
     method: custom or pearson
     return a DataFrame of the correlation matrix from columns of df
     '''
-    corr_func = corr_custom if method == 'custom' else corr_pearson
+    # get corr_func
+    if method in ('pearson', 'spearman', 'phi', 'matthews'):
+        corr_func = corr_pearson
+    elif method == 'kendall':
+        corr_func = corr_kendall
+    elif method == 'custom':
+        corr_func == corr_custom
+    else:
+        import sys
+        print('Unknown method {}'.format(method), file=sys.stderr)
+        exit(1)
+
     corr_matrix_func = get_corr_matrix_func(corr_func)
     corr = corr_matrix_func(df.as_matrix())
     return pd.DataFrame(corr, index=df.columns, columns=df.columns)
