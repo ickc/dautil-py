@@ -94,16 +94,23 @@ def df_corr_matrix(df, method='pearson'):
     return pd.DataFrame(corr, index=df.columns, columns=df.columns)
 
 
+@jit #(nopython=True)
+def max_mask_row(array):
+    result = np.zeros_like(array, np.bool_)
+    for i, j in enumerate(array.argmax(axis=0)):
+        result[i, j] = True
+    return result
+
+
 def corr_max(df, rowonly=False):
     '''df: squared correlation matrix
     rowonly: if True, only max per row, else max per either row or col
     return: a mask that is True when the correlation is max.
     '''
-    df_max = (df - np.identity(df.shape[0])).max()
-
     # per row
-    mask = df.eq(df_max, axis=0)
+    mask = max_mask_row((df - np.identity(df.shape[0])).as_matrix())
     if not rowonly:
         # or per col
-        mask |= df.eq(df_max, axis=1)
-    return mask
+        # assert mask.T == df.eq(df_max, axis=1)
+        mask |= mask.T
+    return pd.DataFrame(mask, index=df.index, columns=df.columns)
