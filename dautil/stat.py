@@ -16,26 +16,19 @@ def corr_custom(x, y):
 def corr_pearson(x, y):
     '''x, y: ndarray of dtype bool
     return: pearson correlation between x, y
+    Note: a.k.a. phi correlation, Matthews correlation
+    Assume ``x.size == y.size``
     '''
-    n = np.empty((2, 2), dtype=np.int32)
+    n = np.empty((3,))
 
-    # strictly speaking, n[0, 0] and N should be calculated by the following lines
-    # n[0, 0] = (~x & ~y).sum()
-    # N = n.sum()
-    # but n[0, 0] is not used anywhere below.
-    # so just for simplicity, n[0, 0] is used to store N instead
-    n[0, 0] = x.shape[0]
+    n[0] = x.sum()
+    n[1] = y.sum()
+    n[2] = (x & y).sum()
 
-    n[0, 1] = (~x & y).sum()
-    n[1, 0] = (x & ~y).sum()
-    n[1, 1] = (x & y).sum()
+    n /= x.size
 
-    mean = np.empty((2,))
-    mean[0] = n[1, :].sum()
-    mean[1] = n[:, 1].sum()
-    mean /= n[0, 0]
+    return (n[2] - n[0] * n[1]) / np.sqrt(n[0] * (1 - n[0]) * n[1] * (1 - n[1]))
 
-    return (n[1, 1] / n[0, 0] - np.prod(mean)) / np.sqrt(np.prod(mean - np.square(mean)))
 
 
 def get_corr_matrix_func(corr_func):
