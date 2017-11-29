@@ -47,7 +47,7 @@ def get_corr_matrix_func(corr_func):
         corr =  np.empty((n, n))
         for i in prange(n):
             corr[i, i] = 1.
-            for j in np.arange(i):
+            for j in range(i):
                 corr[i, j] = corr_func(array[:, i], array[:, j])
                 corr[j, i] = corr[i, j]
         return corr
