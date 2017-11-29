@@ -2,6 +2,7 @@ from numba import jit, prange
 
 import numpy as np
 import pandas as pd
+import scipy
 
 
 @jit(nopython=True)
@@ -94,6 +95,39 @@ def df_corr_matrix(df, method='pearson'):
     return pd.DataFrame(corr, index=df.columns, columns=df.columns)
 
 
+@jit(nopython=True)
+def partial_corr_matrix(inv):
+    '''corr: inverse of a correlation matrix
+    return the partial correlation matrix
+    '''
+    n = inv.shape[0]
+    result = np.empty_like(inv)
+    for i in range(n):
+        for j in range(n):
+            result[i, j] = -inv[i, j] / np.sqrt(inv[i, i] * inv[j, j])
+    return result
+
+
+def df_partial_corr_matrix(df, mode='pinv'):
+    '''df: a correlation matrix
+    mode: 'pinv' or 'inv', using the corresponding function in scipy.linalg
+    return the partial correlation matrix
+    '''
+    corr = df.as_matrix()
+    inv = scipy.linalg.pinv(corr) if mode == 'pinv' else scipy.linalg.inv(corr)
+    corr_partial = partial_corr_matrix(inv)
+    return pd.DataFrame(corr_partial, index=df.columns, columns=df.index)
+
+
+def df_inv(df, mode='pinv'):
+    '''df: a DataFrame where rows and columns are indentical
+    mode: 'pinv' or 'inv', using the corresponding function in scipy.linalg
+    return a DataFrame with the pesudo inverse matrix of the values
+    '''
+    inv = scipy.linalg.pinv if mode == 'pinv' else scipy.linalg.inv
+    return pd.DataFrame(inv(df.as_matrix()), index=df.columns, columns=df.index)
+
+
 @jit #(nopython=True)
 def max_mask_row(array):
     result = np.zeros_like(array, np.bool_)
@@ -114,3 +148,20 @@ def corr_max(df, rowonly=False):
         # assert mask.T == df.eq(df_max, axis=1)
         mask |= mask.T
     return pd.DataFrame(mask, index=df.index, columns=df.columns)
+
+
+def bin_corr_relative(corr, neighbor_max):
+    '''``corr`` is a correlation matrix with columns & indices sorted,
+    and in regular intervals.
+    Return the average of the correlations of the (k + 1)-th neighbor,
+    where k ranges from 0 to neighbor_max
+    '''
+    interval = np.real(corr.columns[1] - corr.columns[0])
+    corr_matrix = corr.as_matrix()
+
+    result = np.empty((neighbor_max,), dtype=complex)
+    # k-th neighbor
+    for k in range(neighbor_max):
+        neighbor = corr_matrix.diagonal(k + 1)
+        result[k] = np.mean(neighbor) + 1.j * np.std(neighbor)
+    return pd.DataFrame(result, index=np.arange(1, neighbor_max + 1) * interval, columns=['Correlation as a function of $\Delta l$'])
