@@ -9,7 +9,7 @@ def corr_custom(x, y):
     '''x, y: ndarray of dtype bool
     return: the difference between counts of x and y being agree or disagree.
     '''
-    return 2. * np.count_nonzero(x == y) / x.shape[0] - 1.
+    return 2. * (x == y).sum() / x.size - 1.
 
 
 @jit(nopython=True)
