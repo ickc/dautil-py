@@ -163,5 +163,5 @@ def bin_corr_relative(corr, neighbor_max):
     # k-th neighbor
     for k in range(neighbor_max):
         neighbor = corr_matrix.diagonal(k + 1)
-        result[k] = np.mean(neighbor) + 1.j * np.std(neighbor)
+        result[k] = np.mean(neighbor) + 1.j * scipy.stats.sem(neighbor)
     return pd.DataFrame(result, index=np.arange(1, neighbor_max + 1) * interval, columns=['Correlation as a function of $\Delta l$'])
