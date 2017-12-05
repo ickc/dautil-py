@@ -124,6 +124,26 @@ def get_variables(module):
          isinstance(getattr(module, item), types.ModuleType) or
          callable(getattr(module, item)))]
 
+
+def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
+    '''
+    recursively assert into a dictionary
+    if the value is a numpy array, assert_allclose, else assert equal.
+    '''
+    for key in input1:
+        if isinstance(input1[key], dict):
+            if verbose:
+                print('asserting {}'.format(key))
+            assert_rec(input1[key], input2[key], rtol=rtol, atol=atol, verbose=verbose)
+        elif isinstance(input1[key], np.ndarray):
+            if verbose:
+                print('asserting {}'.format(key))
+            np.testing.assert_allclose(input1[key], input2[key], rtol=rtol, atol=atol)
+        else:
+            if verbose:
+                print('asserting {}'.format(key))
+            assert input1[key] == input2[key]
+
 # numpy array ##########################################################
 
 def get_box(array):
