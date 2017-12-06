@@ -1,4 +1,9 @@
 import numpy as np
+from collections import OrderedDict
+import os
+from functools import partial
+import pandas as pd
+import sys
 
 def cli_sort(cli, n_command):
     '''assume cli is a command with args
@@ -36,3 +41,72 @@ def cli_sort(cli, n_command):
     del index, n_arg
     arg_list.sort()
     return ' '.join(command + arg_list)
+
+# GNU time output
+
+def parse_gnu_time_line(text):
+    '''Parse a line of GNU time's output
+    Returns a list of 2 elements as the key-value pair
+    '''
+    # when there's error in running the script,
+    # the first line does not start with '\t'.
+    if text[0] != '\t':
+        raise ValueError
+    # get key-value pair 
+    # first element is '\t', last element may be '\n'
+    last_idx = -1 if text[-1] == '\n' else 0
+    result = text[1:last_idx].split(': ')
+
+    # remove '"' from 2 ends
+    # result[1] is the value of the dict
+    # if result[1][0] == result[1][-1] == '"':
+    #     result[1] = result[1][1:-1]
+
+    # casting value to an appropriate type
+    try:
+        result[1] = int(result[1])
+    except (ValueError, IndexError):
+        try:
+            result[1] = float(result[1])
+        except (ValueError, IndexError):
+            try:
+                # TODO: not using pandas?
+                result[1] = pd.to_timedelta(result[1])
+            except (ValueError, IndexError):
+                try:
+                    if result[1][-1] == '%':
+                        result[1] = float(result[1][:-1]) / 100.
+                except IndexError:
+                    pass
+    return result
+
+
+def parse_gnu_time_file(filename, isdatetime=False):
+    '''Parse the output of GNU time
+    filename: a path to the GNU time output
+    Returns a DataFrame
+    '''
+    # use filename as index
+    index = os.path.splitext(os.path.basename(filename))[0]
+    if isdatetime:
+        try:
+            index = pd.to_datetime(index, format='%Y%m%d_%H%M%S')
+        except ValueError:
+            pass
+
+    with open(filename, 'r') as f:
+        try:
+            return pd.DataFrame(OrderedDict(map(parse_gnu_time_line, f)), index=(index,))
+        except ValueError:
+            print(filename, file=sys.stderr)
+            raise ValueError
+
+
+def parse_gnu_time_files(filenames, isdatetime=False, map_parallel=map):
+    '''Parse the outputs of GNU time
+    filenames: an iterator of paths to GNU time's outputs
+    Returns a DataFrame
+    '''
+    df = pd.concat(map_parallel(partial(parse_gnu_time_file, isdatetime=isdatetime), filenames))
+    df.sort_index(inplace=True)
+    return df
