@@ -4,6 +4,7 @@
 '''
 
 from collections import OrderedDict
+import os
 import pandas as pd
 import subprocess
 
@@ -81,5 +82,5 @@ def main():
 
 if __name__ == "__main__":
     allocated_buffers, per_user_buffer_use = main()
-    pd.set_option('display.width', 120) # so that columns doesn't wrap
+    pd.set_option('display.width', os.get_terminal_size().columns)
     print(AB, allocated_buffers, PUBU, per_user_buffer_use, sep='\n\n')
