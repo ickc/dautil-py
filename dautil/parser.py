@@ -53,31 +53,30 @@ def parse_gnu_time_line(text):
     if text[0] != '\t':
         raise ValueError
     # get key-value pair 
-    # first element is '\t', last element may be '\n'
-    last_idx = -1 if text[-1] == '\n' else 0
-    result = text[1:last_idx].split(': ')
-
-    # remove '"' from 2 ends
-    # result[1] is the value of the dict
-    # if result[1][0] == result[1][-1] == '"':
-    #     result[1] = result[1][1:-1]
+    result = text.strip().split(': ')
 
     # casting value to an appropriate type
     try:
-        result[1] = int(result[1])
-    except (ValueError, IndexError):
+        result[1] = float(result[1])
+        if result[0] == 'Maximum resident set size (kbytes)':
+            result = ['Maximum resident set size (GiB)', result[1] / 1048576.]
+    # only command, percentage, timedelta syntax is not floatable
+    except ValueError:
+        # percentage
         try:
-            result[1] = float(result[1])
-        except (ValueError, IndexError):
+            result[1] = float(result[1][:-1]) / 100.
+        except ValueError:
+            # timedelta
             try:
                 # TODO: not using pandas?
-                result[1] = pd.to_timedelta(result[1])
-            except (ValueError, IndexError):
-                try:
-                    if result[1][-1] == '%':
-                        result[1] = float(result[1][:-1]) / 100.
-                except IndexError:
-                    pass
+                if result[1].count(':') == 1:
+                    result[1] = '0:' + result[1]
+                result[1] = pd.to_timedelta(result[1]).total_seconds()
+                # the only row with timedelta syntax is this one
+                result[0] = 'Elapsed (wall clock) time (seconds)'
+            # command string
+            except ValueError:
+                result[1] = result[1][1:-1]
     return result
 
 
