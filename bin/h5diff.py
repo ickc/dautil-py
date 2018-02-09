@@ -4,6 +4,7 @@
 For example,
 
 find small-test -iname '*.hdf5' | sed 's/^small-test\(.*\)$/h5diff\.py -1 small-test\1 -2 small-test-reference\1 -r 1e-1 -a 1 -S/g' | xargs -i -n1 -P1 bash -c '$0' {}
+find high_0_3_full -name '*.hdf5' | sed -e 's/^high_0_3_full\(.*\)$/h5diff\.py -1 high_0_3_full\1 -2 high_0_3\1 -S/g' -e 's/high_0_3\/\(.*\)null/high_0_3\/\1full/g' | xargs -i -n1 -P1 bash -c '$0' {}
 '''
 
 from __future__ import print_function
