@@ -219,6 +219,27 @@ def unpackbits(data, flags):
     '''
     return (data[:,None] & flags) != 0
 
+
+def running_mean(x, n):
+    '''
+    return: array of the moving average of x with bins of width n
+    '''
+    cumsum = np.cumsum(np.insert(x, 0, 0)) 
+    return (cumsum[n:] - cumsum[:-n]) / n
+
+
+def running_mean_arange(start, stop, step, n):
+    '''assume start, stop, step as in the input of arange
+    given binning of width n
+    return the start, stop, step of the resultant arange after binning
+    '''
+    # middle of the first n bins
+    start_avg = start + step * (n - 1) / 2
+    # length of the original arange
+    N = np.ceil((stop - start) / step)
+    stop_avg = start_avg + step * (N - n + 1) # new length in ()
+    return start_avg, stop_avg, step
+
 ########################################################################
 
 def get_map_parallel(processes):
