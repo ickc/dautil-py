@@ -146,6 +146,16 @@ def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
 
 # numpy array ##########################################################
 
+def arange_inv(array):
+    '''array: assumed to be an output of numpy.arange
+    return (start, stop, step) which used to create this array
+    '''
+    start = array[0]
+    step = (array[-1] - array[0]) / (array.size - 1)
+    stop = array[-1] + step
+    return start, stop, step
+
+
 def get_box(array):
     '''array: numpy.ndarray
     return: per dim. in array, find the min. and max. index s.t.
