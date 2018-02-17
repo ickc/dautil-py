@@ -23,6 +23,8 @@ install:
   - pip install -r tests/requirements.txt
 script:
   - make -j4 test
+before_deploy:
+  - make docs
 deploy:
   provider: pages
   skip-cleanup: true
