@@ -6,12 +6,18 @@ python = python
 
 clean:
 	rm -f .coverage
-	rm -rf htmlcov *.egg-info
+	rm -rf htmlcov *.egg-info apidoc docs
 	find -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete
 
 test:
 	$(python) -m pytest -vv --cov=dautil tests
 
+# TODO set version
+apidoc:
+	sphinx-apidoc --separate --maxdepth=10 --full --append-syspath --doc-project=dautil --doc-author='Kolen Cheung' --ext-autodoc --ext-todo --ext-coverage --ext-mathjax --ext-viewcode --ext-githubpages -o $@ . tests
+docs: apidoc
+	cd $< && make html
+	mv $</_build/html $@
 
 # Deploy to PyPI
 ## by Travis, properly git tagged
