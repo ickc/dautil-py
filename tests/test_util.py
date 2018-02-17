@@ -2,6 +2,7 @@ import numpy as np
 
 from .context import util
 
+
 def test_arange_inv():
     start, stop, step = 0., 4., 1 / 40000
     array = np.arange(start, stop, step)

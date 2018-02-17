@@ -63,7 +63,7 @@ def get_corr_matrix_func(corr_func):
         '''
         n = array.shape[1]
         # initialize
-        corr =  np.empty((n, n))
+        corr = np.empty((n, n))
         for i in prange(n):
             corr[i, i] = 1.
             for j in range(i):
@@ -128,7 +128,7 @@ def df_inv(df, mode='pinv'):
     return pd.DataFrame(inv(df.as_matrix()), index=df.columns, columns=df.index)
 
 
-@jit #(nopython=True)
+@jit  # (nopython=True)
 def max_mask_row(array):
     result = np.zeros_like(array, np.bool_)
     for i, j in enumerate(array.argmax(axis=0)):

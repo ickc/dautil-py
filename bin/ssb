@@ -23,8 +23,8 @@ def scontrol_show_burst_parser(cat_list):
             pd.DataFrame(
                 OrderedDict(item.split('=') for item in line.strip().split()),
                 index=(i,)
-                )
-        for i, line in enumerate(cat_list)
+            )
+            for i, line in enumerate(cat_list)
         )
     )
 

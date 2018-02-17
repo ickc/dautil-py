@@ -5,6 +5,7 @@ from functools import partial
 import pandas as pd
 import sys
 
+
 def cli_sort(cli, n_command):
     '''assume cli is a command with args
     where ``n_command`` is not number of positional arguments in the beginning
@@ -44,6 +45,7 @@ def cli_sort(cli, n_command):
 
 # GNU time output
 
+
 def parse_gnu_time_line(text):
     '''Parse a line of GNU time's output
     Returns a list of 2 elements as the key-value pair
@@ -52,7 +54,7 @@ def parse_gnu_time_line(text):
     # the first line does not start with '\t'.
     if text[0] != '\t':
         raise ValueError
-    # get key-value pair 
+    # get key-value pair
     result = text.strip().split(': ')
 
     # casting value to an appropriate type

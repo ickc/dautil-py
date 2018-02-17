@@ -7,6 +7,7 @@ import types
 
 # summarize ############################################################
 
+
 def summarize_ndarray(data):
     '''assume data is ndarray
     return its type, dtype and shape'''
@@ -47,7 +48,7 @@ def shape_list(data):
     return the shape of nested list/tuple, if regular
     else return []
     note that it will return the shape up to the inner most regular interval
-    
+
     Example
     -------
     >>> shape_list([[[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]], [[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]]])
@@ -120,9 +121,9 @@ def get_variables(module):
     Currently, callables and modules are ignored.
     '''
     return [item for item in dir(module) if not
-        (item.startswith("__") or
-         isinstance(getattr(module, item), types.ModuleType) or
-         callable(getattr(module, item)))]
+            (item.startswith("__") or
+             isinstance(getattr(module, item), types.ModuleType) or
+             callable(getattr(module, item)))]
 
 
 def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
@@ -146,6 +147,7 @@ def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
 
 # numpy array ##########################################################
 
+
 def arange_inv(array):
     '''array: assumed to be an output of numpy.arange
     return (start, stop, step) which used to create this array
@@ -165,7 +167,7 @@ def get_box(array):
     In principle, a trimmed array with this attribute can reconstruct the original array.
 
     Note:
-    
+
     - This might not make sense if ndim = 1
     - This is relatively slow, that uses numpy only to walk through the array.
     '''
@@ -217,14 +219,14 @@ def unpackbits(data, flags):
     With flags = numpy.arange(7, -1, -1), and data has dype = uint8,
     this is the same as numpy.unpackbits
     '''
-    return (data[:,None] & flags) != 0
+    return (data[:, None] & flags) != 0
 
 
 def running_mean(x, n):
     '''
     return: array of the moving average of x with bins of width n
     '''
-    cumsum = np.cumsum(np.insert(x, 0, 0)) 
+    cumsum = np.cumsum(np.insert(x, 0, 0))
     return (cumsum[n:] - cumsum[:-n]) / n
 
 
@@ -237,10 +239,11 @@ def running_mean_arange(start, stop, step, n):
     start_avg = start + step * (n - 1) / 2
     # length of the original arange
     N = np.ceil((stop - start) / step)
-    stop_avg = start_avg + step * (N - n + 1) # new length in ()
+    stop_avg = start_avg + step * (N - n + 1)  # new length in ()
     return start_avg, stop_avg, step
 
 ########################################################################
+
 
 def get_map_parallel(processes):
     '''return a map function
@@ -254,6 +257,7 @@ def get_map_parallel(processes):
         return pool.map
 
 # pandas ###############################################################
+
 
 def insert_index_level(df, level, name, value):
     '''For DataFrame df, add an index with name and value between level & (level + 1)'''
@@ -278,7 +282,7 @@ def df_linregress(df, grouplevel=0, regresslevel=1, regressindex=2, regressorder
     TODO: if regressindex is None, return a DataFrame that the 5 elements returned at MultiIndex level-2.
     '''
     df_grouped = df.groupby(level=grouplevel)
-    
+
     if regressindex is None:
         _linregress = lambda x: scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())
     elif regressorder == 1:

@@ -6,6 +6,7 @@ import os
 import matplotlib.pyplot as plt
 import sys
 
+
 def h5delete(filename, dry_run=True, verbose=False):
     '''delete file if it is not a valid HDF5 file.
     '''

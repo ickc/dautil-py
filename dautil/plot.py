@@ -48,6 +48,7 @@ def save(f):
 
 # plot pandas DataFrame ################################################
 
+
 @save
 def plot_unique(df, col_select, col_plot, **kwargs):
     '''plot the values of col_plot
@@ -124,6 +125,7 @@ def plot_corr(df, vmin=0., mask=None, triangle=True, **kwargs):
     sns.heatmap(df, vmin=vmin, mask=mask, square=True)
 
 ########################################################################
+
 
 @save
 def plot_camb(df, **kwargs):
