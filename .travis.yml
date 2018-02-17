@@ -1,0 +1,24 @@
+language: python
+cache: pip
+python:
+  - "2.6"
+  - "2.7"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  # pypy (version info from [Changelogs — PyPy documentation](http://doc.pypy.org/en/latest/index-of-whatsnew.html))
+  - "pypy2.7"
+  - "pypy3.5"
+# matrix:
+  # allow_failures:
+    # - python: "3.3"
+    # - python: "3.6-dev"
+    # - python: "nightly"
+    # - python: "pypy3"
+  # fast_finish: true
+# install dependencies
+install:
+  - pip install -r requirements.txt
+script:
+  - make -j4 test
