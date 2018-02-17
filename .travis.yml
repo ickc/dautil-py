@@ -22,3 +22,14 @@ install:
   - pip install -r requirements.txt
 script:
   - make -j4 test
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  keep-history: true
+  on:
+    branch: master
+  local-dir: docs
+env:
+  global:
+    secure: alYXtIsPUTzl2o+4p8K9hkXNx6hw5gkSlmQsxcUspVR0mIfAavqT93boSM4XM+vwwXbQY6pUqR22d9eF0Z2wAQr4rqW2chtizAgpVyBkMkD3b6YdVnWSK4nSmWz36hAJi4bN1BpFXsHrqxMj4SdNW92jz+BuZRFdMUKFJPEFObKTyZKHu2xiSiKVr7eity/vUuVl4V7IpRWeJZoQn+3j/hVYpGzb3GzlXLyqxaskydTopAkEGy17eIrxuJnhmN48y5EN39PtQsiADjMPAUdAHDawmnEnVn24oUnaxg86sc8GlG6QhsGbu4tXxWDSeS7WnUWypeNtmbEt18NpTsrA0kZ4GJBQlTpBsG2gDkangxKwRZFgajWZyqUGnDYziTKustFnzW7HH3YcrZ9ZkWw0R2cK7sbto/+1ie7ofMAcy/NVkj7HJx6f+3KbK1L0uFaajN6HnSQmaT9FI0jSZVpBqC2glEM4ixbg0jdkxaTWzcdR53fJ4haJC1Q9OSKuPt3ZTGtHwha774VrFhVdM1qBP2890VNz76M/Kd1CD323jZrTQ4dBA1e7tOSlaof7kCTfFnkC+E6TQ8TH9Sa0kr5wgCzqSsD/ZRf0/muklZfsBJJRzwafhlkGYP56FDzShazeU/rXQpvG5SMPZn4yvJA9mkfjb8jPZOHHyBKe5ZQiw4E=
