@@ -4,6 +4,8 @@ python:
   - "2.7"
   - "3.5"
   - "3.6"
+env:
+  - pandocVersion=latest
 # install dependencies
 install:
   - pip install -r requirements.txt
