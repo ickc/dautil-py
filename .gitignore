@@ -4,4 +4,9 @@ __pycache__
 .coverage
 .DS_Store
 *.ipynb
-apidoc/
+
+docs/*
+!docs/index.rst
+!docs/Makefile
+!docs/conf.py
+!docs/requirements.txt
