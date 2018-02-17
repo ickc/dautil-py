@@ -1,0 +1,18 @@
+dautil.IO package
+=================
+
+Submodules
+----------
+
+.. toctree::
+
+   dautil.IO.h5
+   dautil.IO.pandas
+
+Module contents
+---------------
+
+.. automodule:: dautil.IO
+    :members:
+    :undoc-members:
+    :show-inheritance:

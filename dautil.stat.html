@@ -1,0 +1,180 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dautil.stat module &#8212; dautil  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dautil.util module" href="dautil.util.html" />
+    <link rel="prev" title="dautil.plot module" href="dautil.plot.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dautil.stat">
+<span id="dautil-stat-module"></span><h1>dautil.stat module<a class="headerlink" href="#module-dautil.stat" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="dautil.stat.bin_corr_relative">
+<code class="descclassname">dautil.stat.</code><code class="descname">bin_corr_relative</code><span class="sig-paren">(</span><em>corr</em>, <em>neighbor_max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#bin_corr_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.bin_corr_relative" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">corr</span></code> is a correlation matrix with columns &amp; indices sorted,
+and in regular intervals.
+Return the average of the correlations of the (k + 1)-th neighbor,
+where k ranges from 0 to neighbor_max</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.stat.corr_custom">
+<code class="descclassname">dautil.stat.</code><code class="descname">corr_custom</code><a class="reference internal" href="_modules/dautil/stat.html#corr_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
+return: the difference between counts of x and y being agree or disagree.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.stat.corr_kendall">
+<code class="descclassname">dautil.stat.</code><code class="descname">corr_kendall</code><a class="reference internal" href="_modules/dautil/stat.html#corr_kendall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_kendall" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
+return: Kendall correlation between x, y
+Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.stat.corr_max">
+<code class="descclassname">dautil.stat.</code><code class="descname">corr_max</code><span class="sig-paren">(</span><em>df</em>, <em>rowonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>df: squared correlation matrix
+rowonly: if True, only max per row, else max per either row or col
+return: a mask that is True when the correlation is max.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.stat.corr_pearson">
+<code class="descclassname">dautil.stat.</code><code class="descname">corr_pearson</code><a class="reference internal" href="_modules/dautil/stat.html#corr_pearson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_pearson" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
+return: pearson correlation between x, y
+Note: a.k.a. phi correlation, Matthews correlation
+Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.stat.df_corr_matrix">
+<code class="descclassname">dautil.stat.</code><code class="descname">df_corr_matrix</code><span class="sig-paren">(</span><em>df</em>, <em>method='pearson'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>df: DataFrame of dtypes bool
+method: custom or pearson
+return a DataFrame of the correlation matrix from columns of df</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.stat.df_inv">
+<code class="descclassname">dautil.stat.</code><code class="descname">df_inv</code><span class="sig-paren">(</span><em>df</em>, <em>mode='pinv'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_inv" title="Permalink to this definition">¶</a></dt>
+<dd><p>df: a DataFrame where rows and columns are indentical
+mode: ‘pinv’ or ‘inv’, using the corresponding function in scipy.linalg
+return a DataFrame with the pesudo inverse matrix of the values</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.stat.df_partial_corr_matrix">
+<code class="descclassname">dautil.stat.</code><code class="descname">df_partial_corr_matrix</code><span class="sig-paren">(</span><em>df</em>, <em>mode='pinv'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>df: a correlation matrix
+mode: ‘pinv’ or ‘inv’, using the corresponding function in scipy.linalg
+return the partial correlation matrix</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.stat.get_corr_matrix_func">
+<code class="descclassname">dautil.stat.</code><code class="descname">get_corr_matrix_func</code><span class="sig-paren">(</span><em>corr_func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_corr_matrix_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_corr_matrix_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>a higher order function that returns
+a function to calculate a correlation matrix from
+a kernel function corr_func that calculates correlations
+between 2 arrays</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.stat.max_mask_row">
+<code class="descclassname">dautil.stat.</code><code class="descname">max_mask_row</code><a class="reference internal" href="_modules/dautil/stat.html#max_mask_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.max_mask_row" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.stat.partial_corr_matrix">
+<code class="descclassname">dautil.stat.</code><code class="descname">partial_corr_matrix</code><a class="reference internal" href="_modules/dautil/stat.html#partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>corr: inverse of a correlation matrix
+return the partial correlation matrix</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="dautil.html">dautil package</a><ul>
+      <li>Previous: <a href="dautil.plot.html" title="previous chapter">dautil.plot module</a></li>
+      <li>Next: <a href="dautil.util.html" title="next chapter">dautil.util module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dautil.stat.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Kolen Cheung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/dautil.stat.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

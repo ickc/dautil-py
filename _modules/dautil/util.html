@@ -1,0 +1,387 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dautil.util &#8212; dautil  documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for dautil.util</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">types</span>
+
+<span class="c1"># summarize ############################################################</span>
+
+
+<div class="viewcode-block" id="summarize_ndarray"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.summarize_ndarray">[docs]</a><span class="k">def</span> <span class="nf">summarize_ndarray</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume data is ndarray</span>
+<span class="sd">    return its type, dtype and shape&#39;&#39;&#39;</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="flatten_list"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.flatten_list">[docs]</a><span class="k">def</span> <span class="nf">flatten_list</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;flatten nested list/tuple to arbitrary depth</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="n">flatten_list</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<div class="viewcode-block" id="type_list"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.type_list">[docs]</a><span class="k">def</span> <span class="nf">type_list</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume data is list/tuple</span>
+<span class="sd">    may be nested list/tuple</span>
+<span class="sd">    return the type of all elements, if they are the same</span>
+<span class="sd">    else return None&#39;&#39;&#39;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">flatten_list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># initialize</span>
+    <span class="n">data_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="n">data_type</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+    <span class="k">return</span> <span class="n">data_type</span>
+
+
+<div class="viewcode-block" id="shape_list"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.shape_list">[docs]</a><span class="k">def</span> <span class="nf">shape_list</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume data is list/tuple</span>
+<span class="sd">    may be nested list/tuple</span>
+<span class="sd">    return the shape of nested list/tuple, if regular</span>
+<span class="sd">    else return []</span>
+<span class="sd">    note that it will return the shape up to the inner most regular interval</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+<span class="sd">    &gt;&gt;&gt; shape_list([[[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]], [[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]]])</span>
+<span class="sd">    [2, 3]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
+    <span class="c1"># to be initialized</span>
+    <span class="n">m_0</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">shape_list</span><span class="p">(</span><span class="n">datum</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">datum</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="c1"># initialize</span>
+        <span class="k">if</span> <span class="n">m_0</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">m_0</span> <span class="o">=</span> <span class="n">m</span>
+        <span class="k">elif</span> <span class="n">m_0</span> <span class="o">!=</span> <span class="n">m</span><span class="p">:</span>
+            <span class="n">m_0</span> <span class="o">=</span> <span class="p">[]</span></div>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">+</span> <span class="n">m_0</span>
+
+
+<div class="viewcode-block" id="summarize_list"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.summarize_list">[docs]</a><span class="k">def</span> <span class="nf">summarize_list</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume data is list/tuple</span>
+<span class="sd">    if types are not uniform, return &#39;mixed&#39; instead</span>
+<span class="sd">    if shape is not regular to the innermost levels, shape is ended with None</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">data_type</span> <span class="o">=</span> <span class="n">type_list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">data_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">data_type</span> <span class="o">=</span> <span class="s1">&#39;mixed&#39;</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">shape_list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="c1"># detect irregular list/tuple in inner nesting levels</span>
+    <span class="c1"># by counting no. of elements</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">flatten_list</span><span class="p">(</span><span class="n">data</span><span class="p">))</span> <span class="o">!=</span> <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">shape</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">shape</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</div>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">data_type</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="summarize_dict"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.summarize_dict">[docs]</a><span class="k">def</span> <span class="nf">summarize_dict</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume data is dict</span>
+<span class="sd">    return a dict with values of types of values in data</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">summarized</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">summarized</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">summarize_dict</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">summarized</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">summarize_ndarray</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">summarized</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">summarize_list</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">summarized</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">j</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">summarized</span>
+
+
+<div class="viewcode-block" id="summarize"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.summarize">[docs]</a><span class="k">def</span> <span class="nf">summarize</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;summarize according to type</span>
+<span class="sd">    see summarize_dict, summarize_list, summarize_ndarray</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">summarize_dict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">summarize_list</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">summarize_ndarray</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span></div>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_variables"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_variables">[docs]</a><span class="k">def</span> <span class="nf">get_variables</span><span class="p">(</span><span class="n">module</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Return a list of variable names from ``module``.</span>
+<span class="sd">    Currently, callables and modules are ignored.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">module</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span>
+            <span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;__&quot;</span><span class="p">)</span> <span class="ow">or</span>
+             <span class="nb">isinstance</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">item</span><span class="p">),</span> <span class="n">types</span><span class="o">.</span><span class="n">ModuleType</span><span class="p">)</span> <span class="ow">or</span></div>
+             <span class="n">callable</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">item</span><span class="p">)))]</span>
+
+
+<div class="viewcode-block" id="assert_dict"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.assert_dict">[docs]</a><span class="k">def</span> <span class="nf">assert_dict</span><span class="p">(</span><span class="n">input1</span><span class="p">,</span> <span class="n">input2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1.5e-09</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.5e-09</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    recursively assert into a dictionary</span>
+<span class="sd">    if the value is a numpy array, assert_allclose, else assert equal.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">input1</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;asserting </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="n">assert_rec</span><span class="p">(</span><span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">input2</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;asserting </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_allclose</span><span class="p">(</span><span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">input2</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">rtol</span><span class="o">=</span><span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="n">atol</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;asserting </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span></div>
+            <span class="k">assert</span> <span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">input2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+<span class="c1"># numpy array ##########################################################</span>
+
+
+<div class="viewcode-block" id="arange_inv"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.arange_inv">[docs]</a><span class="k">def</span> <span class="nf">arange_inv</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;array: assumed to be an output of numpy.arange</span>
+<span class="sd">    return (start, stop, step) which used to create this array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">step</span></div>
+    <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span>
+
+
+<div class="viewcode-block" id="get_box"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_box">[docs]</a><span class="k">def</span> <span class="nf">get_box</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;array: numpy.ndarray</span>
+<span class="sd">    return: per dim. in array, find the min. and max. index s.t.</span>
+<span class="sd">            the other dim. are identically zero.</span>
+
+<span class="sd">    This might be used when one want to trim out the empty &quot;boundary&quot; of an array to reduce size.</span>
+<span class="sd">    In principle, a trimmed array with this attribute can reconstruct the original array.</span>
+
+<span class="sd">    Note:</span>
+
+<span class="sd">    - This might not make sense if ndim = 1</span>
+<span class="sd">    - This is relatively slow, that uses numpy only to walk through the array.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ndim</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">ndim</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">ndim</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">):</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ndim</span><span class="p">))</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="c1"># all but the i-axis</span>
+        <span class="n">minmax</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">array</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="n">axis</span><span class="p">)</span>
+        <span class="n">minmax_index</span> <span class="o">=</span> <span class="n">minmax</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">minmax</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">minmax_index</span> <span class="o">=</span> <span class="n">minmax_index</span><span class="p">[</span><span class="n">minmax_index</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">minmax_index</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</div>
+    <span class="k">return</span> <span class="n">result</span>
+
+
+<div class="viewcode-block" id="get_outer_box"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_outer_box">[docs]</a><span class="k">def</span> <span class="nf">get_outer_box</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Given boxes from the output of get_box,</span>
+<span class="sd">    return the smallest box that contains both.</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]))</span>
+
+
+<div class="viewcode-block" id="to_levels"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.to_levels">[docs]</a><span class="k">def</span> <span class="nf">to_levels</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">256</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;mapping the values of ``array`` between its min. and max. to ``levels``</span>
+<span class="sd">    with dtype ``dtype``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">_min</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="n">_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">_min</span><span class="p">)</span> <span class="ow">or</span> <span class="mi">1</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span> <span class="o">-</span> <span class="n">_min</span><span class="p">)</span> <span class="o">*</span> <span class="p">((</span><span class="n">levels</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">_range</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="unpackbits"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.unpackbits">[docs]</a><span class="k">def</span> <span class="nf">unpackbits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    data: 1d-array of type int</span>
+<span class="sd">    flags: 1d-array of &quot;bits&quot;, e.g. numpy.array([1, 2, 4, 8, ...])</span>
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    2d-array, where each element is the unpacked array of bits per datum.</span>
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    With flags = numpy.arange(7, -1, -1), and data has dype = uint8,</span>
+<span class="sd">    this is the same as numpy.unpackbits</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">flags</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+
+
+<div class="viewcode-block" id="running_mean"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean">[docs]</a><span class="k">def</span> <span class="nf">running_mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    return: array of the moving average of x with bins of width n</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">cumsum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span></div>
+    <span class="k">return</span> <span class="p">(</span><span class="n">cumsum</span><span class="p">[</span><span class="n">n</span><span class="p">:]</span> <span class="o">-</span> <span class="n">cumsum</span><span class="p">[:</span><span class="o">-</span><span class="n">n</span><span class="p">])</span> <span class="o">/</span> <span class="n">n</span>
+
+
+<div class="viewcode-block" id="running_mean_arange"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean_arange">[docs]</a><span class="k">def</span> <span class="nf">running_mean_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume start, stop, step as in the input of arange</span>
+<span class="sd">    given binning of width n</span>
+<span class="sd">    return the start, stop, step of the resultant arange after binning</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># middle of the first n bins</span>
+    <span class="n">start_avg</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="c1"># length of the original arange</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span>
+    <span class="n">stop_avg</span> <span class="o">=</span> <span class="n">start_avg</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># new length in ()</span></div>
+    <span class="k">return</span> <span class="n">start_avg</span><span class="p">,</span> <span class="n">stop_avg</span><span class="p">,</span> <span class="n">step</span>
+
+<span class="c1">########################################################################</span>
+
+
+<div class="viewcode-block" id="get_map_parallel"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_map_parallel">[docs]</a><span class="k">def</span> <span class="nf">get_map_parallel</span><span class="p">(</span><span class="n">processes</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;return a map function</span>
+<span class="sd">    uses multiprocessing&#39;s Pool if processes != 1</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">processes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">map</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">multiprocessing</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="n">processes</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span>
+
+<span class="c1"># pandas ###############################################################</span>
+
+
+<div class="viewcode-block" id="insert_index_level"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.insert_index_level">[docs]</a><span class="k">def</span> <span class="nf">insert_index_level</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">level</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;For DataFrame df, add an index with name and value between level &amp; (level + 1)&#39;&#39;&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">nlevels</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">order</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</div>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">reorder_levels</span><span class="p">(</span><span class="n">order</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="df_linregress"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.df_linregress">[docs]</a><span class="k">def</span> <span class="nf">df_linregress</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">grouplevel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">regresslevel</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">regressindex</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">regressorder</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;per level ``grouplevel``, perform a linregress of each column vs. level ``regresslevel``</span>
+<span class="sd">    assumes df has MultiIndex of 2 levels, behavior undefined otherwise.</span>
+
+<span class="sd">    ``regressindex`` and ``regressorder`` control which amount the 5 outputs from scipy.stats.linregress is returned</span>
+<span class="sd">    If ``regressindex`` is None, return all as an object, else, only return the stat at this index.</span>
+<span class="sd">    In the latter case, the stat will be raised to the power ``regressorder``, which is useful to return $R^2$.</span>
+<span class="sd">    TODO: if regressindex is None, return a DataFrame that the 5 elements returned at MultiIndex level-2.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">df_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">grouplevel</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">regressindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
+    <span class="k">elif</span> <span class="n">regressorder</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span><span class="o">**</span><span class="n">regressorder</span>
+
+    <span class="n">dfs</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_linregress</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">df_grouped</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+    <span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+    <span class="n">df_final</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+    <span class="k">return</span> <span class="n">df_final</span>
+
+
+<div class="viewcode-block" id="df_unpackbits"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.df_unpackbits">[docs]</a><span class="k">def</span> <span class="nf">df_unpackbits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">flag_dict</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    data: 1d-array of type int</span>
+<span class="sd">    flag_dict: a dict with keys as name of the flag and values as the bit of the flag (e.g. 1024)</span>
+<span class="sd">    similar to unpackbits, but return a DataFrame instead.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="n">unpackbits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flag_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))),</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">columns</span><span class="o">=</span><span class="n">flag_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span></div>
+    <span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Kolen Cheung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

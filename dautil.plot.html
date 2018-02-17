@@ -1,0 +1,149 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dautil.plot module &#8212; dautil  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dautil.stat module" href="dautil.stat.html" />
+    <link rel="prev" title="dautil.parser module" href="dautil.parser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dautil.plot">
+<span id="dautil-plot-module"></span><h1>dautil.plot module<a class="headerlink" href="#module-dautil.plot" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="dautil.plot.plot_camb">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_camb</code><span class="sig-paren">(</span><em>df</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_camb"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_camb" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot DataFrame obtained by load_camb</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.plot_corr">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_corr</code><span class="sig-paren">(</span><em>df</em>, <em>vmin=0.0</em>, <em>mask=None</em>, <em>triangle=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_corr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_corr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assume df is a correlation matrix
+if triangle, plot the lower-half triangle excluding diagonal only.
+mask will be passed to seaborn’s heatmap, data will not be shown in cells where <code class="docutils literal notranslate"><span class="pre">mask</span></code> is True.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.plot_unique">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_unique</code><span class="sig-paren">(</span><em>df</em>, <em>col_select</em>, <em>col_plot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_unique"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_unique" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot the values of col_plot
+per unique value in col_select</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.plot_unique_index">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_unique_index</code><span class="sig-paren">(</span><em>df</em>, <em>idx_select</em>, <em>col_plot</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_unique_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_unique_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>plot the values of col_plot
+per index from index level idx_select</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.plot_unique_index_binned">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_unique_index_binned</code><span class="sig-paren">(</span><em>df</em>, <em>idx_select</em>, <em>col_plot</em>, <em>binwidth</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_unique_index_binned"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_unique_index_binned" title="Permalink to this definition">¶</a></dt>
+<dd><p>similar to plot_unique_index, but the values of index in level idx_select
+is binned instead
+Assumed df is sorted, else its behavior is undefined.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">plot_unique_index_binned</span><span class="p">(</span><span class="n">df_masked</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;ampparams2_1&#39;</span><span class="p">,</span> <span class="n">binwidth</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Timedelta</span><span class="p">(</span><span class="s1">&#39;10 days&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.plot_x_y_complex">
+<code class="descclassname">dautil.plot.</code><code class="descname">plot_x_y_complex</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#plot_x_y_complex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.plot_x_y_complex" title="Permalink to this definition">¶</a></dt>
+<dd><p>x is a real array.
+y is a complex array.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.plot.save">
+<code class="descclassname">dautil.plot.</code><code class="descname">save</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/plot.html#save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.plot.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>a decorator to add keyword filename to the function args
+the function f is expected to be a procedure that uses matplotlib
+the figure produced is saved to the path specified in filename
+dispatch according to the filename extension</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="dautil.html">dautil package</a><ul>
+      <li>Previous: <a href="dautil.parser.html" title="previous chapter">dautil.parser module</a></li>
+      <li>Next: <a href="dautil.stat.html" title="next chapter">dautil.stat module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dautil.plot.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Kolen Cheung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/dautil.plot.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

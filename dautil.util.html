@@ -1,0 +1,261 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+  <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>dautil.util module &#8212; dautil  documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="dautil.stat module" href="dautil.stat.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dautil.util">
+<span id="dautil-util-module"></span><h1>dautil.util module<a class="headerlink" href="#module-dautil.util" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="dautil.util.arange_inv">
+<code class="descclassname">dautil.util.</code><code class="descname">arange_inv</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
+<dd><p>array: assumed to be an output of numpy.arange
+return (start, stop, step) which used to create this array</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.assert_dict">
+<code class="descclassname">dautil.util.</code><code class="descname">assert_dict</code><span class="sig-paren">(</span><em>input1</em>, <em>input2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>recursively assert into a dictionary
+if the value is a numpy array, assert_allclose, else assert equal.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.df_linregress">
+<code class="descclassname">dautil.util.</code><code class="descname">df_linregress</code><span class="sig-paren">(</span><em>df</em>, <em>grouplevel=0</em>, <em>regresslevel=1</em>, <em>regressindex=2</em>, <em>regressorder=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_linregress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_linregress" title="Permalink to this definition">¶</a></dt>
+<dd><p>per level <code class="docutils literal notranslate"><span class="pre">grouplevel</span></code>, perform a linregress of each column vs. level <code class="docutils literal notranslate"><span class="pre">regresslevel</span></code>
+assumes df has MultiIndex of 2 levels, behavior undefined otherwise.</p>
+<p><code class="docutils literal notranslate"><span class="pre">regressindex</span></code> and <code class="docutils literal notranslate"><span class="pre">regressorder</span></code> control which amount the 5 outputs from scipy.stats.linregress is returned
+If <code class="docutils literal notranslate"><span class="pre">regressindex</span></code> is None, return all as an object, else, only return the stat at this index.
+In the latter case, the stat will be raised to the power <code class="docutils literal notranslate"><span class="pre">regressorder</span></code>, which is useful to return $R^2$.
+TODO: if regressindex is None, return a DataFrame that the 5 elements returned at MultiIndex level-2.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.df_unpackbits">
+<code class="descclassname">dautil.util.</code><code class="descname">df_unpackbits</code><span class="sig-paren">(</span><em>data</em>, <em>flag_dict</em>, <em>index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_unpackbits" title="Permalink to this definition">¶</a></dt>
+<dd><p>data: 1d-array of type int
+flag_dict: a dict with keys as name of the flag and values as the bit of the flag (e.g. 1024)
+similar to unpackbits, but return a DataFrame instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.flatten_list">
+<code class="descclassname">dautil.util.</code><code class="descname">flatten_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.flatten_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>flatten nested list/tuple to arbitrary depth</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_box">
+<code class="descclassname">dautil.util.</code><code class="descname">get_box</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>array: numpy.ndarray
+return: per dim. in array, find the min. and max. index s.t.</p>
+<blockquote>
+<div>the other dim. are identically zero.</div></blockquote>
+<p>This might be used when one want to trim out the empty “boundary” of an array to reduce size.
+In principle, a trimmed array with this attribute can reconstruct the original array.</p>
+<p>Note:</p>
+<ul class="simple">
+<li>This might not make sense if ndim = 1</li>
+<li>This is relatively slow, that uses numpy only to walk through the array.</li>
+</ul>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_map_parallel">
+<code class="descclassname">dautil.util.</code><code class="descname">get_map_parallel</code><span class="sig-paren">(</span><em>processes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_map_parallel" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a map function
+uses multiprocessing’s Pool if processes != 1</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_outer_box">
+<code class="descclassname">dautil.util.</code><code class="descname">get_outer_box</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_outer_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_outer_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given boxes from the output of get_box,
+return the smallest box that contains both.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_variables">
+<code class="descclassname">dautil.util.</code><code class="descname">get_variables</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_variables" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of variable names from <code class="docutils literal notranslate"><span class="pre">module</span></code>.
+Currently, callables and modules are ignored.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.insert_index_level">
+<code class="descclassname">dautil.util.</code><code class="descname">insert_index_level</code><span class="sig-paren">(</span><em>df</em>, <em>level</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#insert_index_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.insert_index_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>For DataFrame df, add an index with name and value between level &amp; (level + 1)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.running_mean">
+<code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><span class="sig-paren">(</span><em>x</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>return: array of the moving average of x with bins of width n</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.running_mean_arange">
+<code class="descclassname">dautil.util.</code><code class="descname">running_mean_arange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em>, <em>step</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#running_mean_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_arange" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume start, stop, step as in the input of arange
+given binning of width n
+return the start, stop, step of the resultant arange after binning</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.shape_list">
+<code class="descclassname">dautil.util.</code><code class="descname">shape_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#shape_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.shape_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume data is list/tuple
+may be nested list/tuple
+return the shape of nested list/tuple, if regular
+else return []
+note that it will return the shape up to the inner most regular interval</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shape_list</span><span class="p">([[[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]],</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]]])</span>
+<span class="go">[2, 3]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.summarize">
+<code class="descclassname">dautil.util.</code><code class="descname">summarize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize" title="Permalink to this definition">¶</a></dt>
+<dd><p>summarize according to type
+see summarize_dict, summarize_list, summarize_ndarray</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.summarize_dict">
+<code class="descclassname">dautil.util.</code><code class="descname">summarize_dict</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume data is dict
+return a dict with values of types of values in data</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.summarize_list">
+<code class="descclassname">dautil.util.</code><code class="descname">summarize_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume data is list/tuple
+if types are not uniform, return ‘mixed’ instead
+if shape is not regular to the innermost levels, shape is ended with None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.summarize_ndarray">
+<code class="descclassname">dautil.util.</code><code class="descname">summarize_ndarray</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume data is ndarray
+return its type, dtype and shape</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.to_levels">
+<code class="descclassname">dautil.util.</code><code class="descname">to_levels</code><span class="sig-paren">(</span><em>array</em>, <em>dtype=&lt;class 'numpy.uint8'&gt;</em>, <em>levels=256</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
+<dd><p>mapping the values of <code class="docutils literal notranslate"><span class="pre">array</span></code> between its min. and max. to <code class="docutils literal notranslate"><span class="pre">levels</span></code>
+with dtype <code class="docutils literal notranslate"><span class="pre">dtype</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.type_list">
+<code class="descclassname">dautil.util.</code><code class="descname">type_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#type_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.type_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume data is list/tuple
+may be nested list/tuple
+return the type of all elements, if they are the same
+else return None</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.unpackbits">
+<code class="descclassname">dautil.util.</code><code class="descname">unpackbits</code><span class="sig-paren">(</span><em>data</em>, <em>flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.unpackbits" title="Permalink to this definition">¶</a></dt>
+<dd><p>data: 1d-array of type int
+flags: 1d-array of “bits”, e.g. numpy.array([1, 2, 4, 8, …])
+Return
+——
+2d-array, where each element is the unpacked array of bits per datum.
+Note
+—-
+With flags = numpy.arange(7, -1, -1), and data has dype = uint8,
+this is the same as numpy.unpackbits</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="dautil.html">dautil package</a><ul>
+      <li>Previous: <a href="dautil.stat.html" title="previous chapter">dautil.stat module</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/dautil.util.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Kolen Cheung.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/dautil.util.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

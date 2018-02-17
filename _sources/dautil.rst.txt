@@ -1,0 +1,27 @@
+dautil package
+==============
+
+Subpackages
+-----------
+
+.. toctree::
+
+    dautil.IO
+
+Submodules
+----------
+
+.. toctree::
+
+   dautil.parser
+   dautil.plot
+   dautil.stat
+   dautil.util
+
+Module contents
+---------------
+
+.. automodule:: dautil
+    :members:
+    :undoc-members:
+    :show-inheritance:
