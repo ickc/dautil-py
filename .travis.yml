@@ -30,6 +30,7 @@ deploy:
   keep-history: true
   on:
     branch: master
+    python: "3.6"
   local-dir: docs
 env:
   global:
