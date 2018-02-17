@@ -11,6 +11,18 @@ install:
 script:
   - make -j4 test
 before_deploy:
+  # pandoc
+  - |
+    if [[ $pandocVersion == "latest" ]]; then
+      url="https://github.com/jgm/pandoc/releases/latest"
+    else
+      url="https://github.com/jgm/pandoc/releases/tag/$pandocVersion"
+    fi
+    path=$(curl -L $url | grep -o '/jgm/pandoc/releases/download/.*-amd64\.deb')
+    downloadUrl="https://github.com$path"
+    file=${path##*/}
+    wget $downloadUrl &&
+    sudo dpkg -i $file
   - pip install -r docs/requirements.txt
   - make docs
 deploy:
