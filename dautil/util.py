@@ -1,3 +1,4 @@
+from numba import jit
 import numpy as np
 import operator
 import pandas as pd
@@ -222,12 +223,15 @@ def unpackbits(data, flags):
     return (data[:, None] & flags) != 0
 
 
+@jit(nopython=True)
 def running_mean(x, n):
     '''
     return: array of the moving average of x with bins of width n
     '''
-    cumsum = np.cumsum(np.insert(x, 0, 0))
-    return (cumsum[n:] - cumsum[:-n]) / n
+    cumsum = np.cumsum(x)
+    result = cumsum[(n - 1):].copy()
+    result[1:] -= cumsum[:-n]
+    return result / n
 
 
 def running_mean_arange(start, stop, step, n):
