@@ -23,9 +23,9 @@ pypiManual:
 
 # check python styles
 pep8:
-	pep8 . --ignore=E402,E501,E731
+	pycodestyle . --ignore=E402,E501,E731
 pep8Strict:
-	pep8 .
+	pycodestyle .
 pyflakes:
 	pyflakes .
 flake8:
@@ -35,7 +35,7 @@ pylint:
 
 # cleanup python
 autopep8:
-	autopep8 . --recursive --in-place --pep8-passes 2000 --verbose
+	autopep8 . --recursive --in-place --pep8-passes 2000 --verbose --ignore=E402,E501,E731
 autopep8Aggressive:
 	autopep8 . --recursive --in-place --pep8-passes 2000 --verbose --aggressive --aggressive
 
