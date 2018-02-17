@@ -5,19 +5,21 @@ python = python
 .PHONY: clean test pypi pypiManual pep8 pep8Strict pyflakes flake8 pylint autopep8 autopep8Aggressive past
 
 clean:
-	rm -f .coverage
-	rm -rf htmlcov *.egg-info apidoc docs
+	rm -f .coverage docs/dautil*.rst docs/modules.rst docs/README.rst
+	rm -rf htmlcov *.egg-info docs/_build .cache
 	find -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete
 
 test:
 	$(python) -m pytest -vv --cov=dautil tests
 
+docs/%.rst: %.md
+	pandoc -s -o $@ $<
+
 # TODO set version
-apidoc:
-	sphinx-apidoc --separate --maxdepth=10 --full --append-syspath --doc-project=dautil --doc-author='Kolen Cheung' --ext-autodoc --ext-todo --ext-coverage --ext-mathjax --ext-viewcode --ext-githubpages -o $@ . tests
-docs: apidoc
-	cd $< && make html
-	mv $</_build/html $@
+.PHONY: docs
+docs: docs/README.rst
+	sphinx-apidoc -d 10 -f -e -o $@ . tests
+	cd $@ && make html
 
 # Deploy to PyPI
 ## by Travis, properly git tagged
