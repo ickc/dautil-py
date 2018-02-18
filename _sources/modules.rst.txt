@@ -1,7 +1,0 @@
-dautil-py
-=========
-
-.. toctree::
-   :maxdepth: 10
-
-   dautil
