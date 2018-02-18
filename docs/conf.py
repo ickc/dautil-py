@@ -176,3 +176,5 @@ texinfo_documents = [
      author, 'dautil', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+exclude_patterns = ['modules.rst']
