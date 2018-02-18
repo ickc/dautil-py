@@ -12,15 +12,7 @@ script:
   - make -j4 test
 before_deploy:
   # pandoc
-  - |
-    url_name=(`python << EOF
-    import requests, json
-    print(' '.join(next(
-        (i['browser_download_url'], i['name'])
-        for i in json.loads(requests.get("https://api.github.com/repos/jgm/pandoc/releases/latest").text)['assets']
-        if i['name'][-3:] == "deb"
-    )))
-    EOF`)
+  - url_name=($(python -c 'import requests, json; print(" ".join(next((i["browser_download_url"], i["name"]) for i in json.loads(requests.get("https://api.github.com/repos/jgm/pandoc/releases/latest").text)["assets"] if i["name"][-3:] == "deb")))'))
   - wget --quiet $url_name[1] &&
     sudo dpkg -i $url_name[2]
   - pip install -r docs/requirements.txt
