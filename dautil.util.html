@@ -181,9 +181,8 @@ similar to unpackbits, but return a DataFrame instead.</p>
 <dt id="dautil.util.get_box">
 <code class="descclassname">dautil.util.</code><code class="descname">get_box</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>array: numpy.ndarray
-return: per dim. in array, find the min. and max. index s.t.</p>
-<blockquote>
-<div>the other dim. are identically zero.</div></blockquote>
+return: per dim. in array, find the min. and max. index s.t.
+the other dim. are identically zero.</p>
 <p>This might be used when one want to trim out the empty “boundary” of an array to reduce size.
 In principle, a trimmed array with this attribute can reconstruct the original array.</p>
 <p>Note:</p>
