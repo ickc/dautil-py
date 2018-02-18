@@ -162,7 +162,7 @@ def arange_inv(array):
 def get_box(array):
     '''array: numpy.ndarray
     return: per dim. in array, find the min. and max. index s.t.
-            the other dim. are identically zero.
+    the other dim. are identically zero.
 
     This might be used when one want to trim out the empty "boundary" of an array to reduce size.
     In principle, a trimmed array with this attribute can reconstruct the original array.
