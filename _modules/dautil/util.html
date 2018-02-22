@@ -265,7 +265,8 @@
 <span class="c1"># numpy array ##########################################################</span>
 
 
-<div class="viewcode-block" id="arange_inv"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.arange_inv">[docs]</a><span class="k">def</span> <span class="nf">arange_inv</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+<div class="viewcode-block" id="arange_inv"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.arange_inv">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">arange_inv</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;array: assumed to be an output of numpy.arange</span>
 <span class="sd">    return (start, stop, step) which used to create this array</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -273,6 +274,14 @@
     <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
     <span class="n">stop</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">step</span></div>
     <span class="k">return</span> <span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span>
+
+
+<div class="viewcode-block" id="linspace_inv"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.linspace_inv">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">linspace_inv</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;array: assumed to be an output of numpy.linspace</span>
+<span class="sd">    return (start, stop, num) which used to create this array</span>
+<span class="sd">    &#39;&#39;&#39;</span></div>
+    <span class="k">return</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">array</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="o">.</span><span class="n">size</span>
 
 
 <div class="viewcode-block" id="get_box"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_box">[docs]</a><span class="k">def</span> <span class="nf">get_box</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
@@ -339,7 +348,7 @@
     <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">flags</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
 
 
-<div class="viewcode-block" id="running_mean"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="viewcode-block" id="running_mean"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">running_mean</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    return: array of the moving average of x with bins of width n</span>
@@ -350,7 +359,8 @@
     <span class="k">return</span> <span class="n">result</span> <span class="o">/</span> <span class="n">n</span>
 
 
-<div class="viewcode-block" id="running_mean_arange"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean_arange">[docs]</a><span class="k">def</span> <span class="nf">running_mean_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+<div class="viewcode-block" id="running_mean_arange"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean_arange">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">running_mean_arange</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">step</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;assume start, stop, step as in the input of arange</span>
 <span class="sd">    given binning of width n</span>
 <span class="sd">    return the start, stop, step of the resultant arange after binning</span>
@@ -361,6 +371,20 @@
     <span class="n">N</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">((</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="n">step</span><span class="p">)</span>
     <span class="n">stop_avg</span> <span class="o">=</span> <span class="n">start_avg</span> <span class="o">+</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">N</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># new length in ()</span></div>
     <span class="k">return</span> <span class="n">start_avg</span><span class="p">,</span> <span class="n">stop_avg</span><span class="p">,</span> <span class="n">step</span>
+
+
+<div class="viewcode-block" id="running_mean_linspace"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.running_mean_linspace">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">running_mean_linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;assume start, stop, num as in the input of linspace</span>
+<span class="sd">    given binning of width n</span>
+<span class="sd">    return the start, stop, num of the resultant arange after binning</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">step</span> <span class="o">=</span> <span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># middle of the first n bins</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="n">step</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+    <span class="n">start_avg</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">mid</span>
+    <span class="n">stop_avg</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">mid</span></div>
+    <span class="k">return</span> <span class="n">start_avg</span><span class="p">,</span> <span class="n">stop_avg</span><span class="p">,</span> <span class="n">num</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span>
 
 <span class="c1">########################################################################</span>
 

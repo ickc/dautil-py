@@ -138,10 +138,10 @@
       
   <div class="section" id="module-dautil.util">
 <span id="dautil-util-module"></span><h1>dautil.util module<a class="headerlink" href="#module-dautil.util" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="attribute">
 <dt id="dautil.util.arange_inv">
-<code class="descclassname">dautil.util.</code><code class="descname">arange_inv</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
-<dd><p>array: assumed to be an output of numpy.arange
+<code class="descclassname">dautil.util.</code><code class="descname">arange_inv</code><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>array</em> – assumed to be an output of numpy.arange
 return (start, stop, step) which used to create this array</p>
 </dd></dl>
 
@@ -220,17 +220,32 @@ Currently, callables and modules are ignored.</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="dautil.util.linspace_inv">
+<code class="descclassname">dautil.util.</code><code class="descname">linspace_inv</code><a class="reference internal" href="_modules/dautil/util.html#linspace_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.linspace_inv" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>array</em> – assumed to be an output of numpy.linspace
+return (start, stop, num) which used to create this array</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="dautil.util.running_mean">
 <code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
 <dd><p><em>return</em> – array of the moving average of x with bins of width n</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="attribute">
 <dt id="dautil.util.running_mean_arange">
-<code class="descclassname">dautil.util.</code><code class="descname">running_mean_arange</code><span class="sig-paren">(</span><em>start</em>, <em>stop</em>, <em>step</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#running_mean_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_arange" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dautil.util.</code><code class="descname">running_mean_arange</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_arange" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume start, stop, step as in the input of arange
 given binning of width n
 return the start, stop, step of the resultant arange after binning</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.util.running_mean_linspace">
+<code class="descclassname">dautil.util.</code><code class="descname">running_mean_linspace</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_linspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_linspace" title="Permalink to this definition">¶</a></dt>
+<dd><p>assume start, stop, num as in the input of linspace
+given binning of width n
+return the start, stop, num of the resultant arange after binning</p>
 </dd></dl>
 
 <dl class="function">
