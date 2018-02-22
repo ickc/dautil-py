@@ -149,6 +149,7 @@ def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
 # numpy array ##########################################################
 
 
+@jit(nopython=True, nogil=True)
 def arange_inv(array):
     '''array: assumed to be an output of numpy.arange
     return (start, stop, step) which used to create this array
@@ -157,6 +158,14 @@ def arange_inv(array):
     step = (array[-1] - array[0]) / (array.size - 1)
     stop = array[-1] + step
     return start, stop, step
+
+
+@jit(nopython=True, nogil=True)
+def linspace_inv(array):
+    '''array: assumed to be an output of numpy.linspace
+    return (start, stop, num) which used to create this array
+    '''
+    return array[0], array[-1], array.size
 
 
 def get_box(array):
@@ -223,7 +232,7 @@ def unpackbits(data, flags):
     return (data[:, None] & flags) != 0
 
 
-@jit(nopython=True)
+@jit(nopython=True, nogil=True)
 def running_mean(x, n):
     '''
     return: array of the moving average of x with bins of width n
@@ -234,6 +243,7 @@ def running_mean(x, n):
     return result / n
 
 
+@jit(nopython=True, nogil=True)
 def running_mean_arange(start, stop, step, n):
     '''assume start, stop, step as in the input of arange
     given binning of width n
@@ -245,6 +255,20 @@ def running_mean_arange(start, stop, step, n):
     N = np.ceil((stop - start) / step)
     stop_avg = start_avg + step * (N - n + 1)  # new length in ()
     return start_avg, stop_avg, step
+
+
+@jit(nopython=True, nogil=True)
+def running_mean_linspace(start, stop, num, n):
+    '''assume start, stop, num as in the input of linspace
+    given binning of width n
+    return the start, stop, num of the resultant arange after binning
+    '''
+    step = (stop - start) / (num - 1)
+    # middle of the first n bins
+    mid = step * (n - 1) / 2
+    start_avg = start + mid
+    stop_avg = stop - mid
+    return start_avg, stop_avg, num - n + 1
 
 ########################################################################
 
