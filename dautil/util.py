@@ -35,9 +35,12 @@ def type_list(data):
     data = flatten_list(data)
 
     # initialize
-    data_type = type(data[0])
+    try:
+        data_type = type(data[0])
+    except IndexError:
+        return None
 
-    for datum in data:
+    for datum in data[1:]:
         if not isinstance(datum, data_type):
             return None
     return data_type
@@ -55,17 +58,22 @@ def shape_list(data):
     >>> shape_list([[[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]], [[0, [1, 2]], [0, [1, 2]], [0, [1, 2]]]])
     [2, 3]
     '''
+    if not isinstance(data, (list, tuple)):
+        return []
+
+    # initialized
+    try:
+        m = shape_list(data[0])
+    except IndexError:
+        return []
+
     n = [len(data)]
-    # to be initialized
-    m_0 = None
-    for datum in data:
-        m = shape_list(datum) if isinstance(datum, (list, tuple)) else []
-        # initialize
-        if m_0 is None:
-            m_0 = m
-        elif m_0 != m:
-            m_0 = []
-    return n + m_0
+    
+    for datum in data[1:]:
+        if m != shape_list(datum):
+            return n
+
+    return n + m
 
 
 def summarize_list(data):
