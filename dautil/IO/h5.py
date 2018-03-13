@@ -38,6 +38,24 @@ def h5assert_nonzero(f, verbose=False):
             h5assert_nonzero(f[i], verbose)
 
 
+def h5assert_isfinite(f, verbose=False):
+    '''assert the arrays in the HDF5 file object f is finite.
+    '''
+    if isinstance(f, h5py._hl.dataset.Dataset):
+        if verbose:
+            print('{} is dataset, asserting...'.format(f))
+        assert np.all(np.isfinite(f))
+    elif isinstance(f, h5py._hl.group.Group):
+        if verbose:
+            print('{} is group, entering...'.format(f))
+        for i in f:
+            try:
+                h5assert_isfinite(f[i], verbose)
+            except AssertionError:
+                print('Group {} has non-finite elements.'.format(i), file=sys.stderr)
+                raise AssertionError
+
+
 def h5assert_recursive(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
     '''assert the contents of the 2 HDF5 file objects f1 and f2 are identical up to rtol and atol
     '''
