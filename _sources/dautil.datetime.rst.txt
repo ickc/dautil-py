@@ -1,7 +1,0 @@
-dautil.datetime module
-======================
-
-.. automodule:: dautil.datetime
-    :members:
-    :undoc-members:
-    :show-inheritance:

@@ -13,7 +13,7 @@ Submodules
 
 .. toctree::
 
-   dautil.datetime
+   dautil.date_time
    dautil.parser
    dautil.plot
    dautil.stat

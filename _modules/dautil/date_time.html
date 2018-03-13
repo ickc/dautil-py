@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>dautil.datetime &#8212; dautil  documentation</title>
+    <title>dautil.date_time &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" src="../../_static/documentation_options.js"></script>
@@ -113,13 +113,13 @@
       </div>
     <div class="col-md-9 content">
       
-  <h1>Source code for dautil.datetime</h1><div class="highlight"><pre>
+  <h1>Source code for dautil.date_time</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="c1"># converters ###########################################################</span>
 
-<div class="viewcode-block" id="strptime_np_general"><a class="viewcode-back" href="../../dautil.datetime.html#dautil.datetime.strptime_np_general">[docs]</a><span class="k">def</span> <span class="nf">strptime_np_general</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="strptime_np_general"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strptime_np_general">[docs]</a><span class="k">def</span> <span class="nf">strptime_np_general</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    string: a datetime in format ``fmt``</span>
 <span class="sd">    return: numpy.datetime64 representation of it</span>
@@ -130,7 +130,7 @@
     <span class="p">)</span>
 
 
-<div class="viewcode-block" id="strptime_np"><a class="viewcode-back" href="../../dautil.datetime.html#dautil.datetime.strptime_np">[docs]</a><span class="k">def</span> <span class="nf">strptime_np</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+<div class="viewcode-block" id="strptime_np"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strptime_np">[docs]</a><span class="k">def</span> <span class="nf">strptime_np</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    string: a datetime in format &#39;%Y%m%d_%H%M%S&#39;</span>
 <span class="sd">    return: numpy.datetime64 representation of it</span>
@@ -142,7 +142,7 @@
     <span class="p">)</span>
 
 
-<div class="viewcode-block" id="npptime"><a class="viewcode-back" href="../../dautil.datetime.html#dautil.datetime.npptime">[docs]</a><span class="k">def</span> <span class="nf">npptime</span><span class="p">(</span><span class="n">datetime64</span><span class="p">):</span>
+<div class="viewcode-block" id="npptime"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.npptime">[docs]</a><span class="k">def</span> <span class="nf">npptime</span><span class="p">(</span><span class="n">datetime64</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    datetime64: of type numpy.datetime64</span>
 <span class="sd">    return: Python&#39;s datetime format of it</span>
@@ -150,7 +150,7 @@
     <span class="k">return</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">datetime64</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
 
 
-<div class="viewcode-block" id="strttime_np_general"><a class="viewcode-back" href="../../dautil.datetime.html#dautil.datetime.strttime_np_general">[docs]</a><span class="k">def</span> <span class="nf">strttime_np_general</span><span class="p">(</span><span class="n">datetime64</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="strttime_np_general"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strttime_np_general">[docs]</a><span class="k">def</span> <span class="nf">strttime_np_general</span><span class="p">(</span><span class="n">datetime64</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    datetime64: of type numpy.datetime64</span>
 <span class="sd">    return: datetime in format ``fmt``</span>
@@ -159,7 +159,7 @@
 
 
 
-<div class="viewcode-block" id="strttime_np"><a class="viewcode-back" href="../../dautil.datetime.html#dautil.datetime.strttime_np">[docs]</a><span class="k">def</span> <span class="nf">strttime_np</span><span class="p">(</span><span class="n">datetime64</span><span class="p">):</span>
+<div class="viewcode-block" id="strttime_np"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strttime_np">[docs]</a><span class="k">def</span> <span class="nf">strttime_np</span><span class="p">(</span><span class="n">datetime64</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    datetime64: of type numpy.datetime64</span>
 <span class="sd">    return: datetime in format &#39;%Y%m%d_%H%M%S&#39;</span>
