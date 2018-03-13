@@ -214,15 +214,24 @@ def get_outer_box(x, y):
     return np.column_stack((np.minimum(x, y)[:, 0], np.maximum(x, y)[:, 1]))
 
 
-def to_levels(array, dtype=np.uint8, levels=256):
+def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255)):
     '''mapping the values of ``array`` between its min. and max. to ``levels``
     with dtype ``dtype``
     '''
-    _min = array.min()
-    _range = (array.max() - _min) or 1
+    if mask is not None:
+        array = array[mask]
 
-    result = (array - _min) * ((levels - 1) / _range)
-    return result.astype(dtype)
+    _min = array.min()
+    scale = (ranges[1] - ranges[0]) / ((array.max() - _min) or 1.)
+
+    result = (array * scale + (ranges[0] - _min * scale)).astype(dtype)
+
+    if mask is not None:
+        result2 = np.zeros_like(mask, dtype=dtype)
+        result2[mask] = result
+        return result2
+    else:
+        return result
 
 
 def unpackbits(data, flags):
