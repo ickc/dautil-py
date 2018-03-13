@@ -16,8 +16,6 @@ def makedirs(path):
     '''makesdirs if not exist while avoiding race condition
     catch the case that path is file, whether initially or in a race condition
     '''
-    if os.path.isfile(path):
-        raise OSError
     if not os.path.isdir(path):
         try:
             os.makedirs(path)
