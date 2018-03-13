@@ -148,15 +148,21 @@
   <div class="section" id="module-dautil.IO.h5">
 <span id="dautil-io-h5-module"></span><h1>dautil.IO.h5 module<a class="headerlink" href="#module-dautil.IO.h5" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
-<dt id="dautil.IO.h5.h5assert">
-<code class="descclassname">dautil.IO.h5.</code><code class="descname">h5assert</code><span class="sig-paren">(</span><em>f1</em>, <em>f2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5assert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5assert" title="Permalink to this definition">¶</a></dt>
-<dd><p>assert the contents of the 2 HDF5 file objects f1 and f2 are identical up to rtol and atol</p>
+<dt id="dautil.IO.h5.h5assert_isfinite">
+<code class="descclassname">dautil.IO.h5.</code><code class="descname">h5assert_isfinite</code><span class="sig-paren">(</span><em>f</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5assert_isfinite"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5assert_isfinite" title="Permalink to this definition">¶</a></dt>
+<dd><p>assert the arrays in the HDF5 file object f is finite.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.IO.h5.h5assert_nonzero">
 <code class="descclassname">dautil.IO.h5.</code><code class="descname">h5assert_nonzero</code><span class="sig-paren">(</span><em>f</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5assert_nonzero"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5assert_nonzero" title="Permalink to this definition">¶</a></dt>
 <dd><p>assert the arrays in the HDF5 file object f are not identically zero.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.IO.h5.h5assert_recursive">
+<code class="descclassname">dautil.IO.h5.</code><code class="descname">h5assert_recursive</code><span class="sig-paren">(</span><em>f1</em>, <em>f2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5assert_recursive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5assert_recursive" title="Permalink to this definition">¶</a></dt>
+<dd><p>assert the contents of the 2 HDF5 file objects f1 and f2 are identical up to rtol and atol</p>
 </dd></dl>
 
 <dl class="function">
