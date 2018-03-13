@@ -38,7 +38,7 @@ def h5assert_nonzero(f, verbose=False):
             h5assert_nonzero(f[i], verbose)
 
 
-def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
+def h5assert_recursive(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
     '''assert the contents of the 2 HDF5 file objects f1 and f2 are identical up to rtol and atol
     '''
     if isinstance(f1, h5py._hl.dataset.Dataset):
@@ -52,7 +52,7 @@ def h5assert(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
             print('{} is group, entering...'.format(f1))
         for i in f1:
             try:
-                h5assert(f1[i], f2[i], rtol, atol, verbose)
+                h5assert_recursive(f1[i], f2[i], rtol, atol, verbose)
             except KeyError:
                 raise AssertionError
 

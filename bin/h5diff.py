@@ -13,16 +13,23 @@ import argparse
 import h5py
 import sys
 
-from dautil.IO.h5 import h5assert
-
-__version__ = '0.1'
+__version__ = '0.2'
 
 
 def main(args):
     with h5py.File(args.first, "r") as f1:
         with h5py.File(args.second, "r") as f2:
             try:
-                h5assert(f1, f2, args.rtol, args.atol, verbose=args.verbose)
+                if args.datasets:
+                    import numpy as np
+                    for dataset in args.datasets:
+                        try:
+                            np.testing.assert_allclose(f1[dataset], f2[dataset], args.rtol, args.atol)
+                        except KeyError:
+                            raise AssertionError
+                else:
+                    from dautil.IO.h5 import h5assert_recursive
+                    h5assert_recursive(f1, f2, args.rtol, args.atol, verbose=args.verbose)
             except AssertionError:
                 if args.silent:
                     print(args.first, file=sys.stderr)
@@ -41,6 +48,8 @@ def cli():
                         help='1st file', required=True)
     parser.add_argument('-2', '--second',
                         help='2nd file', required=True)
+    parser.add_argument('-d', '--datasets', nargs='*',
+                        help='if specified, check only these datasets, else check resursively.')
     parser.add_argument('-r', '--rtol', type=float, default=1.5e-9,
                         help='rtol for numpy\'s allclose')
     parser.add_argument('-a', '--atol', type=float, default=1.5e-9,
