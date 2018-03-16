@@ -1,0 +1,7 @@
+dautil.IO.stdio module
+======================
+
+.. automodule:: dautil.IO.stdio
+    :members:
+    :undoc-members:
+    :show-inheritance:
