@@ -243,7 +243,7 @@ def unpackbits(data, flags):
     2d-array, where each element is the unpacked array of bits per datum.
     Note
     ----
-    With flags = numpy.arange(7, -1, -1), and data has dype = uint8,
+    With flags = 2**numpy.arange(7, -1, -1), and data has dype = uint8,
     this is the same as numpy.unpackbits
     '''
     return (data[:, None] & flags) != 0
@@ -348,7 +348,7 @@ def df_unpackbits(data, flag_dict, index=None):
     similar to unpackbits, but return a DataFrame instead.
     '''
     return pd.DataFrame(
-        unpackbits(data, np.array(list(flag_dict.values()))),
+        unpackbits(data, np.array(list(flag_dict.values()), dtype=np.uint64)),
         index=index,
         columns=flag_dict.keys()
     )
