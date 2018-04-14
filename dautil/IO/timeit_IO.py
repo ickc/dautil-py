@@ -9,7 +9,9 @@ def timeit_IO(f):
     if timeit_filename not None, dump time taken to that file
     '''
     @wraps(f)
-    def f_decorated(timeit_filename=None, *args, **kwargs):
+    def f_decorated(*args, **kwargs):
+        timeit_filename = kwargs.pop('timeit_filename', None)
+
         if timeit_filename is None:
             return f(*args, **kwargs)
         else:

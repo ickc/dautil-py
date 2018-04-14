@@ -9,7 +9,10 @@ def redirect_stdout_stderr(f):
     the respective files.
     '''
     @wraps(f)
-    def f_decorated(stdout=None, stderr=None, *args, **kwargs):
+    def f_decorated(*args, **kwargs):
+        stdout = kwargs.pop('stdout', None)
+        stderr = kwargs.pop('stderr', None)
+
         if stdout:
             stdout_original = sys.stdout
             f_out = os.open(stdout, os.O_WRONLY | os.O_CREAT, 0644)
