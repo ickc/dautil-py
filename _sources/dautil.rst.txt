@@ -15,6 +15,7 @@ Submodules
 
    dautil.date_time
    dautil.parser
+   dautil.path_util
    dautil.plot
    dautil.stat
    dautil.util

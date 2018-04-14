@@ -100,18 +100,7 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-<form action="../../search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <h1>Source code for dautil.plot</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
@@ -159,8 +148,8 @@
                           <span class="n">figureheight</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">figureheight&#39;</span><span class="p">,</span>
                           <span class="n">figurewidth</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">figurewidth&#39;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">f_decorated</span>
+                <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f_decorated</span></div>
 
 <span class="c1"># plot pandas DataFrame ################################################</span>
 
@@ -171,8 +160,8 @@
 <span class="sd">    per unique value in col_select</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="n">col_select</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">():</span>
-        <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col_select</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">][</span><span class="n">col_plot</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col_select</span><span class="p">]</span> <span class="o">==</span> <span class="n">value</span><span class="p">][</span><span class="n">col_plot</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="plot_unique_index"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.plot_unique_index">[docs]</a><span class="nd">@save</span>
@@ -186,8 +175,8 @@
         <span class="c1"># choose the current value</span>
         <span class="n">indexslice</span><span class="p">[</span><span class="n">idx_select</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">indexslice</span><span class="p">),</span> <span class="p">:][</span><span class="n">col_plot</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</div>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="plot_unique_index_binned"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.plot_unique_index_binned">[docs]</a><span class="nd">@save</span>
@@ -216,8 +205,8 @@
         <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="ne">ZeroDivisionError</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;No data between </span><span class="si">{}</span><span class="s1"> and </span><span class="si">{}</span><span class="s1">.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">idx_current</span><span class="p">,</span> <span class="n">idx_new</span><span class="p">))</span>
         <span class="n">idx_current</span> <span class="o">=</span> <span class="n">idx_new</span>
-</div>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">col_plot</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="plot_corr"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.plot_corr">[docs]</a><span class="nd">@save</span>
@@ -237,8 +226,8 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">mask</span> <span class="o">|=</span> <span class="n">mask_local</span>
         <span class="k">del</span> <span class="n">mask_local</span>
-</div>
-    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="n">vmin</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span> <span class="n">square</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
 <span class="c1">########################################################################</span>
 
@@ -246,8 +235,8 @@
 <div class="viewcode-block" id="plot_camb"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.plot_camb">[docs]</a><span class="nd">@save</span>
 <span class="k">def</span> <span class="nf">plot_camb</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;plot DataFrame obtained by load_camb</span>
-<span class="sd">    &#39;&#39;&#39;</span></div>
-    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="plot_x_y_complex"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.plot_x_y_complex">[docs]</a><span class="nd">@save</span>
@@ -268,8 +257,8 @@
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;imag(y) vs. x&#39;</span><span class="p">)</span>
     <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;abs(y) vs. x&#39;</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;arg(y) vs. x&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;arg(y) vs. x&#39;</span><span class="p">)</span></div>
 </pre></div>
 
     </div>
@@ -284,7 +273,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>

@@ -100,18 +100,7 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-<form action="../../search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <h1>Source code for dautil.parser</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -156,8 +145,8 @@
     <span class="c1"># joining the options per index to one single arg</span>
     <span class="n">arg_list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arg_list</span><span class="p">[</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">index</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_arg</span><span class="p">)]</span>
     <span class="k">del</span> <span class="n">index</span><span class="p">,</span> <span class="n">n_arg</span>
-    <span class="n">arg_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span></div>
-    <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command</span> <span class="o">+</span> <span class="n">arg_list</span><span class="p">)</span>
+    <span class="n">arg_list</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command</span> <span class="o">+</span> <span class="n">arg_list</span><span class="p">)</span></div>
 
 <span class="c1"># GNU time output</span>
 
@@ -194,8 +183,8 @@
                 <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Elapsed (wall clock) time (seconds)&#39;</span>
             <span class="c1"># command string</span>
             <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-                <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
-    <span class="k">return</span> <span class="n">result</span>
+                <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">result</span></div>
 
 
 <div class="viewcode-block" id="parse_gnu_time_file"><a class="viewcode-back" href="../../dautil.parser.html#dautil.parser.parse_gnu_time_file">[docs]</a><span class="k">def</span> <span class="nf">parse_gnu_time_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">isdatetime</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -215,8 +204,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">parse_gnu_time_line</span><span class="p">,</span> <span class="n">f</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="p">(</span><span class="n">index</span><span class="p">,))</span>
         <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div>
-            <span class="k">raise</span> <span class="ne">ValueError</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span></div>
 
 
 <div class="viewcode-block" id="parse_gnu_time_files"><a class="viewcode-back" href="../../dautil.parser.html#dautil.parser.parse_gnu_time_files">[docs]</a><span class="k">def</span> <span class="nf">parse_gnu_time_files</span><span class="p">(</span><span class="n">filenames</span><span class="p">,</span> <span class="n">isdatetime</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">map_parallel</span><span class="o">=</span><span class="nb">map</span><span class="p">):</span>
@@ -225,8 +214,8 @@
 <span class="sd">    Returns a DataFrame</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">map_parallel</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">parse_gnu_time_file</span><span class="p">,</span> <span class="n">isdatetime</span><span class="o">=</span><span class="n">isdatetime</span><span class="p">),</span> <span class="n">filenames</span><span class="p">))</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
-    <span class="k">return</span> <span class="n">df</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
 </pre></div>
 
     </div>
@@ -241,7 +230,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>

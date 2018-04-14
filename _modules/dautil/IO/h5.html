@@ -100,18 +100,7 @@
 
 <div class="container">
   <div class="row">
-      <div class="col-md-3">
-        <div id="sidebar" class="bs-sidenav" role="complementary">
-<form action="../../../search.html" method="get">
- <div class="form-group">
-  <input type="text" name="q" class="form-control" placeholder="Search" />
- </div>
-  <input type="hidden" name="check_keywords" value="yes" />
-  <input type="hidden" name="area" value="default" />
-</form>
-        </div>
-      </div>
-    <div class="col-md-9 content">
+    <div class="col-md-12 content">
       
   <h1>Source code for dautil.IO.h5</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
@@ -135,8 +124,8 @@
             <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;is not good, and will be deleted.&#39;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">dry_run</span><span class="p">:</span></div>
-            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dry_run</span><span class="p">:</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="h5assert_nonzero"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5assert_nonzero">[docs]</a><span class="k">def</span> <span class="nf">h5assert_nonzero</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -150,8 +139,8 @@
     <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is group, entering...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span></div>
-            <span class="n">h5assert_nonzero</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">h5assert_nonzero</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">verbose</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="h5assert_isfinite"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5assert_isfinite">[docs]</a><span class="k">def</span> <span class="nf">h5assert_isfinite</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -168,8 +157,8 @@
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">h5assert_isfinite</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">verbose</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Group </span><span class="si">{}</span><span class="s1"> has non-finite elements.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span></div>
-                <span class="k">raise</span> <span class="ne">AssertionError</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Group </span><span class="si">{}</span><span class="s1"> has non-finite elements.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span></div>
 
 
 <div class="viewcode-block" id="h5assert_recursive"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5assert_recursive">[docs]</a><span class="k">def</span> <span class="nf">h5assert_recursive</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1.5e-09</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1.5e-09</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -187,8 +176,8 @@
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f1</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">h5assert_recursive</span><span class="p">(</span><span class="n">f1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">rtol</span><span class="p">,</span> <span class="n">atol</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
-            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span></div>
-                <span class="k">raise</span> <span class="ne">AssertionError</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">AssertionError</span></div>
 
 
 <div class="viewcode-block" id="plot_h5diff"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.plot_h5diff">[docs]</a><span class="k">def</span> <span class="nf">plot_h5diff</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -210,8 +199,8 @@
         <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
             <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">prefix</span><span class="p">]</span> <span class="o">+</span> <span class="n">f1</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> is group, entering...&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f1</span><span class="p">:</span></div>
-            <span class="n">plot_h5diff</span><span class="p">(</span><span class="n">f1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f1</span><span class="p">:</span>
+            <span class="n">plot_h5diff</span><span class="p">(</span><span class="n">f1</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">prefix</span><span class="p">,</span> <span class="n">verbose</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="h5split"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5split">[docs]</a><span class="k">def</span> <span class="nf">h5split</span><span class="p">(</span><span class="n">in_file</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -227,8 +216,8 @@
                 <span class="k">for</span> <span class="n">sub_group</span> <span class="ow">in</span> <span class="n">f_in</span><span class="p">[</span><span class="n">group</span><span class="p">]:</span>
                     <span class="n">h5_path</span> <span class="o">=</span> <span class="n">group</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">sub_group</span>
                     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span></div>
-                    <span class="n">f_in</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">f_out</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
+                    <span class="n">f_in</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">f_out</span><span class="p">)</span></div>
 </pre></div>
 
     </div>
@@ -243,7 +232,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
     </p>
   </div>
 </footer>
