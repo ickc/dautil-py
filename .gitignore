@@ -4,6 +4,7 @@ __pycache__
 .coverage
 .DS_Store
 *.ipynb
+*.egg-info/
 
 docs/*
 !docs/index.rst
