@@ -23,16 +23,17 @@ def redirect_stdout_stderr(f):
             f_err = os.open(stderr, os.O_WRONLY | os.O_CREAT, 0644)
             os.dup2(f_err, sys.stderr.fileno())
 
-        result = f(*args, **kwargs)
+        try:
+            return f(*args, **kwargs)
+        finally:
+            if stderr:
+                sys.stderr.flush() # prevent buffer not saved
+                os.dup2(stderr_original.fileno(), f_err)
+                os.close(f_err)
 
-        if stderr:
-            os.dup2(stderr_original.fileno(), f_err)
-            os.close(f_err)
-
-        if stdout:
-            os.dup2(stdout_original.fileno(), f_out)
-            os.close(f_out)
-
-        return result
+            if stdout:
+                sys.stdout.flush() # prevent buffer not saved
+                os.dup2(stdout_original.fileno(), f_out)
+                os.close(f_out)
 
     return f_decorated
