@@ -7,14 +7,17 @@ import matplotlib.pyplot as plt
 import sys
 
 
-def h5delete(filename, dry_run=True, verbose=False):
+def h5delete(filename, datasets=None, dry_run=True, verbose=False):
     '''delete file if it is not a valid HDF5 file.
     '''
     try:
         with h5py.File(filename, "r") as f:
+            if datasets:
+                for dataset in datasets:
+                    assert dataset in f.keys()
             if verbose:
                 print(filename, 'is good.')
-    except IOError:
+    except (IOError, AssertionError):
         if verbose:
             print(filename, 'is not good, and will be deleted.', file=sys.stderr)
         else:
