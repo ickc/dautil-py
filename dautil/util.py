@@ -301,6 +301,53 @@ def get_map_parallel(processes):
         pool = multiprocessing.Pool(processes=processes)
         return pool.map
 
+
+def map_parallel(f, args, mode='multiprocessing', processes=1):
+    '''equivalent to map(f, args)
+    p: no. of parallel processes when multiprocessing is used
+    (in the case of mpi, it is determined by mpiexec/mpirun args)
+    mode:
+
+    - mpi: using mpi4py.futures
+    - multiprocessing: using multiprocessing from standard library
+    - serial: using map
+    '''
+    if mode == 'mpi':
+        from mpi4py.futures import MPIPoolExecutor
+        with MPIPoolExecutor() as executor:
+            result = executor.map(f, args)
+    elif mode == 'multiprocessing' and processes > 1:
+        import multiprocessing
+        with multiprocessing.Pool(processes=processes) as pool:
+            result = pool.map(f, args)
+    else:
+        result = list(map(f, args))
+    return result
+
+
+def starmap_parallel(f, args, mode='multiprocessing', processes=1):
+    '''equivalent to starmap(f, args)
+    p: no. of parallel processes when multiprocessing is used
+    (in the case of mpi, it is determined by mpiexec/mpirun args)
+    mode:
+
+    - mpi: using mpi4py.futures
+    - multiprocessing: using multiprocessing from standard library
+    - serial: using starmap
+    '''
+    if mode == 'mpi':
+        from mpi4py.futures import MPIPoolExecutor
+        with MPIPoolExecutor() as executor:
+            result = executor.starmap(f, args)
+    elif mode == 'multiprocessing' and p > 1:
+        import multiprocessing
+        with multiprocessing.Pool(processes=processes) as pool:
+            result = pool.map(lambda x: f(*x), args)
+    else:
+        from itertools import starmap
+        result = list(starmap(f, args))
+    return result
+
 # pandas ###############################################################
 
 
