@@ -295,7 +295,7 @@ def get_map_parallel(processes):
     uses multiprocessing's Pool if processes != 1
     '''
     if processes == 1:
-        return map
+        return lambda *x: list(map(*x))
     else:
         import multiprocessing
         pool = multiprocessing.Pool(processes=processes)
