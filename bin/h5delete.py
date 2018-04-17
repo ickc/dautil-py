@@ -23,7 +23,10 @@ def main(args):
     map_parallel = get_map_parallel(args.p)
     Nones = map_parallel(partial(h5delete, datasets=args.datasets, dry_run=args.dry_run, verbose=args.verbose), h5_in_paths)
     if args.verbose:
-        print('Finish checking {} HDF5 files with datasets {}.'.format(len(Nones), ' '.join(args.datasets)))
+        if args.datasets:
+            print('Finish checking {} HDF5 files with datasets {}.'.format(len(Nones), ' '.join(args.datasets)))
+        else:
+            print('Finish checking {} HDF5 files.'.format(len(Nones)))
 
 
 def cli():
