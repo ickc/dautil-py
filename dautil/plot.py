@@ -156,3 +156,24 @@ def plot_x_y_complex(x, y, **kwargs):
     plt.title('abs(y) vs. x')
     sns.jointplot(x=x, y=np.angle(y), kind='reg', **kwargs)
     plt.title('arg(y) vs. x')
+
+# PIL ##################################################################
+
+def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', font_ratio=10):
+    '''array: dtype of numpy.float64
+    filename: output filename
+    text: optional text to print on top-left corner
+    fontname: fontname that's available on the system for ``text``
+    font_ratio: the ratio of the font-size comparing to horizontal size of image
+    '''
+    from PIL import Image
+
+    # transpose and invert y-axis
+    img = Image.fromarray((array.T)[::-1])
+    if text:
+        from PIL import ImageFont, ImageDraw
+        draw = ImageDraw.Draw(img)
+        fontsize = array.shape[0] // font_ratio
+        font = ImageFont.truetype(fontname, fontsize)
+        draw.text((0, 0), text,(255,), font=font)
+    img.save(filename)
