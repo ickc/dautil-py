@@ -18,7 +18,9 @@ def save(f):
     dispatch according to the filename extension
     '''
     @wraps(f)
-    def f_decorated(*args, filename=None, **kwargs):
+    def f_decorated(*args, **kwargs):
+        filename = kwargs.pop('filename', None)
+
         if filename:
             makedirs(os.path.dirname(filename))
 
