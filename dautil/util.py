@@ -318,8 +318,12 @@ def map_parallel(f, args, mode='multiprocessing', processes=1):
             result = executor.map(f, args)
     elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
-        with multiprocessing.Pool(processes=processes) as pool:
+        #  with multiprocessing.Pool(processes=processes) as pool: in Python 3
+        pool = multiprocessing.Pool(processes=processes)
+        try:
             result = pool.map(f, args)
+        finally:
+            del pool
     else:
         result = list(map(f, args))
     return result
