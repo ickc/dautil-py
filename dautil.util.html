@@ -218,6 +218,16 @@ mode:</p>
 </ul>
 </dd></dl>
 
+<dl class="function">
+<dt id="dautil.util.mask">
+<code class="descclassname">dautil.util.</code><code class="descname">mask</code><span class="sig-paren">(</span><em>f</em>, <em>idxs=(0</em>, <em>)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.mask" title="Permalink to this definition">¶</a></dt>
+<dd><p>f: a function with args where the idx-th arguments are numpy.ndarray
+a decorator to add keyword mask of type boolean array
+if mask is not None, mask the first positional argument
+the returned value will be “unmasked”, with default value zeros
+TODO: add options for other default values</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="dautil.util.running_mean">
 <code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
@@ -300,7 +310,7 @@ return its type, dtype and shape</p>
 
 <dl class="function">
 <dt id="dautil.util.to_levels">
-<code class="descclassname">dautil.util.</code><code class="descname">to_levels</code><span class="sig-paren">(</span><em>array</em>, <em>mask=None</em>, <em>dtype=&lt;class 'numpy.uint8'&gt;</em>, <em>ranges=(0</em>, <em>255)</em>, <em>fix_origin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dautil.util.</code><code class="descname">to_levels</code><span class="sig-paren">(</span><em>array</em>, <em>dtype=&lt;class 'numpy.uint8'&gt;</em>, <em>ranges=(0</em>, <em>255)</em>, <em>fix_origin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
 <dd><p>array: of type numpy.ndarray
 mask: optional mask when scaling <code class="docutils literal notranslate"><span class="pre">array</span></code>
 dtype: output dtype
