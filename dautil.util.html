@@ -301,8 +301,12 @@ return its type, dtype and shape</p>
 <dl class="function">
 <dt id="dautil.util.to_levels">
 <code class="descclassname">dautil.util.</code><code class="descname">to_levels</code><span class="sig-paren">(</span><em>array</em>, <em>mask=None</em>, <em>dtype=&lt;class 'numpy.uint8'&gt;</em>, <em>ranges=(0</em>, <em>255)</em>, <em>fix_origin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
-<dd><p>mapping the values of <code class="docutils literal notranslate"><span class="pre">array</span></code> between its min. and max. to <code class="docutils literal notranslate"><span class="pre">levels</span></code>
-with dtype <code class="docutils literal notranslate"><span class="pre">dtype</span></code></p>
+<dd><p>array: of type numpy.ndarray
+mask: optional mask when scaling <code class="docutils literal notranslate"><span class="pre">array</span></code>
+dtype: output dtype
+ranges: a tuple of 2 values, defining the range of values the input <code class="docutils literal notranslate"><span class="pre">array</span></code> is going to be
+mapped to.
+fix_origin: if True, 0 stays 0</p>
 </dd></dl>
 
 <dl class="function">
