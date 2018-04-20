@@ -329,6 +329,10 @@ def map_parallel(f, args, mode='multiprocessing', processes=1):
     return result
 
 
+def _starmap(f, x):
+    return f(*x)
+
+
 def starmap_parallel(f, args, mode='multiprocessing', processes=1):
     '''equivalent to starmap(f, args)
     p: no. of parallel processes when multiprocessing is used
@@ -343,10 +347,11 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
         from mpi4py.futures import MPIPoolExecutor
         with MPIPoolExecutor() as executor:
             result = executor.starmap(f, args)
-    elif mode == 'multiprocessing' and p > 1:
+    elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
+        from functools import partial
         with multiprocessing.Pool(processes=processes) as pool:
-            result = pool.map(lambda x: f(*x), args)
+            result = pool.map(partial(_starmap, f), args)
     else:
         from itertools import starmap
         result = list(starmap(f, args))
