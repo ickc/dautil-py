@@ -228,7 +228,7 @@ def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255), fix_origin=Fals
     _min = array.min()
     _max = array.max()
     if fix_origin:
-        rs = [range_i / value for range_i, value in zip(ranges, (_min, _max)) if value != 0.]
+        rs = [range_i / value for range_i, value in zip(ranges, (_min, _max)) if (range_i and value)]
         # if the range of array includes 0
         scale = (min if _min * _max < 0. else max)(*rs) if len(rs) == 2 else (rs[0] if len(rs) == 1 else 0.)
         del rs
