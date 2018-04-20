@@ -215,23 +215,37 @@ def get_outer_box(x, y):
 
 
 def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255), fix_origin=False):
-    '''mapping the values of ``array`` between its min. and max. to ``levels``
-    with dtype ``dtype``
+    '''array: of type numpy.ndarray
+    mask: optional mask when scaling ``array``
+    dtype: output dtype
+    ranges: a tuple of 2 values, defining the range of values the input ``array`` is going to be
+    mapped to.
+    fix_origin: if True, 0 stays 0
     '''
     if mask is not None:
         array = array[mask]
 
-    _min = 0. if fix_origin else array.min()
-    scale = (ranges[1] - ranges[0]) / ((array.max() - _min) or 1.)
+    _min = array.min()
+    _max = array.max()
+    if fix_origin:
+        rs = [range_i / value for range_i, value in zip(ranges, (_min, _max)) if value != 0.]
+        # if the range of array includes 0
+        scale = (min if _min * _max < 0. else max)(*rs) if len(rs) == 2 else (rs[0] if len(rs) == 1 else 0.)
+        del rs
+        result = array * scale
+    else:
+        scale = (ranges[1] - ranges[0]) / ((_max - _min) or 1.)
+        result = array * scale + (ranges[0] - _min * scale)
+    del _min, _max, array, scale
 
-    result = (array * scale + (ranges[0] - _min * scale)).astype(dtype)
+    result = result.astype(dtype)
 
     if mask is not None:
-        result2 = np.zeros_like(mask, dtype=dtype)
-        result2[mask] = result
-        return result2
-    else:
-        return result
+        temp = np.zeros_like(mask, dtype=dtype)
+        temp[mask] = result
+        result = temp
+
+    return result
 
 
 def unpackbits(data, flags):
