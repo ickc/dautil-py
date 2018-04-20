@@ -5,6 +5,7 @@ import pandas as pd
 from functools import reduce
 import scipy
 import types
+from functools import wraps
 
 # summarize ############################################################
 
@@ -214,7 +215,33 @@ def get_outer_box(x, y):
     return np.column_stack((np.minimum(x, y)[:, 0], np.maximum(x, y)[:, 1]))
 
 
-def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255), fix_origin=False):
+def mask(f, idxs=(0,)):
+    '''f: a function with args where the idx-th arguments are numpy.ndarray
+    a decorator to add keyword mask of type boolean array
+    if mask is not None, mask the first positional argument
+    the returned value will be "unmasked", with default value zeros
+    TODO: add options for other default values
+    '''
+    @wraps(f)
+    def f_decorated(*args, **kwargs):
+        mask = kwargs.pop('mask', None)
+
+        if mask is None:
+            return f(*args, **kwargs)
+        else:
+            args = [arg[mask] if idx in idxs else arg for idx, arg in enumerate(args)]
+
+            temp = f(*args, **kwargs)
+
+            result = np.zeros_like(mask, dtype=temp.dtype)
+            result[mask] = temp
+            return result
+
+    return f_decorated
+
+
+@mask
+def to_levels(array, dtype=np.uint8, ranges=(0, 255), fix_origin=False):
     '''array: of type numpy.ndarray
     mask: optional mask when scaling ``array``
     dtype: output dtype
@@ -222,9 +249,6 @@ def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255), fix_origin=Fals
     mapped to.
     fix_origin: if True, 0 stays 0
     '''
-    if mask is not None:
-        array = array[mask]
-
     _min = array.min()
     _max = array.max()
     if fix_origin:
@@ -236,16 +260,7 @@ def to_levels(array, mask=None, dtype=np.uint8, ranges=(0, 255), fix_origin=Fals
     else:
         scale = (ranges[1] - ranges[0]) / ((_max - _min) or 1.)
         result = array * scale + (ranges[0] - _min * scale)
-    del _min, _max, array, scale
-
-    result = result.astype(dtype)
-
-    if mask is not None:
-        temp = np.zeros_like(mask, dtype=dtype)
-        temp[mask] = result
-        result = temp
-
-    return result
+    return result.astype(dtype)
 
 
 def unpackbits(data, flags):
