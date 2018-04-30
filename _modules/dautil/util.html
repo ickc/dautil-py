@@ -274,6 +274,21 @@
     <span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">:</span>
         <span class="n">assert_func</span><span class="p">(</span><span class="n">array0</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span></div>
 
+
+<div class="viewcode-block" id="remove_key"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.remove_key">[docs]</a><span class="k">def</span> <span class="nf">remove_key</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;``data``: dictionary. If ``level`` &gt; 1, assumes</span>
+<span class="sd">    it is a dictionary of dictionaries of at least this much level.</span>
+<span class="sd">    This function remove the key of the dictionary at this level.</span>
+<span class="sd">    ``level``: 1 is interpreted as the values of the dictionary ``data``.</span>
+<span class="sd">    2 is interpreted as the values of the dictionary which is a value of ``data``,</span>
+<span class="sd">    so on so forth.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">remove_key</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="p">(</span><span class="n">level</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span></div>
+
 <span class="c1"># numpy array ##########################################################</span>
 
 

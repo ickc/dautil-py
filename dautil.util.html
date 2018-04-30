@@ -237,6 +237,17 @@ the returned value will be “unmasked”, with default value zeros
 TODO: add options for other default values</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="dautil.util.remove_key">
+<code class="descclassname">dautil.util.</code><code class="descname">remove_key</code><span class="sig-paren">(</span><em>data</em>, <em>key</em>, <em>level=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#remove_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.remove_key" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: dictionary. If <code class="docutils literal notranslate"><span class="pre">level</span></code> &gt; 1, assumes
+it is a dictionary of dictionaries of at least this much level.
+This function remove the key of the dictionary at this level.
+<code class="docutils literal notranslate"><span class="pre">level</span></code>: 1 is interpreted as the values of the dictionary <code class="docutils literal notranslate"><span class="pre">data</span></code>.
+2 is interpreted as the values of the dictionary which is a value of <code class="docutils literal notranslate"><span class="pre">data</span></code>,
+so on so forth.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="dautil.util.running_mean">
 <code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
