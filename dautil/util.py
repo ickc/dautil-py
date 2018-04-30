@@ -184,6 +184,28 @@ def remove_key(data, key, level=1):
         for value in data.values():
             remove_key(value, key, level=(level - 1))
 
+
+def sum_(*args):
+    '''first argument: ``iterable``.
+
+    second argument: ``start`` (default: 0)
+
+    A drop-in replacement of ``sum`` with arbitrary type.
+    The only requirement is the type of elements in ``iterable``
+    has `__iadd__` method and is compatible with each other.
+    ``start`` is not used except for empty iterable in which case it
+    is returned.
+    '''
+    iterable = iter(args[0])
+    start = args[1] if len(args) > 1 else 0
+    try:
+        result = next(iterable)
+        for i in iterable:
+            result += i
+        return result
+    except StopIteration:
+        return start
+
 # numpy array ##########################################################
 
 
