@@ -260,6 +260,20 @@
                 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;asserting </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
             <span class="k">assert</span> <span class="n">input1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">==</span> <span class="n">input2</span><span class="p">[</span><span class="n">key</span><span class="p">]</span></div>
 
+
+<div class="viewcode-block" id="assert_arrays"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.assert_arrays">[docs]</a><span class="k">def</span> <span class="nf">assert_arrays</span><span class="p">(</span><span class="n">arrays</span><span class="p">,</span> <span class="n">assert_func</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">assert_array_equal</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;arrays: an iterable of numpy.ndarray</span>
+<span class="sd">    this function assert each of them are equal</span>
+<span class="sd">    assert_func can be defined to use other assertions from numpy</span>
+<span class="sd">    beware that all other arrays are comparing to the first array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># make sure it is an iterator</span>
+    <span class="n">arrays</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
+
+    <span class="n">array0</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">array</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">:</span>
+        <span class="n">assert_func</span><span class="p">(</span><span class="n">array0</span><span class="p">,</span> <span class="n">array</span><span class="p">)</span></div>
+
 <span class="c1"># numpy array ##########################################################</span>
 
 
@@ -556,7 +570,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
     </p>
   </div>
 </footer>

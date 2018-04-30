@@ -1,4 +1,4 @@
-|Build Status|
+`Build Status <https://travis-ci.org/ickc/dautil-py>`__
 
 Introduction
 ============
@@ -17,6 +17,3 @@ Installation
 2. Add this directory to your ``PYTHONPATH``.
 
 3. Add ``bin/`` to your ``PATH``.
-
-.. |Build Status| image:: https://travis-ci.org/ickc/dautil-py.svg?branch=master
-   :target: https://travis-ci.org/ickc/dautil-py

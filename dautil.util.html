@@ -124,6 +124,15 @@ return (start, stop, step) which used to create this array</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.util.assert_arrays">
+<code class="descclassname">dautil.util.</code><code class="descname">assert_arrays</code><span class="sig-paren">(</span><em>arrays</em>, <em>assert_func=&lt;function assert_array_equal&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_arrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>arrays: an iterable of numpy.ndarray
+this function assert each of them are equal
+assert_func can be defined to use other assertions from numpy
+beware that all other arrays are comparing to the first array</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.util.assert_dict">
 <code class="descclassname">dautil.util.</code><code class="descname">assert_dict</code><span class="sig-paren">(</span><em>input1</em>, <em>input2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>recursively assert into a dictionary
@@ -357,7 +366,7 @@ this is the same as numpy.unpackbits</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
     </p>
   </div>
 </footer>
