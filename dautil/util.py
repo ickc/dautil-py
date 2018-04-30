@@ -155,6 +155,20 @@ def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
                 print('asserting {}'.format(key))
             assert input1[key] == input2[key]
 
+
+def assert_arrays(arrays, assert_func=np.testing.assert_array_equal):
+    '''arrays: an iterable of numpy.ndarray
+    this function assert each of them are equal
+    assert_func can be defined to use other assertions from numpy
+    beware that all other arrays are comparing to the first array
+    '''
+    # make sure it is an iterator
+    arrays = iter(arrays)
+
+    array0 = next(arrays)
+    for array in arrays:
+        assert_func(array0, array)
+
 # numpy array ##########################################################
 
 
