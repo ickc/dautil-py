@@ -300,6 +300,18 @@ mode:</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.util.sum_">
+<code class="descclassname">dautil.util.</code><code class="descname">sum_</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#sum_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.sum_" title="Permalink to this definition">¶</a></dt>
+<dd><p>first argument: <code class="docutils literal notranslate"><span class="pre">iterable</span></code>.</p>
+<p>second argument: <code class="docutils literal notranslate"><span class="pre">start</span></code> (default: 0)</p>
+<p>A drop-in replacement of <code class="docutils literal notranslate"><span class="pre">sum</span></code> with arbitrary type.
+The only requirement is the type of elements in <code class="docutils literal notranslate"><span class="pre">iterable</span></code>
+has <cite>__iadd__</cite> method and is compatible with each other.
+<code class="docutils literal notranslate"><span class="pre">start</span></code> is not used except for empty iterable in which case it
+is returned.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.util.summarize">
 <code class="descclassname">dautil.util.</code><code class="descname">summarize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize" title="Permalink to this definition">¶</a></dt>
 <dd><p>summarize according to type
