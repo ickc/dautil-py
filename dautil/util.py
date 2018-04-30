@@ -169,6 +169,21 @@ def assert_arrays(arrays, assert_func=np.testing.assert_array_equal):
     for array in arrays:
         assert_func(array0, array)
 
+
+def remove_key(data, key, level=1):
+    '''``data``: dictionary. If ``level`` > 1, assumes
+    it is a dictionary of dictionaries of at least this much level.
+    This function remove the key of the dictionary at this level.
+    ``level``: 1 is interpreted as the values of the dictionary ``data``.
+    2 is interpreted as the values of the dictionary which is a value of ``data``,
+    so on so forth.
+    '''
+    if level == 1:
+        del data[key]
+    else:
+        for value in data.values():
+            remove_key(value, key, level=(level - 1))
+
 # numpy array ##########################################################
 
 
