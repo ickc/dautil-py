@@ -196,10 +196,13 @@ def sum_(*args):
     ``start`` is not used except for empty iterable in which case it
     is returned.
     '''
+    from copy import deepcopy
+
     iterable = iter(args[0])
     start = args[1] if len(args) > 1 else 0
     try:
-        result = next(iterable)
+        # avoid mutating the input, both during and after this function call
+        result = deepcopy(next(iterable))
         for i in iterable:
             result += i
         return result
