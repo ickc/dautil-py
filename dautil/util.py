@@ -433,8 +433,12 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
     elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
         from functools import partial
-        with multiprocessing.Pool(processes=processes) as pool:
+        #  with multiprocessing.Pool(processes=processes) as pool: in Python 3
+        pool = multiprocessing.Pool(processes=processes)
+        try:
             result = pool.map(partial(_starmap, f), args)
+        finally:
+            del pool
     else:
         from itertools import starmap
         result = list(starmap(f, args))
