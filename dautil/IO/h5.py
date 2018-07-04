@@ -101,16 +101,21 @@ def plot_h5diff(f1, f2, out_dir, prefix='', verbose=False):
             plot_h5diff(f1[i], f2[i], out_dir, prefix, verbose)
 
 
-def h5split(in_file, out_dir, verbose=False):
+def h5split(in_file, out_dir, verbose=False, groups=None, attrs=None):
     '''split each of the HDF5 group from in_file to individual ones in out_dir
+    groups: if None, split all groups from in_file, else only the given group
+    attrs: if not None, copy HDF5 attributes per item in attrs
     '''
     filename = os.path.splitext(os.path.basename(in_file))
     with h5py.File(in_file, "r") as f_in:
-        for group in f_in:
+        for group in groups or f_in:
             out_file = os.path.join(out_dir, filename[0] + '_' + group + filename[1])
             if verbose:
                 print(out_file)
             with h5py.File(out_file, "x") as f_out:
+                if attrs:
+                    for attr in attrs:
+                        f_out.attrs[attr] = f_in.attrs[attr]
                 for sub_group in f_in[group]:
                     h5_path = group + '/' + sub_group
                     if verbose:
