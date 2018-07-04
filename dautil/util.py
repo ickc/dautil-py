@@ -1,3 +1,5 @@
+from builtins import map
+
 from numba import jit
 import numpy as np
 import operator
@@ -385,8 +387,12 @@ def get_map_parallel(processes):
         return pool.map
 
 
-def map_parallel(f, args, mode='multiprocessing', processes=1):
-    '''equivalent to map(f, args)
+def _starmap(f, x):
+    return f(*x)
+
+
+def map_parallel(f, *args, **kwargs):
+    '''equivalent to map(f, *args)
     p: no. of parallel processes when multiprocessing is used
     (in the case of mpi, it is determined by mpiexec/mpirun args)
     mode:
@@ -394,26 +400,31 @@ def map_parallel(f, args, mode='multiprocessing', processes=1):
     - mpi: using mpi4py.futures
     - multiprocessing: using multiprocessing from standard library
     - serial: using map
+
+    Note: this is for Python 2 compatibility,
+    else map_parallel(f, *args, mode='multiprocessing', processes=1)
     '''
+    mode = kwargs.get('mode', 'multiprocessing')
+    processes = kwargs.get('processes', 1)
+
     if mode == 'mpi':
         from mpi4py.futures import MPIPoolExecutor
         with MPIPoolExecutor() as executor:
-            result = executor.map(f, args)
+            result = executor.map(f, *args)
     elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
+        from functools import partial
         #  with multiprocessing.Pool(processes=processes) as pool: in Python 3
         pool = multiprocessing.Pool(processes=processes)
         try:
-            result = pool.map(f, args)
+            result = pool.map(f, *args) \
+                if len(args) <= 1 else \
+                pool.map(partial(_starmap, f), zip(*args))
         finally:
             del pool
     else:
-        result = list(map(f, args))
+        result = list(map(f, *args))
     return result
-
-
-def _starmap(f, x):
-    return f(*x)
 
 
 def starmap_parallel(f, args, mode='multiprocessing', processes=1):
