@@ -7,7 +7,7 @@
     <title>dautil.IO.h5 module &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -147,8 +147,10 @@
 
 <dl class="function">
 <dt id="dautil.IO.h5.h5split">
-<code class="descclassname">dautil.IO.h5.</code><code class="descname">h5split</code><span class="sig-paren">(</span><em>in_file</em>, <em>out_dir</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5split" title="Permalink to this definition">¶</a></dt>
-<dd><p>split each of the HDF5 group from in_file to individual ones in out_dir</p>
+<code class="descclassname">dautil.IO.h5.</code><code class="descname">h5split</code><span class="sig-paren">(</span><em>in_file</em>, <em>out_dir</em>, <em>verbose=False</em>, <em>groups=None</em>, <em>attrs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5split" title="Permalink to this definition">¶</a></dt>
+<dd><p>split each of the HDF5 group from in_file to individual ones in out_dir
+groups: if None, split all groups from in_file, else only the given group
+attrs: if not None, copy HDF5 attributes per item in attrs</p>
 </dd></dl>
 
 <dl class="function">
@@ -172,7 +174,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.<br/>
     </p>
   </div>
 </footer>
