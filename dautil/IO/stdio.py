@@ -15,12 +15,12 @@ def redirect_stdout_stderr(f):
 
         if stdout:
             stdout_original = sys.stdout
-            f_out = os.open(stdout, os.O_WRONLY | os.O_CREAT, 0644)
+            f_out = os.open(stdout, os.O_WRONLY | os.O_CREAT, 0o644)
             os.dup2(f_out, sys.stdout.fileno())
 
         if stderr:
             stderr_original = sys.stderr
-            f_err = os.open(stderr, os.O_WRONLY | os.O_CREAT, 0644)
+            f_err = os.open(stderr, os.O_WRONLY | os.O_CREAT, 0o644)
             os.dup2(f_err, sys.stderr.fileno())
 
         try:
