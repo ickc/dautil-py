@@ -26,3 +26,20 @@ def get_job(jobid):
     ).stdout.decode('utf-8')
     with StringIO(result) as f:
         return pd.read_csv(f, sep='|')
+
+
+def get_user(username):
+    '''run ``sacct`` for the given username
+    and return a DataFrame of that.
+    '''
+    result = subprocess.run(
+        [
+            'sacct',
+             '-u', username,
+             '--parsable2',
+             '--format={}'.format(','.join(ALLFORMAT))
+        ],
+        stdout=subprocess.PIPE
+    ).stdout.decode('utf-8')
+    with StringIO(result) as f:
+        return pd.read_csv(f, sep='|')
