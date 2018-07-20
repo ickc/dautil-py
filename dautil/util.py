@@ -2,15 +2,19 @@ from builtins import map
 
 from numba import jit
 import numpy as np
+import numba
 import operator
 import pandas as pd
 from functools import reduce
 import scipy
+import scipy.signal
+import sys
 import types
 from functools import wraps
 
-# summarize ############################################################
+PY2 = sys.version_info[0] == 2
 
+# summarize ############################################################
 
 def summarize_ndarray(data):
     '''assume data is ndarray
@@ -213,7 +217,6 @@ def sum_(*args):
 
 # numpy array ##########################################################
 
-
 @jit(nopython=True, nogil=True)
 def arange_inv(array):
     '''array: assumed to be an output of numpy.arange
@@ -372,6 +375,132 @@ def running_mean_linspace(start, stop, num, n):
     stop_avg = stop - mid
     return start_avg, stop_avg, num - n + 1
 
+
+@numba.vectorize([numba.float64(numba.complex128),numba.float32(numba.complex64)])
+def abs2(x):
+    '''return the square norm of complex ``x``
+    '''
+    return x.real**2 + x.imag**2
+
+
+@jit(nopython=True, nogil=True, parallel=True)
+def min_offdiag(array):
+    '''``array``: 2d-array
+    return 1d-array of the minimum per row excluding the diagonal.
+    Note that the result doesn't make sense if array is of shape (1, 1)
+    same as min_offdiag_general(array, axis=1) but faster
+    '''
+    n = array.shape[0]
+    result = np.empty(n, dtype=array.dtype)
+    for i in numba.prange(n):
+        _min = np.inf
+        for j in range(n):
+            if j != i:
+                temp = array[i, j]
+                if temp < _min:
+                    _min = temp
+        result[i] = _min
+    return result
+
+
+def min_offdiag_general(array, **kwargs):
+    '''works similar to ``np.amin(array, **kwargs)``
+    except that the off-diagonal items is ignored when finding minimum
+    '''
+    temp = array.copy()
+    np.fill_diagonal(temp, np.nan)
+    return np.nanmin(temp, **kwargs)
+
+
+@jit(nopython=True, nogil=True, parallel=True)
+def max_offdiag(array):
+    '''``array``: 2d-array
+    return 1d-array of the maximum per row excluding the diagonal.
+    Note that the result doesn't make sense if array is of shape (1, 1)
+    same as max_offdiag_general(array, axis=1) but faster
+    '''
+    n = array.shape[0]
+    result = np.empty(n, dtype=array.dtype)
+    for i in numba.prange(n):
+        _max = np.NINF
+        for j in range(n):
+            if j != i:
+                temp = array[i, j]
+                if temp > _max:
+                    _max = temp
+        result[i] = _max
+    return result
+
+
+def max_offdiag_general(array, **kwargs):
+    '''works similar to ``np.amax(array, **kwargs)``
+    except that the off-diagonal items is ignored when finding maximum
+    '''
+    temp = array.copy()
+    np.fill_diagonal(temp, np.nan)
+    return np.nanmax(temp, **kwargs)
+
+# KDE
+
+def get_KDE(data, num=100, **kwargs):
+    '''given a distribution ``data``,
+    return the KDE estimation as a 2d-array,
+    where the columns are the x, y values repsectively
+
+    ``num``: num of rows of the resultant array
+    ``kwargs``: passes to ``scipy.stats.gaussian_kde
+    '''
+    func = scipy.stats.gaussian_kde(data, **kwargs)
+    x = np.linspace(data.min(), data.max(), num=num)
+    return np.column_stack((x, func(x)))
+
+
+def get_KDE_der(data, num=100, **kwargs):
+    '''Similar to ``get_KDE``, but return the first
+    derivative of it instead.
+    '''
+    func = scipy.stats.gaussian_kde(data)
+    x = np.linspace(data.min(), data.max(), num=num)
+    dx = x[1] - x[0]
+    return np.column_stack((x, scipy.misc.derivative(func, x, dx=dx)))
+
+
+def get_KDE_min(data, num=100, **kwargs):
+    '''given a distribution ``data``,
+    return the minimum of the KDE estimation as a 2d-array.
+
+    ``num``: number of points between data.min() and data.max(),
+    this controls the resolution of the minimum
+    ``kwargs``: passes to ``scipy.stats.gaussian_kde
+
+    This is useful for clustering based on distribution.
+    '''
+    xy = get_KDE(data, num=num, **kwargs)
+    return xy[:, 0][scipy.signal.argrelmin(xy[:, 1])]
+
+
+def get_KDE_der_max(data, num=100, **kwargs):
+    '''Similar to ``get_KDE_min``, but
+    get the maximum of the first derivatives
+    of the Gaussian KDE.
+
+    This can be useful when ``get_KDE_min`` provides no
+    minimum.
+    '''
+    xy = get_KDE_der(data, num=num, **kwargs)
+    return xy[:, 0][scipy.signal.argrelmax(xy[:, 1])]
+
+
+def min_nan(array, **kwargs):
+    '''same as ``numpy.amin(array, **kwargs)``
+    except if the array is empty, it returns ``numpy.nan`` instead.
+    '''
+    try:
+        return np.amin(array, **kwargs)
+    # for empty array
+    except ValueError:
+        return np.nan
+
 ########################################################################
 
 
@@ -388,6 +517,8 @@ def get_map_parallel(processes):
 
 
 def _starmap(f, x):
+    '''return f(*x), for map_parallel only
+    '''
     return f(*x)
 
 
