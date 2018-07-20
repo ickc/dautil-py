@@ -9,7 +9,7 @@ from itertools import chain
 from glob import iglob as glob
 from functools import partial
 
-from dautil.util import get_map_parallel
+from dautil.util import map_parallel
 from dautil.IO.h5 import h5delete
 
 __version__ = '0.3'
@@ -20,8 +20,11 @@ def main(args):
     h5_in_paths = chain(*(_glob(glob_i)
                           for glob_i in args.input))
 
-    map_parallel = get_map_parallel(args.p)
-    Nones = map_parallel(partial(h5delete, datasets=args.datasets, dry_run=args.dry_run, verbose=args.verbose), h5_in_paths)
+    Nones = map_parallel(
+        partial(h5delete, datasets=args.datasets, dry_run=args.dry_run, verbose=args.verbose),
+        h5_in_paths,
+        processes=args.p
+    )
     if args.verbose:
         if args.datasets:
             print('Finish checking {} HDF5 files with datasets {}.'.format(len(Nones), ' '.join(args.datasets)))
