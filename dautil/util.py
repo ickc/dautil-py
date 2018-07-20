@@ -414,14 +414,20 @@ def map_parallel(f, *args, **kwargs):
     elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
         from functools import partial
-        #  with multiprocessing.Pool(processes=processes) as pool: in Python 3
-        pool = multiprocessing.Pool(processes=processes)
-        try:
-            result = pool.map(f, *args) \
-                if len(args) <= 1 else \
-                pool.map(partial(_starmap, f), zip(*args))
-        finally:
-            del pool
+        if PY2:
+            pool = multiprocessing.Pool(processes=processes)
+            try:
+                result = pool.map(f, *args) \
+                    if len(args) <= 1 else \
+                    pool.map(partial(_starmap, f), zip(*args))
+            finally:
+                pool.terminate()
+                pool.close()
+        else:
+            with multiprocessing.Pool(processes=processes) as pool:
+                result = pool.map(f, *args) \
+                    if len(args) <= 1 else \
+                    pool.map(partial(_starmap, f), zip(*args))
     else:
         result = list(map(f, *args))
     return result
@@ -444,12 +450,16 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
     elif mode == 'multiprocessing' and processes > 1:
         import multiprocessing
         from functools import partial
-        #  with multiprocessing.Pool(processes=processes) as pool: in Python 3
-        pool = multiprocessing.Pool(processes=processes)
-        try:
-            result = pool.map(partial(_starmap, f), args)
-        finally:
-            del pool
+        if PY2:
+            pool = multiprocessing.Pool(processes=processes)
+            try:
+                result = pool.map(partial(_starmap, f), args)
+            finally:
+                pool.terminate()
+                pool.close()
+        else:
+            with multiprocessing.Pool(processes=processes) as pool:
+                result = pool.map(partial(_starmap, f), args)
     else:
         from itertools import starmap
         result = list(starmap(f, args))
