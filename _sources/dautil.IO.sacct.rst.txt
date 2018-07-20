@@ -1,0 +1,7 @@
+dautil.IO.sacct module
+======================
+
+.. automodule:: dautil.IO.sacct
+    :members:
+    :undoc-members:
+    :show-inheritance:

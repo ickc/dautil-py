@@ -165,6 +165,44 @@ similar to unpackbits, but return a DataFrame instead.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.util.get_KDE">
+<code class="descclassname">dautil.util.</code><code class="descname">get_KDE</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE" title="Permalink to this definition">¶</a></dt>
+<dd><p>given a distribution <code class="docutils literal notranslate"><span class="pre">data</span></code>,
+return the KDE estimation as a 2d-array,
+where the columns are the x, y values repsectively</p>
+<p><code class="docutils literal notranslate"><span class="pre">num</span></code>: num of rows of the resultant array
+<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id1"><span class="problematic" id="id2">``</span></a>scipy.stats.gaussian_kde</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_KDE_der">
+<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_der</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <code class="docutils literal notranslate"><span class="pre">get_KDE</span></code>, but return the first
+derivative of it instead.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_KDE_der_max">
+<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_der_max</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Similar to <code class="docutils literal notranslate"><span class="pre">get_KDE_min</span></code>, but
+get the maximum of the first derivatives
+of the Gaussian KDE.</p>
+<p>This can be useful when <code class="docutils literal notranslate"><span class="pre">get_KDE_min</span></code> provides no
+minimum.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.get_KDE_min">
+<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_min</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_min" title="Permalink to this definition">¶</a></dt>
+<dd><p>given a distribution <code class="docutils literal notranslate"><span class="pre">data</span></code>,
+return the minimum of the KDE estimation as a 2d-array.</p>
+<p><code class="docutils literal notranslate"><span class="pre">num</span></code>: number of points between data.min() and data.max(),
+this controls the resolution of the minimum
+<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id3"><span class="problematic" id="id4">``</span></a>scipy.stats.gaussian_kde</p>
+<p>This is useful for clustering based on distribution.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.util.get_box">
 <code class="descclassname">dautil.util.</code><code class="descname">get_box</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>array: numpy.ndarray
@@ -216,7 +254,7 @@ return (start, stop, num) which used to create this array</p>
 <dl class="function">
 <dt id="dautil.util.map_parallel">
 <code class="descclassname">dautil.util.</code><code class="descname">map_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.map_parallel" title="Permalink to this definition">¶</a></dt>
-<dd><p>equivalent to map(f, <a href="#id1"><span class="problematic" id="id2">*</span></a>args)
+<dd><p>equivalent to map(f, <a href="#id5"><span class="problematic" id="id6">*</span></a>args)
 p: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
@@ -226,7 +264,7 @@ mode:</p>
 <li>serial: using map</li>
 </ul>
 <p>Note: this is for Python 2 compatibility,
-else map_parallel(f, <a href="#id3"><span class="problematic" id="id4">*</span></a>args, mode=’multiprocessing’, processes=1)</p>
+else map_parallel(f, <a href="#id7"><span class="problematic" id="id8">*</span></a>args, mode=’multiprocessing’, processes=1)</p>
 </dd></dl>
 
 <dl class="function">
@@ -237,6 +275,45 @@ a decorator to add keyword mask of type boolean array
 if mask is not None, mask the first positional argument
 the returned value will be “unmasked”, with default value zeros
 TODO: add options for other default values</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.util.max_offdiag">
+<code class="descclassname">dautil.util.</code><code class="descname">max_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#max_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">array</span></code> – 2d-array
+return 1d-array of the maximum per row excluding the diagonal.
+Note that the result doesn’t make sense if array is of shape (1, 1)
+same as max_offdiag_general(array, axis=1) but faster</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.max_offdiag_general">
+<code class="descclassname">dautil.util.</code><code class="descname">max_offdiag_general</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#max_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag_general" title="Permalink to this definition">¶</a></dt>
+<dd><p>works similar to <code class="docutils literal notranslate"><span class="pre">np.amax(array,</span> <span class="pre">**kwargs)</span></code>
+except that the off-diagonal items is ignored when finding maximum</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.min_nan">
+<code class="descclassname">dautil.util.</code><code class="descname">min_nan</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_nan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_nan" title="Permalink to this definition">¶</a></dt>
+<dd><p>same as <code class="docutils literal notranslate"><span class="pre">numpy.amin(array,</span> <span class="pre">**kwargs)</span></code>
+except if the array is empty, it returns <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code> instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.util.min_offdiag">
+<code class="descclassname">dautil.util.</code><code class="descname">min_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#min_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">array</span></code> – 2d-array
+return 1d-array of the minimum per row excluding the diagonal.
+Note that the result doesn’t make sense if array is of shape (1, 1)
+same as min_offdiag_general(array, axis=1) but faster</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.min_offdiag_general">
+<code class="descclassname">dautil.util.</code><code class="descname">min_offdiag_general</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag_general" title="Permalink to this definition">¶</a></dt>
+<dd><p>works similar to <code class="docutils literal notranslate"><span class="pre">np.amin(array,</span> <span class="pre">**kwargs)</span></code>
+except that the off-diagonal items is ignored when finding minimum</p>
 </dd></dl>
 
 <dl class="function">
@@ -391,7 +468,7 @@ this is the same as numpy.unpackbits</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.5.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.<br/>
     </p>
   </div>
 </footer>
