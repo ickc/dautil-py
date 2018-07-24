@@ -215,6 +215,15 @@ def sum_(*args):
     except StopIteration:
         return start
 
+# compose ##############################################################
+
+def compose(*functions):
+    '''composing functions. For example,
+
+    compose(f, g, h)(x) == f(g(h(x)))
+    '''
+    return reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
+
 # numpy array ##########################################################
 
 @jit(nopython=True, nogil=True)
