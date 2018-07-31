@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from numba import jit, prange
 
 import numpy as np
