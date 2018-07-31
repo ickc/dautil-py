@@ -140,6 +140,13 @@ if the value is a numpy array, assert_allclose, else assert equal.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.util.compose">
+<code class="descclassname">dautil.util.</code><code class="descname">compose</code><span class="sig-paren">(</span><em>*functions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#compose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.compose" title="Permalink to this definition">¶</a></dt>
+<dd><p>composing functions. For example,</p>
+<p>compose(f, g, h)(x) == f(g(h(x)))</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.util.df_linregress">
 <code class="descclassname">dautil.util.</code><code class="descname">df_linregress</code><span class="sig-paren">(</span><em>df</em>, <em>grouplevel=0</em>, <em>regresslevel=1</em>, <em>regressindex=2</em>, <em>regressorder=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_linregress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_linregress" title="Permalink to this definition">¶</a></dt>
 <dd><p>per level <code class="docutils literal notranslate"><span class="pre">grouplevel</span></code>, perform a linregress of each column vs. level <code class="docutils literal notranslate"><span class="pre">regresslevel</span></code>

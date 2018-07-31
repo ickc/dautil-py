@@ -103,7 +103,9 @@
     <div class="col-md-12 content">
       
   <h1>Source code for dautil.util</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">from</span> <span class="nn">builtins</span> <span class="k">import</span> <span class="nb">map</span>
 
 <span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -319,6 +321,15 @@
         <span class="k">return</span> <span class="n">result</span>
     <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">start</span></div>
+
+<span class="c1"># compose ##############################################################</span>
+
+<div class="viewcode-block" id="compose"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.compose">[docs]</a><span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="o">*</span><span class="n">functions</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;composing functions. For example,</span>
+
+<span class="sd">    compose(f, g, h)(x) == f(g(h(x)))</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">functions</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span></div>
 
 <span class="c1"># numpy array ##########################################################</span>
 
@@ -748,7 +759,7 @@
 <span class="sd">    similar to unpackbits, but return a DataFrame instead.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="n">unpackbits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flag_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint64</span><span class="p">)),</span>
+        <span class="n">unpackbits</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">flag_dict</span><span class="o">.</span><span class="n">values</span><span class="p">()))),</span>
         <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span>
         <span class="n">columns</span><span class="o">=</span><span class="n">flag_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
     <span class="p">)</span></div>
