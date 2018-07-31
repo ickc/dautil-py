@@ -652,7 +652,7 @@ def df_unpackbits(data, flag_dict, index=None):
     similar to unpackbits, but return a DataFrame instead.
     '''
     return pd.DataFrame(
-        unpackbits(data, np.array(list(flag_dict.values()), dtype=np.uint64)),
+        unpackbits(data, np.array(list(flag_dict.values()))),
         index=index,
         columns=flag_dict.keys()
     )
