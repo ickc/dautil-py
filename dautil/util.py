@@ -24,16 +24,69 @@ def summarize_ndarray(data):
     return (type(data), data.dtype, data.shape)
 
 
-def flatten_list(data):
+def flatten_list(data, verbose=False):
     '''flatten nested list/tuple to arbitrary depth
+
+    Algorithm:
+
+    keep flatten and data list
+    initially flatten list is empty
+    moving data list to flatten list until
+    data list is empty
+
+    The followings are equivalent, but limited by recursions
+    ```py
+    def flatten_list(data):
+        result = []
+        for datum in data:
+            if isinstance(datum, (list, tuple)):
+                result += flatten_list(datum)
+            else:
+                result.append(datum)
+        return result
+
+
+    def flatten_list(data):
+        return [item
+                    for datum in data
+                    for item in (flatten(datum) if isinstance(datum, list) else [datum])
+               ]
+    ```
     '''
-    result = []
-    for datum in data:
-        if isinstance(datum, (list, tuple)):
-            result += flatten_list(datum)
-        else:
-            result.append(datum)
-    return result
+    flatten = []
+    list_found = True
+    while list_found:
+        list_found = False
+        for i, datum in enumerate(data):
+            if isinstance(datum, (list, tuple)):
+                list_found = True
+
+                head = data[:i]
+                tail = data[i + 1:]
+
+                flatten += head
+                data = datum + tail
+
+                if verbose:
+                    print('''I found a list at position {}.
+Moving {} to flatten list, adding {} and {} as the remaining data.
+My current flatten list is {} and data is {}.'''.format(
+                        i,
+                        head,
+                        datum,
+                        tail,
+                        flatten,
+                        data
+                    ))
+
+                break
+
+        if not list_found:
+            flatten += data
+            if verbose:
+                print('''All remaining data is flatten, adding it to flatten
+My current flatten list is {} and data is {}'''.format(flatten, data))
+    return flatten
 
 
 def type_list(data):
