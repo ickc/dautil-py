@@ -11,7 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -119,8 +119,16 @@
 <dl class="attribute">
 <dt id="dautil.util.arange_inv">
 <code class="descclassname">dautil.util.</code><code class="descname">arange_inv</code><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – assumed to be an output of numpy.arange
+<dd><p>assumed to be an output of numpy.arange
 return (start, stop, step) which used to create this array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -167,8 +175,42 @@ similar to unpackbits, but return a DataFrame instead.</p>
 
 <dl class="function">
 <dt id="dautil.util.flatten_list">
-<code class="descclassname">dautil.util.</code><code class="descname">flatten_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.flatten_list" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dautil.util.</code><code class="descname">flatten_list</code><span class="sig-paren">(</span><em>data</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.flatten_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>flatten nested list/tuple to arbitrary depth</p>
+<p>Algorithm:</p>
+<p>keep flatten and data list
+initially flatten list is empty
+moving data list to flatten list until
+data list is empty</p>
+<p>The followings are equivalent, but limited by recursions
+<a href="#id1"><span class="problematic" id="id2">``</span></a><a href="#id3"><span class="problematic" id="id4">`</span></a>py
+def flatten_list(data):</p>
+<blockquote>
+<div><p>result = []
+for datum in data:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if isinstance(datum, (list, tuple)):</dt>
+<dd>result += flatten_list(datum)</dd>
+<dt>else:</dt>
+<dd>result.append(datum)</dd>
+</dl>
+</div></blockquote>
+<p>return result</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>def flatten_list(data):</dt>
+<dd><dl class="first last docutils">
+<dt>return [item</dt>
+<dd><blockquote class="first">
+<div>for datum in data
+for item in (flatten(datum) if isinstance(datum, list) else [datum])</div></blockquote>
+<p class="last">]</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p><a href="#id5"><span class="problematic" id="id6">``</span></a><a href="#id7"><span class="problematic" id="id8">`</span></a></p>
 </dd></dl>
 
 <dl class="function">
@@ -178,7 +220,7 @@ similar to unpackbits, but return a DataFrame instead.</p>
 return the KDE estimation as a 2d-array,
 where the columns are the x, y values repsectively</p>
 <p><code class="docutils literal notranslate"><span class="pre">num</span></code>: num of rows of the resultant array
-<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id1"><span class="problematic" id="id2">``</span></a>scipy.stats.gaussian_kde</p>
+<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id9"><span class="problematic" id="id10">``</span></a>scipy.stats.gaussian_kde</p>
 </dd></dl>
 
 <dl class="function">
@@ -205,7 +247,7 @@ minimum.</p>
 return the minimum of the KDE estimation as a 2d-array.</p>
 <p><code class="docutils literal notranslate"><span class="pre">num</span></code>: number of points between data.min() and data.max(),
 this controls the resolution of the minimum
-<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id3"><span class="problematic" id="id4">``</span></a>scipy.stats.gaussian_kde</p>
+<code class="docutils literal notranslate"><span class="pre">kwargs</span></code>: passes to <a href="#id11"><span class="problematic" id="id12">``</span></a>scipy.stats.gaussian_kde</p>
 <p>This is useful for clustering based on distribution.</p>
 </dd></dl>
 
@@ -254,14 +296,22 @@ Currently, callables and modules are ignored.</p>
 <dl class="attribute">
 <dt id="dautil.util.linspace_inv">
 <code class="descclassname">dautil.util.</code><code class="descname">linspace_inv</code><a class="reference internal" href="_modules/dautil/util.html#linspace_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.linspace_inv" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>array</em> – assumed to be an output of numpy.linspace
+<dd><p>assumed to be an output of numpy.linspace
 return (start, stop, num) which used to create this array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.map_parallel">
 <code class="descclassname">dautil.util.</code><code class="descname">map_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.map_parallel" title="Permalink to this definition">¶</a></dt>
-<dd><p>equivalent to map(f, <a href="#id5"><span class="problematic" id="id6">*</span></a>args)
+<dd><p>equivalent to map(f, <a href="#id13"><span class="problematic" id="id14">*</span></a>args)
 p: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
@@ -271,7 +321,7 @@ mode:</p>
 <li>serial: using map</li>
 </ul>
 <p>Note: this is for Python 2 compatibility,
-else map_parallel(f, <a href="#id7"><span class="problematic" id="id8">*</span></a>args, mode=’multiprocessing’, processes=1)</p>
+else map_parallel(f, <a href="#id15"><span class="problematic" id="id16">*</span></a>args, mode=’multiprocessing’, processes=1)</p>
 </dd></dl>
 
 <dl class="function">
@@ -287,10 +337,18 @@ TODO: add options for other default values</p>
 <dl class="attribute">
 <dt id="dautil.util.max_offdiag">
 <code class="descclassname">dautil.util.</code><code class="descname">max_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#max_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">array</span></code> – 2d-array
+<dd><p>2d-array
 return 1d-array of the maximum per row excluding the diagonal.
 Note that the result doesn’t make sense if array is of shape (1, 1)
 same as max_offdiag_general(array, axis=1) but faster</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -310,10 +368,18 @@ except if the array is empty, it returns <code class="docutils literal notransla
 <dl class="attribute">
 <dt id="dautil.util.min_offdiag">
 <code class="descclassname">dautil.util.</code><code class="descname">min_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#min_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag" title="Permalink to this definition">¶</a></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">array</span></code> – 2d-array
+<dd><p>2d-array
 return 1d-array of the minimum per row excluding the diagonal.
 Note that the result doesn’t make sense if array is of shape (1, 1)
 same as min_offdiag_general(array, axis=1) but faster</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -337,7 +403,15 @@ so on so forth.</p>
 <dl class="attribute">
 <dt id="dautil.util.running_mean">
 <code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>return</em> – array of the moving average of x with bins of width n</p>
+<dd><p>array of the moving average of x with bins of width n</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">return</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -475,7 +549,7 @@ this is the same as numpy.unpackbits</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0.<br/>
     </p>
   </div>
 </footer>

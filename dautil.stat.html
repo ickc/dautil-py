@@ -11,7 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -133,16 +133,32 @@ where k ranges from 0 to neighbor_max</p>
 <dl class="attribute">
 <dt id="dautil.stat.corr_custom">
 <code class="descclassname">dautil.stat.</code><code class="descname">corr_custom</code><a class="reference internal" href="_modules/dautil/stat.html#corr_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_custom" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>x, y</em> – ndarray of dtype bool
+<dd><p>ndarray of dtype bool
 return: the difference between counts of x and y being agree or disagree.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">x, y</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.stat.corr_kendall">
 <code class="descclassname">dautil.stat.</code><code class="descname">corr_kendall</code><a class="reference internal" href="_modules/dautil/stat.html#corr_kendall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_kendall" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>x, y</em> – ndarray of dtype bool
+<dd><p>ndarray of dtype bool
 return: Kendall correlation between x, y
 Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">x, y</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -156,10 +172,18 @@ return: a mask that is True when the correlation is max.</p>
 <dl class="attribute">
 <dt id="dautil.stat.corr_pearson">
 <code class="descclassname">dautil.stat.</code><code class="descname">corr_pearson</code><a class="reference internal" href="_modules/dautil/stat.html#corr_pearson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_pearson" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>x, y</em> – ndarray of dtype bool
+<dd><p>ndarray of dtype bool
 return: pearson correlation between x, y
 Note: a.k.a. phi correlation, Matthews correlation
 Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">x, y</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -203,8 +227,16 @@ between 2 arrays</p>
 <dl class="attribute">
 <dt id="dautil.stat.partial_corr_matrix">
 <code class="descclassname">dautil.stat.</code><code class="descname">partial_corr_matrix</code><a class="reference internal" href="_modules/dautil/stat.html#partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>corr</em> – inverse of a correlation matrix
+<dd><p>inverse of a correlation matrix
 return the partial correlation matrix</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">corr</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>
@@ -222,7 +254,7 @@ return the partial correlation matrix</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.6.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.0.<br/>
     </p>
   </div>
 </footer>
