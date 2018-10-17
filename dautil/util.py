@@ -413,6 +413,24 @@ def running_mean(x, n):
 
 
 @jit(nopython=True, nogil=True)
+def polynomials(x, k):
+    '''``x``: 1d-array
+    ``k``: maximum order
+    return
+    ------
+    2d-array, where each column corresponse to x**i, i from 1 to k
+    '''
+    n = x.size
+    result = np.empty((n, k))
+    for i in range(n):
+        temp = x[i]
+        result[i, 0] = temp
+        for j in range(1, k):
+            result[i, j] = temp * result[i, j - 1]
+    return result
+
+
+@jit(nopython=True, nogil=True)
 def running_mean_arange(start, stop, step, n):
     '''assume start, stop, step as in the input of arange
     given binning of width n
