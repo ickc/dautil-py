@@ -10,7 +10,7 @@ from moviepy.editor import VideoFileClip
 
 from dautil.stat import get_cutoffs
 
-__version__ = 0.1
+__version__ = '0.1.1'
 
 EXTS = {
     '.mp4',
@@ -41,8 +41,11 @@ def main_per_path(path):
 
 def main(args):
     for path in args.path:
-        for file in main_per_path(path):
-            print(file, file=args.output)
+        try:
+            for file in main_per_path(path):
+                print(file, file=args.output)
+        except ValueError:
+            pass
 
 
 def cli():
