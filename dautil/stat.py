@@ -5,6 +5,7 @@ from numba import jit, prange
 import numpy as np
 import pandas as pd
 import scipy
+import scipy.signal as signal
 
 
 @jit(nopython=True)
@@ -167,3 +168,29 @@ def bin_corr_relative(corr, neighbor_max):
         neighbor = corr_matrix.diagonal(k + 1)
         result[k] = np.mean(neighbor) + 1.j * scipy.stats.sem(neighbor)
     return pd.DataFrame(result, index=np.arange(1, neighbor_max + 1) * interval, columns=['Correlation as a function of $\Delta l$'])
+
+
+def get_cutoffs(data, num=50):
+    '''``data``: 1d-array
+    ``num``: no. of points to resolve between min and max
+    of ``data``.
+    use KDE to detect minimums and return an array
+    of left and right cutoff
+    '''
+    x = np.linspace(data.min(), data.max(), num=num)
+    y = scipy.stats.gaussian_kde(data)(x)
+
+    x_mins = x[signal.argrelmin(y)]
+    x_max = x[y.argmax()]
+    del x, y
+
+    cutoffs = np.empty(2)
+    try:
+        cutoffs[0] = x_mins[x_mins < x_max].max()
+    except ValueError:
+        cutoffs[0] = np.NINF
+    try:
+        cutoffs[1] = x_mins[x_mins > x_max].min()
+    except ValueError:
+        cutoffs[1] = np.inf
+    return cutoffs
