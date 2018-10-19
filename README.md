@@ -8,8 +8,6 @@ There's a companion repo called `dautil-sh`, scripts for similar purpose but use
 
 # Installation
 
-1. Install the requirements from `requirements.txt`.
+1. `pip install dautilpy`
 
-2. Add this directory to your `PYTHONPATH`.
-
-3. Add `bin/` to your `PATH`.
+2. Optionally add `bin/` to your `PATH`. Consider these some example scripts that uses `dautilpy`.
