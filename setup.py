@@ -1,7 +1,7 @@
 """dautil: Script Generator that organizes cli args by YAML
 
 See:
-https://github.com/ickc/dautil
+https://github.com/ickc/dautil-py
 """
 
 # Always prefer setuptools over distutils
@@ -17,7 +17,7 @@ with open('docs/README.rst', encoding='utf-8') as f:
 version = '0.1'
 
 setup(
-    name='dautil',
+    name='dautilpy',
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
     # the version across setup.py and the project code, see
