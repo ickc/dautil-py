@@ -12,7 +12,7 @@ from moviepy.editor import VideoFileClip
 
 from dautil.stat import get_cutoffs
 
-__version__ = '0.2'
+__version__ = '0.3'
 
 EXTS = {
     '.mp4',
@@ -30,6 +30,8 @@ def get_duration(pathname):
         return VideoFileClip(str(pathname)).duration
     except OSError:
         return np.nan
+    except UnicodeDecodeError:
+        return np.inf
 
 
 def main_per_path(directory, file=sys.stdout):
@@ -40,12 +42,20 @@ def main_per_path(directory, file=sys.stdout):
     ])
     with ProcessPoolExecutor() as executor:
         durations = np.array(list(executor.map(get_duration, pathnames)), dtype=np.float32)
-    idx_nan = np.isnan(durations)
-    idx_nan
-    data = durations[~idx_nan]
-    cutoffs = get_cutoffs(data) if data.size else np.array((np.NINF, np.inf))
-    for pathname in (pathnames[idx_nan | (durations < cutoffs[0]) | (durations > cutoffs[1])]):
-        print(pathname, file=file)
+    idx_ok = np.isfinite(durations)
+    data = durations[idx_ok]
+    cutoffs = get_cutoffs(data) if data.size > 1 else np.array((np.NINF, np.inf))
+
+    # following 4 cases are mutually exclusive
+    for pathname in (pathnames[np.isnan(durations)]):
+        print('O', pathname, file=file)
+    for pathname in (pathnames[np.isposinf(durations)]):
+        print('U', pathname, file=file)
+    for pathname in (pathnames[durations < cutoffs[0]]):
+        print('S', pathname, file=file)
+    # because durations can be +inf we need to exclude that
+    for pathname in (pathnames[idx_ok & (durations > cutoffs[1])]):
+        print('L', pathname, file=file)
 
 
 def main(args):
@@ -53,7 +63,14 @@ def main(args):
 
 
 def cli():
-    parser = argparse.ArgumentParser(description="Detect extreme video duration within a directory.")
+    parser = argparse.ArgumentParser(description="""Detect extreme video duration within a directory.
+First 2 characters are flags:
+'O' means OSError when reading the file;
+'U' means UnicodeDecodeError when reading the file;
+'S' means duration seems too short;
+'L' means duration seems too long.
+"""
+    )
 
     parser.add_argument('dirs', nargs='+',
                         help='Directories.')
