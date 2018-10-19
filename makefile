@@ -6,7 +6,7 @@ python = python
 
 clean:
 	rm -f .coverage docs/dautil*.rst docs/modules.rst docs/README.rst
-	rm -rf htmlcov *.egg-info docs/_build .cache
+	rm -rf htmlcov *.egg-info docs/_build .cache dist build
 	find -type f -name "*.py[co]" -delete -or -type d -name "__pycache__" -delete
 
 test:
@@ -26,8 +26,9 @@ docs: docs/README.rst
 pypi:
 	git tag -a v$$($(python) setup.py --version) -m 'Deploy to PyPI' && git push origin v$$($(python) setup.py --version)
 ## Manually
-pypiManual:
-	$(python) setup.py register -r pypitest && $(python) setup.py sdist upload -r pypitest && $(python) setup.py register -r pypi && $(python) setup.py sdist upload -r pypi
+pypiManual: docs
+	$(python) setup.py sdist bdist_wheel
+	twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 
 # check python styles
 pep8:
