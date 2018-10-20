@@ -7,7 +7,7 @@ import pandas as pd
 from concurrent.futures import ProcessPoolExecutor
 from moviepy.editor import VideoFileClip
 
-__version__ = '0.1'
+__version__ = '0.1.1'
 
 EXTS = {
     '.mp4',
@@ -36,7 +36,7 @@ def main(args):
         for pathname in Path(args.dir).glob('**/*')
         if (pathname.is_file() or pathname.is_symlink()) and pathname.suffix in EXTS
     ])
-    with ProcessPoolExecutor() as executor:
+    with ProcessPoolExecutor(max_workers=args.processes) as executor:
         durations = np.array(list(executor.map(get_duration, pathnames)), dtype=np.float64)
     pd.DataFrame(
         {
@@ -53,6 +53,8 @@ def cli():
                         help='Directories.')
     parser.add_argument('-o', '--output',
                         help='Output pandas hdf5 file name.')
+    parser.add_argument('-p', '--processes',
+                        help='No. of parallel processes.')
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s {}'.format(__version__))
 
