@@ -38,7 +38,7 @@ def main(args):
     ])
     with ProcessPoolExecutor() as executor:
         durations = np.array(list(executor.map(get_duration, pathnames)), dtype=np.float32)
-    pd.Dataframe(
+    pd.DataFrame(
         {
             'Path': pathnames,
             'duration': durations
