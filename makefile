@@ -2,7 +2,10 @@ SHELL = /usr/bin/env bash
 
 python = python
 
-.PHONY: clean test pypi pypiManual pep8 pep8Strict pyflakes flake8 pylint autopep8 autopep8Aggressive past
+.PHONY: all clean test pypi pypiManual pep8 pep8Strict pyflakes flake8 pylint autopep8 autopep8Aggressive past
+
+all:
+	python -m compileall .
 
 clean:
 	rm -f .coverage docs/dautil*.rst docs/modules.rst docs/README.rst
