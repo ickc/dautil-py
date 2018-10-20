@@ -108,6 +108,7 @@
 
 <span class="c1"># converters ###########################################################</span>
 
+
 <div class="viewcode-block" id="strptime_np_general"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strptime_np_general">[docs]</a><span class="k">def</span> <span class="nf">strptime_np_general</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;%Y%m</span><span class="si">%d</span><span class="s1">_%H%M%S&#39;</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    string: a datetime in format ``fmt``</span>
@@ -145,7 +146,6 @@
 <span class="sd">    return: datetime in format ``fmt``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">npptime</span><span class="p">(</span><span class="n">datetime64</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">fmt</span><span class="p">)</span></div>
-
 
 
 <div class="viewcode-block" id="strttime_np"><a class="viewcode-back" href="../../dautil.date_time.html#dautil.date_time.strttime_np">[docs]</a><span class="k">def</span> <span class="nf">strttime_np</span><span class="p">(</span><span class="n">datetime64</span><span class="p">):</span>

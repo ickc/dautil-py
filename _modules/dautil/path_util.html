@@ -121,7 +121,7 @@
 <div class="viewcode-block" id="split_all"><a class="viewcode-back" href="../../dautil.path_util.html#dautil.path_util.split_all">[docs]</a><span class="k">def</span> <span class="nf">split_all</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;recursively split paths into components until exhausted</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">path</span> <span class="o">=</span><span class="p">[</span><span class="n">path</span><span class="p">]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">]</span>
     <span class="c1"># condition to end if the first element is only os.path.sep</span>
     <span class="c1"># also take care of the case &#39;//&#39;</span>
     <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>

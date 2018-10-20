@@ -132,12 +132,12 @@
             <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">stderr</span><span class="p">:</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span> <span class="c1"># prevent buffer not saved</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># prevent buffer not saved</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">stderr_original</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">f_err</span><span class="p">)</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">f_err</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">stdout</span><span class="p">:</span>
-                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span> <span class="c1"># prevent buffer not saved</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># prevent buffer not saved</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">stdout_original</span><span class="o">.</span><span class="n">fileno</span><span class="p">(),</span> <span class="n">f_out</span><span class="p">)</span>
                 <span class="n">os</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">f_out</span><span class="p">)</span>
 

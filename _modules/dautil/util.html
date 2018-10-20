@@ -123,6 +123,7 @@
 
 <span class="c1"># summarize ############################################################</span>
 
+
 <div class="viewcode-block" id="summarize_ndarray"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.summarize_ndarray">[docs]</a><span class="k">def</span> <span class="nf">summarize_ndarray</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;assume data is ndarray</span>
 <span class="sd">    return its type, dtype and shape&#39;&#39;&#39;</span>
@@ -235,7 +236,7 @@
         <span class="k">return</span> <span class="p">[]</span>
 
     <span class="n">n</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
-    
+
     <span class="k">for</span> <span class="n">datum</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
         <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="n">shape_list</span><span class="p">(</span><span class="n">datum</span><span class="p">):</span>
             <span class="k">return</span> <span class="n">n</span>
@@ -377,6 +378,7 @@
 
 <span class="c1"># compose ##############################################################</span>
 
+
 <div class="viewcode-block" id="compose"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.compose">[docs]</a><span class="k">def</span> <span class="nf">compose</span><span class="p">(</span><span class="o">*</span><span class="n">functions</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;composing functions. For example,</span>
 
@@ -385,6 +387,7 @@
     <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">f</span><span class="p">(</span><span class="n">g</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">functions</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">)</span></div>
 
 <span class="c1"># numpy array ##########################################################</span>
+
 
 <div class="viewcode-block" id="arange_inv"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.arange_inv">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">arange_inv</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
@@ -563,7 +566,7 @@
     <span class="k">return</span> <span class="n">start_avg</span><span class="p">,</span> <span class="n">stop_avg</span><span class="p">,</span> <span class="n">num</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="mi">1</span></div>
 
 
-<span class="nd">@numba</span><span class="o">.</span><span class="n">vectorize</span><span class="p">([</span><span class="n">numba</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex128</span><span class="p">),</span><span class="n">numba</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex64</span><span class="p">)])</span>
+<span class="nd">@numba</span><span class="o">.</span><span class="n">vectorize</span><span class="p">([</span><span class="n">numba</span><span class="o">.</span><span class="n">float64</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex128</span><span class="p">),</span> <span class="n">numba</span><span class="o">.</span><span class="n">float32</span><span class="p">(</span><span class="n">numba</span><span class="o">.</span><span class="n">complex64</span><span class="p">)])</span>
 <span class="k">def</span> <span class="nf">abs2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;return the square norm of complex ``x``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -628,6 +631,7 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <span class="c1"># KDE</span>
+
 
 <div class="viewcode-block" id="get_KDE"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_KDE">[docs]</a><span class="k">def</span> <span class="nf">get_KDE</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;given a distribution ``data``,</span>
@@ -811,11 +815,11 @@
     <span class="n">df_grouped</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">grouplevel</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">regressindex</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
+        <span class="k">def</span> <span class="nf">_linregress</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
     <span class="k">elif</span> <span class="n">regressorder</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">_linregress</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">_linregress</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span><span class="o">**</span><span class="n">regressorder</span>
+        <span class="k">def</span> <span class="nf">_linregress</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">regresslevel</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())[</span><span class="n">regressindex</span><span class="p">]</span><span class="o">**</span><span class="n">regressorder</span>
 
     <span class="n">dfs</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_grouped</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_linregress</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">df_grouped</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
     <span class="n">df_final</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
