@@ -53,7 +53,7 @@ def cli():
                         help='Directories.')
     parser.add_argument('-o', '--output',
                         help='Output pandas hdf5 file name.')
-    parser.add_argument('-p', '--processes',
+    parser.add_argument('-p', '--processes', type=int,
                         help='No. of parallel processes.')
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s {}'.format(__version__))
