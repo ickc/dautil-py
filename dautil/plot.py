@@ -159,6 +159,7 @@ def plot_x_y_complex(x, y, **kwargs):
 
 # PIL ##################################################################
 
+
 def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', font_ratio=10):
     '''array: dtype of numpy.float64
     filename: output filename
@@ -175,5 +176,5 @@ def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', fo
         draw = ImageDraw.Draw(img)
         fontsize = array.shape[0] // font_ratio
         font = ImageFont.truetype(fontname, fontsize)
-        draw.text((0, 0), text,(255,), font=font)
+        draw.text((0, 0), text, (255,), font=font)
     img.save(filename)

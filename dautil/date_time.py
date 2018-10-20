@@ -3,6 +3,7 @@ import numpy as np
 
 # converters ###########################################################
 
+
 def strptime_np_general(string, fmt='%Y%m%d_%H%M%S'):
     '''
     string: a datetime in format ``fmt``
@@ -40,7 +41,6 @@ def strttime_np_general(datetime64, fmt='%Y%m%d_%H%M%S'):
     return: datetime in format ``fmt``
     '''
     return npptime(datetime64).strftime(fmt)
-
 
 
 def strttime_np(datetime64):

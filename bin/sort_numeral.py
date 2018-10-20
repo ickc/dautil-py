@@ -24,7 +24,7 @@ def sort_paths(paths, patterns):
     nums = np.array([
         w2n.word_to_num(next(chain(
             *(match_numeral.findall(os.path.splitext(os.path.basename(path))[0])
-            for match_numeral in match_numerals)
+              for match_numeral in match_numerals)
         )))
         for path in paths
     ])

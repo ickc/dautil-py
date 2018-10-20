@@ -18,6 +18,7 @@ PY2 = sys.version_info[0] == 2
 
 # summarize ############################################################
 
+
 def summarize_ndarray(data):
     '''assume data is ndarray
     return its type, dtype and shape'''
@@ -130,7 +131,7 @@ def shape_list(data):
         return []
 
     n = [len(data)]
-    
+
     for datum in data[1:]:
         if m != shape_list(datum):
             return n
@@ -272,6 +273,7 @@ def sum_(*args):
 
 # compose ##############################################################
 
+
 def compose(*functions):
     '''composing functions. For example,
 
@@ -280,6 +282,7 @@ def compose(*functions):
     return reduce(lambda f, g: lambda x: f(g(x)), functions, lambda x: x)
 
 # numpy array ##########################################################
+
 
 @jit(nopython=True, nogil=True)
 def arange_inv(array):
@@ -458,7 +461,7 @@ def running_mean_linspace(start, stop, num, n):
     return start_avg, stop_avg, num - n + 1
 
 
-@numba.vectorize([numba.float64(numba.complex128),numba.float32(numba.complex64)])
+@numba.vectorize([numba.float64(numba.complex128), numba.float32(numba.complex64)])
 def abs2(x):
     '''return the square norm of complex ``x``
     '''
@@ -523,6 +526,7 @@ def max_offdiag_general(array, **kwargs):
     return np.nanmax(temp, **kwargs)
 
 # KDE
+
 
 def get_KDE(data, num=100, **kwargs):
     '''given a distribution ``data``,
@@ -706,11 +710,11 @@ def df_linregress(df, grouplevel=0, regresslevel=1, regressindex=2, regressorder
     df_grouped = df.groupby(level=grouplevel)
 
     if regressindex is None:
-        _linregress = lambda x: scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())
     elif regressorder == 1:
-        _linregress = lambda x: scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]
     else:
-        _linregress = lambda x: scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]**regressorder
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]**regressorder
 
     dfs = (df_grouped.get_group(key).apply(_linregress).to_frame(key).transpose() for key in df_grouped.groups.keys())
     df_final = pd.concat(dfs)

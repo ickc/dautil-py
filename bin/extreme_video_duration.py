@@ -25,6 +25,7 @@ EXTS = {
     '.mpg',
 }
 
+
 def get_duration(pathname):
     try:
         return VideoFileClip(str(pathname)).duration
@@ -70,7 +71,7 @@ First 2 characters are flags:
 'S' means duration seems too short;
 'L' means duration seems too long.
 """
-    )
+                                     )
 
     parser.add_argument('dirs', nargs='+',
                         help='Directories.')

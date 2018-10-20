@@ -16,7 +16,7 @@ def split(path, n=1):
 def split_all(path):
     '''recursively split paths into components until exhausted
     '''
-    path =[path]
+    path = [path]
     # condition to end if the first element is only os.path.sep
     # also take care of the case '//'
     while len(path[0].replace(os.path.sep, '')) > 0:

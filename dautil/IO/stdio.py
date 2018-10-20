@@ -27,12 +27,12 @@ def redirect_stdout_stderr(f):
             return f(*args, **kwargs)
         finally:
             if stderr:
-                sys.stderr.flush() # prevent buffer not saved
+                sys.stderr.flush()  # prevent buffer not saved
                 os.dup2(stderr_original.fileno(), f_err)
                 os.close(f_err)
 
             if stdout:
-                sys.stdout.flush() # prevent buffer not saved
+                sys.stdout.flush()  # prevent buffer not saved
                 os.dup2(stdout_original.fileno(), f_out)
                 os.close(f_out)
 

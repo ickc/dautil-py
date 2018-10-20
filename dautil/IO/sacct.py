@@ -18,9 +18,9 @@ def get_job(jobid):
     result = subprocess.run(
         [
             'sacct',
-             '-j', jobid,
-             '--parsable2',
-             '--format={}'.format(','.join(ALLFORMAT))
+            '-j', jobid,
+            '--parsable2',
+            '--format={}'.format(','.join(ALLFORMAT))
         ],
         stdout=subprocess.PIPE
     ).stdout.decode('utf-8')
@@ -35,9 +35,9 @@ def get_user(username):
     result = subprocess.run(
         [
             'sacct',
-             '-u', username,
-             '--parsable2',
-             '--format={}'.format(','.join(ALLFORMAT))
+            '-u', username,
+            '--parsable2',
+            '--format={}'.format(','.join(ALLFORMAT))
         ],
         stdout=subprocess.PIPE
     ).stdout.decode('utf-8')

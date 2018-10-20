@@ -36,7 +36,7 @@ def convert(basedir, output, in_path, protocol=2):
 def main(args):
     _glob = partial(glob, recursive=True) if args.recursive else glob
     in_paths = chain(*(_glob(os.path.join(args.basedir, glob_i))
-                          for glob_i in args.glob))
+                       for glob_i in args.glob))
 
     _convert = partial(convert, args.basedir, args.output, protocol=args.protocol)
 
