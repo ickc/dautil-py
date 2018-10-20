@@ -37,13 +37,13 @@ def main(args):
         if (pathname.is_file() or pathname.is_symlink()) and pathname.suffix in EXTS
     ])
     with ProcessPoolExecutor() as executor:
-        durations = np.array(list(executor.map(get_duration, pathnames)), dtype=np.float32)
+        durations = np.array(list(executor.map(get_duration, pathnames)), dtype=np.float64)
     pd.DataFrame(
         {
             'Path': pathnames,
             'duration': durations
         }
-    ).to_hdf(args.output, 'df', mode='w', format='table', complevel=9, fletcher32=True)
+    ).to_hdf(args.output, 'df', mode='w', complevel=9, fletcher32=True)
 
 
 def cli():
