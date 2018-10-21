@@ -221,12 +221,14 @@ between 2 arrays</p>
 
 <dl class="function">
 <dt id="dautil.stat.get_cutoffs">
-<code class="descclassname">dautil.stat.</code><code class="descname">get_cutoffs</code><span class="sig-paren">(</span><em>data</em>, <em>num=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_cutoffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_cutoffs" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">dautil.stat.</code><code class="descname">get_cutoffs</code><span class="sig-paren">(</span><em>data</em>, <em>num=50</em>, <em>mode='aggressive'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_cutoffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_cutoffs" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: 1d-array
 <code class="docutils literal notranslate"><span class="pre">num</span></code>: no. of points to resolve between min and max
 of <code class="docutils literal notranslate"><span class="pre">data</span></code>.
 use KDE to detect minimums and return an array
-of left and right cutoff</p>
+of left and right cutoff, relative to the peak of KDE
+if <cite>mode == ‘aggressive’</cite> then choose the innermost minimums to cutoff
+else outermost.</p>
 </dd></dl>
 
 <dl class="attribute">
