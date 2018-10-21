@@ -170,12 +170,14 @@ def bin_corr_relative(corr, neighbor_max):
     return pd.DataFrame(result, index=np.arange(1, neighbor_max + 1) * interval, columns=['Correlation as a function of $\Delta l$'])
 
 
-def get_cutoffs(data, num=50):
+def get_cutoffs(data, num=50, mode='aggressive'):
     '''``data``: 1d-array
     ``num``: no. of points to resolve between min and max
     of ``data``.
     use KDE to detect minimums and return an array
-    of left and right cutoff
+    of left and right cutoff, relative to the peak of KDE
+    if `mode == 'aggressive'` then choose the innermost minimums to cutoff
+    else outermost.
     '''
     x = np.linspace(data.min(), data.max(), num=num)
     y = scipy.stats.gaussian_kde(data)(x)
@@ -186,11 +188,11 @@ def get_cutoffs(data, num=50):
 
     cutoffs = np.empty(2)
     try:
-        cutoffs[0] = x_mins[x_mins < x_max].max()
+        cutoffs[0] = x_mins[x_mins < x_max].max() if mode == 'agressive' else x_mins[x_mins < x_max].min()
     except ValueError:
         cutoffs[0] = np.NINF
     try:
-        cutoffs[1] = x_mins[x_mins > x_max].min()
+        cutoffs[1] = x_mins[x_mins > x_max].min() if mode == 'agressive' else x_mins[x_mins > x_max].max()
     except ValueError:
         cutoffs[1] = np.inf
     return cutoffs
