@@ -710,11 +710,11 @@ def df_linregress(df, grouplevel=0, regresslevel=1, regressindex=2, regressorder
     df_grouped = df.groupby(level=grouplevel)
 
     if regressindex is None:
-        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).values)
     elif regressorder == 1:
-        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).values)[regressindex]
     else:
-        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).as_matrix())[regressindex]**regressorder
+        def _linregress(x): return scipy.stats.linregress(x.reset_index(level=regresslevel).values)[regressindex]**regressorder
 
     dfs = (df_grouped.get_group(key).apply(_linregress).to_frame(key).transpose() for key in df_grouped.groups.keys())
     df_final = pd.concat(dfs)

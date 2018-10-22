@@ -94,7 +94,7 @@ def df_corr_matrix(df, method='pearson'):
         exit(1)
 
     corr_matrix_func = get_corr_matrix_func(corr_func)
-    corr = corr_matrix_func(df.as_matrix())
+    corr = corr_matrix_func(df.values)
     return pd.DataFrame(corr, index=df.columns, columns=df.columns)
 
 
@@ -116,7 +116,7 @@ def df_partial_corr_matrix(df, mode='pinv'):
     mode: 'pinv' or 'inv', using the corresponding function in scipy.linalg
     return the partial correlation matrix
     '''
-    corr = df.as_matrix()
+    corr = df.values
     inv = scipy.linalg.pinv(corr) if mode == 'pinv' else scipy.linalg.inv(corr)
     corr_partial = partial_corr_matrix(inv)
     return pd.DataFrame(corr_partial, index=df.columns, columns=df.index)
@@ -128,7 +128,7 @@ def df_inv(df, mode='pinv'):
     return a DataFrame with the pesudo inverse matrix of the values
     '''
     inv = scipy.linalg.pinv if mode == 'pinv' else scipy.linalg.inv
-    return pd.DataFrame(inv(df.as_matrix()), index=df.columns, columns=df.index)
+    return pd.DataFrame(inv(df.values), index=df.columns, columns=df.index)
 
 
 @jit  # (nopython=True)
@@ -145,7 +145,7 @@ def corr_max(df, rowonly=False):
     return: a mask that is True when the correlation is max.
     '''
     # per row
-    mask = max_mask_row((df - np.identity(df.shape[0])).as_matrix())
+    mask = max_mask_row((df - np.identity(df.shape[0])).values)
     if not rowonly:
         # or per col
         # assert mask.T == df.eq(df_max, axis=1)
@@ -160,7 +160,7 @@ def bin_corr_relative(corr, neighbor_max):
     where k ranges from 0 to neighbor_max
     '''
     interval = np.real(corr.columns[1] - corr.columns[0])
-    corr_matrix = corr.as_matrix()
+    corr_matrix = corr.values
 
     result = np.empty((neighbor_max,), dtype=complex)
     # k-th neighbor
