@@ -19,7 +19,7 @@ def get_job(jobid):
         [
             'sacct',
             '-j', jobid,
-            '--parsable2',
+            '--parsable',
             '--format={}'.format(','.join(ALLFORMAT))
         ],
         stdout=subprocess.PIPE
@@ -36,7 +36,7 @@ def get_user(username):
         [
             'sacct',
             '-u', username,
-            '--parsable2',
+            '--parsable',
             '--format={}'.format(','.join(ALLFORMAT))
         ],
         stdout=subprocess.PIPE
