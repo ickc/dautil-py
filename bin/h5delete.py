@@ -4,6 +4,8 @@
 Detect invalid HDF5 files and delete them.
 '''
 
+from __future__ import print_function
+
 import argparse
 from itertools import chain
 from glob import iglob as glob
