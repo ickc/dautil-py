@@ -261,7 +261,6 @@ def sum_(*args):
     from copy import deepcopy
 
     iterable = iter(args[0])
-    start = args[1] if len(args) > 1 else 0
     try:
         # avoid mutating the input, both during and after this function call
         result = deepcopy(next(iterable))
@@ -269,6 +268,7 @@ def sum_(*args):
             result += i
         return result
     except StopIteration:
+        start = args[1] if len(args) > 1 else 0
         return start
 
 # compose ##############################################################
