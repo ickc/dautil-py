@@ -525,8 +525,18 @@ def max_offdiag_general(array, **kwargs):
     np.fill_diagonal(temp, np.nan)
     return np.nanmax(temp, **kwargs)
 
-# KDE
 
+@jit(nopython=True, nogil=True, parallel=True)
+def reciprocal_sum_reciprocal(*args):
+    '''reciprocal of sum of reciprocal of args
+    ``len(args) > 1`` for this to make sense
+    '''
+    result = np.reciprocal(args[0])
+    for arg in args[1:]:
+        result += np.reciprocal(arg)
+    return np.reciprocal(result)
+
+# KDE ##################################################################
 
 def get_KDE(data, num=100, **kwargs):
     '''given a distribution ``data``,
