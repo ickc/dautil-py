@@ -207,7 +207,7 @@ def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
         if isinstance(input1[key], dict):
             if verbose:
                 print('asserting {}'.format(key))
-            assert_rec(input1[key], input2[key], rtol=rtol, atol=atol, verbose=verbose)
+            assert_dict(input1[key], input2[key], rtol=rtol, atol=atol, verbose=verbose)
         elif isinstance(input1[key], np.ndarray):
             if verbose:
                 print('asserting {}'.format(key))
