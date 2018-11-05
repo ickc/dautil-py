@@ -536,6 +536,21 @@ def reciprocal_sum_reciprocal(*args):
         result += np.reciprocal(arg)
     return np.reciprocal(result)
 
+
+@jit(nopython=True, nogil=True)
+def zero_padding(mask, shape):
+    '''``mask``: 2d-array
+    zero-padding ``mask`` to target shape
+    '''
+    result = np.zeros(shape, dtype=mask.dtype)
+
+    m, n = mask.shape
+    i = (shape[0] - m) // 2
+    j = (shape[1] - n) // 2
+
+    result[i:i + m, j:j + n] = mask
+    return result
+
 # KDE ##################################################################
 
 def get_KDE(data, num=100, **kwargs):
