@@ -11,3 +11,5 @@ docs/*
 !docs/Makefile
 !docs/conf.py
 !docs/requirements.txt
+
+.vscode/
