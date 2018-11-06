@@ -551,6 +551,47 @@ def zero_padding(mask, shape):
     result[i:i + m, j:j + n] = mask
     return result
 
+
+@jit(nopython=True, nogil=True)
+def planck_taper(m):
+    '''return a planck taper window, mapping from 0..m to 0..1,
+    excluding 0, m index (which equals to 0, and 1 respectively)
+    i.e. the returned array has length m - 1
+    the reason is that the array is assumed to be zero-padded anyway,
+    where the 0 at the boundary is granted.
+    '''
+    n = np.arange(1, m)
+    return 1. / (1. + np.exp(m * ((m - 2. * n) / (n * (m - n)))))
+
+
+@jit(nopython=True, nogil=True, parallel=True)
+def clamp_edge(mask, width):
+    '''taper ``mask`` with ``width`` in-place,
+    using ``planck_taper``
+    assume mask's size bigger than 2 * width
+    in-place in ``mask``
+    '''
+    taper = planck_taper(width + 1)
+    m, n = mask.shape
+
+    # apply taper
+    # assume mask is much larger than width
+    # i.e. cache favor mask first
+    # i-lower
+    for i in range(width):
+        mask[i] *= taper[i]
+    # j-lower
+    for i in range(m):
+        for j in range(width):
+            mask[i, j] *= taper[j]
+    # i-upper
+    for i in range(width - 1, -1, -1):
+        mask[m - i - 1] *= taper[i]
+    # j-upper
+    for i in range(m):
+        for j in range(width - 1, -1, -1):
+            mask[i, n - j - 1] *= taper[j]
+
 # KDE ##################################################################
 
 def get_KDE(data, num=100, **kwargs):
