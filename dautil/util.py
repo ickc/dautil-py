@@ -461,11 +461,21 @@ def running_mean_linspace(start, stop, num, n):
     return start_avg, stop_avg, num - n + 1
 
 
+@numba.vectorize([numba.float64(numba.complex128, numba.complex128), numba.float32(numba.complex64, numba.complex64)])
+def complex_dot(x, y):
+    '''return the complex dot product of ``x``, ``y``
+    '''
+    return x.real * y.real + x.imag * y.imag
+
+
 @numba.vectorize([numba.float64(numba.complex128), numba.float32(numba.complex64)])
 def abs2(x):
     '''return the square norm of complex ``x``
+    equals to complex_dot(x, x)
     '''
-    return x.real**2 + x.imag**2
+    real = x.real
+    imag = x.imag
+    return real * real + imag * imag
 
 
 @jit(nopython=True, nogil=True, parallel=True)
