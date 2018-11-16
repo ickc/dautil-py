@@ -8,13 +8,13 @@ from nltk import word_tokenize
 STEMMER = LancasterStemmer()
 LEMMATIZER = WordNetLemmatizer()
 WORDS = wordnet.words()
-SOUP = BeautifulSoup(text, "html.parser")
 
 
 def strip_html(text):
     '''get plain text from html
     '''
-    return SOUP.get_text()
+    soup = BeautifulSoup(text, "html.parser")
+    return soup.get_text()
 
 
 def normalize_word(word, words=WORDS, stemmer=STEMMER, lemmatizer=LEMMATIZER):
