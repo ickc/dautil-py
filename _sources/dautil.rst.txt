@@ -19,6 +19,7 @@ Submodules
    dautil.path_util
    dautil.plot
    dautil.stat
+   dautil.string
    dautil.sym
    dautil.util
 

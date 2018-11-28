@@ -11,7 +11,6 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -145,6 +144,15 @@ beware that all other arrays are comparing to the first array</p>
 <code class="descclassname">dautil.util.</code><code class="descname">assert_dict</code><span class="sig-paren">(</span><em>input1</em>, <em>input2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>recursively assert into a dictionary
 if the value is a numpy array, assert_allclose, else assert equal.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.util.clamp_edge">
+<code class="descclassname">dautil.util.</code><code class="descname">clamp_edge</code><a class="reference internal" href="_modules/dautil/util.html#clamp_edge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.clamp_edge" title="Permalink to this definition">¶</a></dt>
+<dd><p>taper <code class="docutils literal notranslate"><span class="pre">mask</span></code> with <code class="docutils literal notranslate"><span class="pre">width</span></code> in-place,
+using <code class="docutils literal notranslate"><span class="pre">planck_taper</span></code>
+assume mask’s size bigger than 2 * width
+in-place in <code class="docutils literal notranslate"><span class="pre">mask</span></code></p>
 </dd></dl>
 
 <dl class="function">
@@ -390,6 +398,16 @@ except that the off-diagonal items is ignored when finding minimum</p>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="dautil.util.planck_taper">
+<code class="descclassname">dautil.util.</code><code class="descname">planck_taper</code><a class="reference internal" href="_modules/dautil/util.html#planck_taper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.planck_taper" title="Permalink to this definition">¶</a></dt>
+<dd><p>return a planck taper window, mapping from 0..m to 0..1,
+excluding 0, m index (which equals to 0, and 1 respectively)
+i.e. the returned array has length m - 1
+the reason is that the array is assumed to be zero-padded anyway,
+where the 0 at the boundary is granted.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="dautil.util.polynomials">
 <code class="descclassname">dautil.util.</code><code class="descname">polynomials</code><a class="reference internal" href="_modules/dautil/util.html#polynomials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.polynomials" title="Permalink to this definition">¶</a></dt>
 <dd><p>1d-array
@@ -588,7 +606,7 @@ zero-padding <code class="docutils literal notranslate"><span class="pre">mask</
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.<br/>
     </p>
   </div>
 </footer>
