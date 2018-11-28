@@ -65,8 +65,8 @@ def flatten_list(data, verbose=False):
                 head = data[:i]
                 tail = data[i + 1:]
 
-                flatten += head
-                data = datum + tail
+                flatten += list(head)
+                data = list(datum) + list(tail)
 
                 if verbose:
                     print('''I found a list at position {}.
