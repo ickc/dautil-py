@@ -11,6 +11,15 @@ def read_pkl2(path):
     with open(path, 'rb') as f:
         return pickle.load(f) if PY2 else pickle.load(f, encoding='latin1')
 
+def read_pkl(path):
+    '''read pkl, unsure if it was saved in py2 or py3.
+    '''
+    with open(path, 'rb') as f:
+        try:
+            return pickle.load(f)
+        except UnicodeDecodeError:
+            return pickle.load(f, encoding='latin1')
+
 
 def read_h5_dataset(path, dataset):
     '''a functional thin wrapper to read hdf5 dataset
