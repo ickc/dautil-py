@@ -271,6 +271,16 @@ def sum_(*args):
         start = args[1] if len(args) > 1 else 0
         return start
 
+
+def split_list(list_, n):
+    '''split list into n chunks
+    first n - 1 elements are of equal length
+    and last element is the remainder
+    '''
+    N = len(list_)
+    n_per_chunk = (N + n - 1) // n
+    return [list_[i:i + n_per_chunk] for i in range(0, N, n_per_chunk)]
+
 # compose ##############################################################
 
 
