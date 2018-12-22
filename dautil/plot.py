@@ -11,6 +11,18 @@ from functools import wraps
 # from matplotlib2tikz import save as tikz_save
 
 
+def sns_heatmap_xy(mask, **kwargs):
+    '''``mask``: 2d-array
+    thin wrapper of seaborn.heatmap to plot a 2d-array
+    like an x-y plot.
+    such that the horizontal axis is the first axis,
+    increasing from left to right;
+    and the vertical axis is the second axis,
+    increasing from bottom to top.
+    '''
+    return sns.heatmap(mask.T, **kwargs).invert_yaxis()
+
+
 def save(f):
     '''a decorator to add keyword filename to the function args
     the function f is expected to be a procedure that uses matplotlib
