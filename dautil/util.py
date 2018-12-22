@@ -696,7 +696,7 @@ def _starmap(f, x):
 
 def map_parallel(f, *args, **kwargs):
     '''equivalent to map(f, *args)
-    p: no. of parallel processes when multiprocessing is used
+    processes: no. of parallel processes when multiprocessing is used
     (in the case of mpi, it is determined by mpiexec/mpirun args)
     mode:
 
@@ -738,7 +738,7 @@ def map_parallel(f, *args, **kwargs):
 
 def starmap_parallel(f, args, mode='multiprocessing', processes=1):
     '''equivalent to starmap(f, args)
-    p: no. of parallel processes when multiprocessing is used
+    processes: no. of parallel processes when multiprocessing is used
     (in the case of mpi, it is determined by mpiexec/mpirun args)
     mode:
 
