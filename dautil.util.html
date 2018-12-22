@@ -320,7 +320,7 @@ return (start, stop, num) which used to create this array</p>
 <dt id="dautil.util.map_parallel">
 <code class="descclassname">dautil.util.</code><code class="descname">map_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.map_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>equivalent to map(f, <a href="#id13"><span class="problematic" id="id14">*</span></a>args)
-p: no. of parallel processes when multiprocessing is used
+processes: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
 <ul class="simple">
@@ -499,7 +499,7 @@ and last element is the remainder</p>
 <dt id="dautil.util.starmap_parallel">
 <code class="descclassname">dautil.util.</code><code class="descname">starmap_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>args</em>, <em>mode='multiprocessing'</em>, <em>processes=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#starmap_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.starmap_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>equivalent to starmap(f, args)
-p: no. of parallel processes when multiprocessing is used
+processes: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
 <ul class="simple">

@@ -800,7 +800,7 @@
 
 <div class="viewcode-block" id="map_parallel"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.map_parallel">[docs]</a><span class="k">def</span> <span class="nf">map_parallel</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;equivalent to map(f, *args)</span>
-<span class="sd">    p: no. of parallel processes when multiprocessing is used</span>
+<span class="sd">    processes: no. of parallel processes when multiprocessing is used</span>
 <span class="sd">    (in the case of mpi, it is determined by mpiexec/mpirun args)</span>
 <span class="sd">    mode:</span>
 
@@ -842,7 +842,7 @@
 
 <div class="viewcode-block" id="starmap_parallel"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.starmap_parallel">[docs]</a><span class="k">def</span> <span class="nf">starmap_parallel</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;multiprocessing&#39;</span><span class="p">,</span> <span class="n">processes</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;equivalent to starmap(f, args)</span>
-<span class="sd">    p: no. of parallel processes when multiprocessing is used</span>
+<span class="sd">    processes: no. of parallel processes when multiprocessing is used</span>
 <span class="sd">    (in the case of mpi, it is determined by mpiexec/mpirun args)</span>
 <span class="sd">    mode:</span>
 

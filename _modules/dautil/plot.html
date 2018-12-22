@@ -115,6 +115,18 @@
 <span class="c1"># from matplotlib2tikz import save as tikz_save</span>
 
 
+<div class="viewcode-block" id="sns_heatmap_xy"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.sns_heatmap_xy">[docs]</a><span class="k">def</span> <span class="nf">sns_heatmap_xy</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;``mask``: 2d-array</span>
+<span class="sd">    thin wrapper of seaborn.heatmap to plot a 2d-array</span>
+<span class="sd">    like an x-y plot.</span>
+<span class="sd">    such that the horizontal axis is the first axis,</span>
+<span class="sd">    increasing from left to right;</span>
+<span class="sd">    and the vertical axis is the second axis,</span>
+<span class="sd">    increasing from bottom to top.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">()</span></div>
+
+
 <div class="viewcode-block" id="save"><a class="viewcode-back" href="../../dautil.plot.html#dautil.plot.save">[docs]</a><span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;a decorator to add keyword filename to the function args</span>
 <span class="sd">    the function f is expected to be a procedure that uses matplotlib</span>
