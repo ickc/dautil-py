@@ -612,6 +612,14 @@ def clamp_edge(mask, width):
         for j in range(width - 1, -1, -1):
             mask[i, n - j - 1] *= taper[j]
 
+
+@jit(nopython=True, nogil=True)
+def get_non_nan_idxs(array):
+    '''return the idxs that is not nan
+    '''
+    idxs_non_nan = np.nonzero(~np.isnan(array))[0]
+    return idxs_non_nan
+
 # KDE ##################################################################
 
 def get_KDE(data, num=100, **kwargs):
