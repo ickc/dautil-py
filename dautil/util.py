@@ -557,18 +557,31 @@ def reciprocal_sum_reciprocal(*args):
     return np.reciprocal(result)
 
 
+
+@jit(nopython=True, nogil=True)
+def zero_padding_idx(in_shape, out_shape):
+    '''``in_shape``: input 2d-array shape
+    ``out_shape``: output 2d-array shape
+
+    return i_min, i_max, j_min, j_max that defines
+    the box within the output array to be copied from
+    the input array
+    '''
+    m, n = in_shape
+    i = (out_shape[0] - m) // 2
+    j = (out_shape[1] - n) // 2
+
+    return i, i + m, j, j + n
+
+
 @jit(nopython=True, nogil=True)
 def zero_padding(mask, shape):
     '''``mask``: 2d-array
     zero-padding ``mask`` to target shape
     '''
     result = np.zeros(shape, dtype=mask.dtype)
-
-    m, n = mask.shape
-    i = (shape[0] - m) // 2
-    j = (shape[1] - n) // 2
-
-    result[i:i + m, j:j + n] = mask
+    i_min, i_max, j_min, j_max = zero_padding_idx(mask.shape, shape)
+    result[i_min:i_max, j_min:j_max] = mask
     return result
 
 
