@@ -723,6 +723,7 @@ def map_parallel(f, *args, **kwargs):
 
     - mpi: using mpi4py.futures
     - multiprocessing: using multiprocessing from standard library
+    - multithreading: using multithreading from standard library
     - serial: using map
 
     Note: this is for Python 2 compatibility,
@@ -736,9 +737,9 @@ def map_parallel(f, *args, **kwargs):
         with MPIPoolExecutor() as executor:
             result = executor.map(f, *args)
     elif mode == 'multiprocessing' and processes > 1:
-        import multiprocessing
-        from functools import partial
         if PY2:
+            import multiprocessing
+            from functools import partial
             pool = multiprocessing.Pool(processes=processes)
             try:
                 result = pool.map(f, *args) \
@@ -748,10 +749,13 @@ def map_parallel(f, *args, **kwargs):
                 pool.terminate()
                 pool.close()
         else:
-            with multiprocessing.Pool(processes=processes) as pool:
-                result = pool.map(f, *args) \
-                    if len(args) <= 1 else \
-                    pool.map(partial(_starmap, f), zip(*args))
+            from concurrent.futures import ProcessPoolExecutor
+            with ProcessPoolExecutor(max_workers=processes) as executor:
+                result = list(executor.map(f, *args))
+    elif mode == 'multithreading' and processes > 1:
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=processes) as executor:
+            result = list(executor.map(f, *args))
     else:
         result = list(map(f, *args))
     return result
@@ -765,6 +769,7 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
 
     - mpi: using mpi4py.futures
     - multiprocessing: using multiprocessing from standard library
+    - multithreading: using multithreading from standard library
     - serial: using starmap
     '''
     if mode == 'mpi':
@@ -772,9 +777,9 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
         with MPIPoolExecutor() as executor:
             result = executor.starmap(f, args)
     elif mode == 'multiprocessing' and processes > 1:
-        import multiprocessing
         from functools import partial
         if PY2:
+            import multiprocessing
             pool = multiprocessing.Pool(processes=processes)
             try:
                 result = pool.map(partial(_starmap, f), args)
@@ -782,8 +787,14 @@ def starmap_parallel(f, args, mode='multiprocessing', processes=1):
                 pool.terminate()
                 pool.close()
         else:
-            with multiprocessing.Pool(processes=processes) as pool:
-                result = pool.map(partial(_starmap, f), args)
+            from concurrent.futures import ProcessPoolExecutor
+            with ProcessPoolExecutor(max_workers=processes) as executor:
+                result = list(executor.map(partial(_starmap, f), args))
+    elif mode == 'multithreading' and processes > 1:
+        from functools import partial
+        from concurrent.futures import ThreadPoolExecutor
+        with ThreadPoolExecutor(max_workers=processes) as executor:
+            result = list(executor.map(partial(_starmap, f), args))
     else:
         from itertools import starmap
         result = list(starmap(f, args))
