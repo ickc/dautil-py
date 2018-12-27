@@ -21,3 +21,24 @@ def test_running_mean():
     assert util.running_mean_arange(0, 10, 1, 3) == (1, 9, 1)
     assert util.running_mean_linspace(0, 9, 10, 3) == (1, 8, 8)
     assert util.running_mean(test, n).size == test.size - n + 1
+
+
+# def test_parallel():
+#     '''somehow pytest doesn't play nice with futures
+#     '''
+#     def f(a, b, c):
+#         return a - b, b - c, c - a
+
+#     np.random.seed(314159)
+#     temp = np.random.randint(0, 100, 9).reshape((3, 3))
+#     tempT = list(map(list, zip(*temp)))
+#     result = list(map(f, *temp))
+#     assert result == util.map_parallel(f, *temp, processes=1)
+#     assert result == util.map_parallel(f, *temp, processes=3)
+#     assert result == util.map_parallel(f, *temp, processes=1, mode='multithreading')
+#     assert result == util.map_parallel(f, *temp, processes=3, mode='multithreading')
+#     assert result == util.map_parallel(f, *temp, processes=3)
+#     assert result == util.starmap_parallel(f, tempT, processes=1)
+#     assert result == util.starmap_parallel(f, tempT, processes=3)
+#     assert result == util.starmap_parallel(f, tempT, processes=1, mode='multithreading')
+#     assert result == util.starmap_parallel(f, tempT, processes=3, mode='multithreading')
