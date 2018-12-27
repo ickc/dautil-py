@@ -11,6 +11,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
     <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -279,6 +280,12 @@ In principle, a trimmed array with this attribute can reconstruct the original a
 <code class="descclassname">dautil.util.</code><code class="descname">get_map_parallel</code><span class="sig-paren">(</span><em>processes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_map_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a map function
 uses multiprocessing’s Pool if processes != 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dautil.util.get_non_nan_idxs">
+<code class="descclassname">dautil.util.</code><code class="descname">get_non_nan_idxs</code><a class="reference internal" href="_modules/dautil/util.html#get_non_nan_idxs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_non_nan_idxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>return the idxs that is not nan</p>
 </dd></dl>
 
 <dl class="function">
@@ -599,6 +606,24 @@ zero-padding <code class="docutils literal notranslate"><span class="pre">mask</
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="dautil.util.zero_padding_idx">
+<code class="descclassname">dautil.util.</code><code class="descname">zero_padding_idx</code><a class="reference internal" href="_modules/dautil/util.html#zero_padding_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.zero_padding_idx" title="Permalink to this definition">¶</a></dt>
+<dd><p>input 2d-array shape
+<code class="docutils literal notranslate"><span class="pre">out_shape</span></code>: output 2d-array shape</p>
+<p>return i_min, i_max, j_min, j_max that defines
+the box within the output array to be copied from
+the input array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">in_shape</span></code></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 
@@ -614,7 +639,7 @@ zero-padding <code class="docutils literal notranslate"><span class="pre">mask</
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.<br/>
     </p>
   </div>
 </footer>

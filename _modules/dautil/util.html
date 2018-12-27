@@ -11,6 +11,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -661,18 +662,31 @@
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">reciprocal</span><span class="p">(</span><span class="n">result</span><span class="p">)</span></div>
 
 
+
+<div class="viewcode-block" id="zero_padding_idx"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.zero_padding_idx">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">zero_padding_idx</span><span class="p">(</span><span class="n">in_shape</span><span class="p">,</span> <span class="n">out_shape</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;``in_shape``: input 2d-array shape</span>
+<span class="sd">    ``out_shape``: output 2d-array shape</span>
+
+<span class="sd">    return i_min, i_max, j_min, j_max that defines</span>
+<span class="sd">    the box within the output array to be copied from</span>
+<span class="sd">    the input array</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">in_shape</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">out_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+
+    <span class="k">return</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">j</span> <span class="o">+</span> <span class="n">n</span></div>
+
+
 <div class="viewcode-block" id="zero_padding"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.zero_padding">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">zero_padding</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;``mask``: 2d-array</span>
 <span class="sd">    zero-padding ``mask`` to target shape</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">mask</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-
-    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">m</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-    <span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">n</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
-
-    <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="n">m</span><span class="p">,</span> <span class="n">j</span><span class="p">:</span><span class="n">j</span> <span class="o">+</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
+    <span class="n">i_min</span><span class="p">,</span> <span class="n">i_max</span><span class="p">,</span> <span class="n">j_min</span><span class="p">,</span> <span class="n">j_max</span> <span class="o">=</span> <span class="n">zero_padding_idx</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+    <span class="n">result</span><span class="p">[</span><span class="n">i_min</span><span class="p">:</span><span class="n">i_max</span><span class="p">,</span> <span class="n">j_min</span><span class="p">:</span><span class="n">j_max</span><span class="p">]</span> <span class="o">=</span> <span class="n">mask</span>
     <span class="k">return</span> <span class="n">result</span></div>
 
 
@@ -715,6 +729,14 @@
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">width</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
             <span class="n">mask</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span> <span class="o">-</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*=</span> <span class="n">taper</span><span class="p">[</span><span class="n">j</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="get_non_nan_idxs"><a class="viewcode-back" href="../../dautil.util.html#dautil.util.get_non_nan_idxs">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">get_non_nan_idxs</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;return the idxs that is not nan</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">idxs_non_nan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">array</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">idxs_non_nan</span></div>
 
 <span class="c1"># KDE ##################################################################</span>
 
@@ -937,7 +959,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.<br/>
     </p>
   </div>
 </footer>
