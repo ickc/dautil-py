@@ -12,14 +12,14 @@ def timeit_IO(f):
     def f_decorated(*args, **kwargs):
         timeit_filename = kwargs.pop('timeit_filename', None)
 
+        time = timeit.default_timer()
+
+        result = f(*args, **kwargs)
+
+        time -= timeit.default_timer()
         if timeit_filename is None:
-            return f(*args, **kwargs)
+            print('{},{}'.format(f, -time))
         else:
-            time = timeit.default_timer()
-
-            result = f(*args, **kwargs)
-
-            time -= timeit.default_timer()
             with open(timeit_filename, 'w') as file:
                 print('{},{}'.format(timeit_filename, -time), file=file)
 
