@@ -32,7 +32,7 @@ def main(args):
     del h5_in_paths, dfs
     df.sort_index(inplace=True)
     df.to_hdf(
-        args,
+        args.output,
         'df',
         format='table',
         complevel=args.compress_level,
