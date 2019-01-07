@@ -8,11 +8,11 @@ One reason of this happening is when the file is saved, it got interupted/termin
 from __future__ import print_function
 
 import argparse
-from itertools import chain
-from glob import iglob as glob
 import os
-from functools import partial
 import sys
+from functools import partial
+from glob import iglob as glob
+from itertools import chain
 
 from dautil.IO import read_pkl2
 from dautil.util import map_parallel

@@ -6,9 +6,9 @@
 from __future__ import print_function
 
 import argparse
-from itertools import chain
-from glob import iglob as glob
 from functools import partial
+from glob import iglob as glob
+from itertools import chain
 
 import pandas as pd
 

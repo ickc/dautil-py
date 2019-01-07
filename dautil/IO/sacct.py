@@ -1,7 +1,8 @@
-import pandas as pd
 import subprocess
-
 import sys
+
+import pandas as pd
+
 PY2 = sys.version_info[0] == 2
 if PY2:
     from StringIO import StringIO

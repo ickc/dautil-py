@@ -1,9 +1,10 @@
-import numpy as np
-from collections import OrderedDict
 import os
-from functools import partial
-import pandas as pd
 import sys
+from collections import OrderedDict
+from functools import partial
+
+import numpy as np
+import pandas as pd
 
 
 def cli_sort(cli, n_command):

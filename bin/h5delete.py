@@ -7,12 +7,12 @@ Detect invalid HDF5 files and delete them.
 from __future__ import print_function
 
 import argparse
-from itertools import chain
-from glob import iglob as glob
 from functools import partial
+from glob import iglob as glob
+from itertools import chain
 
-from dautil.util import map_parallel
 from dautil.IO.h5 import h5delete
+from dautil.util import map_parallel
 
 __version__ = '0.3'
 

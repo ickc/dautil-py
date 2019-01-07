@@ -10,8 +10,9 @@ find . -iname '*.hdf5' -exec h5zero.py {} +
 from __future__ import print_function
 
 import argparse
-import h5py
 import sys
+
+import h5py
 
 from dautil.IO.h5 import h5assert_nonzero
 

@@ -4,11 +4,12 @@ See:
 https://github.com/ickc/dautil-py
 """
 
-# Always prefer setuptools over distutils
-from setuptools import setup, find_packages
 # To use a consistent encoding
 from io import open
 from os import path
+
+# Always prefer setuptools over distutils
+from setuptools import find_packages, setup
 
 # Get the long description from the README file
 try:

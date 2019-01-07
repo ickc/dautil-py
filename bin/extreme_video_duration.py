@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 
 import argparse
-from collections import deque
-import numpy as np
-from pathlib import Path
-from functools import partial
-import scipy
 import sys
+from collections import deque
 from concurrent.futures import ProcessPoolExecutor
+from functools import partial
+from pathlib import Path
+
+import numpy as np
+import scipy
 from moviepy.editor import VideoFileClip
 
 from dautil.stat import get_cutoffs

@@ -1,10 +1,11 @@
 from __future__ import print_function
 
-import h5py
-import numpy as np
 import os
-import matplotlib.pyplot as plt
 import sys
+
+import h5py
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def h5delete(filename, datasets=None, dry_run=True, verbose=False):

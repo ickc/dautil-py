@@ -10,11 +10,12 @@ find . -iname '*.hdf5' -exec h5zero.py {} +
 from __future__ import print_function
 
 import argparse
-from itertools import chain
-from glob import iglob as glob
-import h5py
-from functools import partial
 import sys
+from functools import partial
+from glob import iglob as glob
+from itertools import chain
+
+import h5py
 
 from dautil.IO.h5 import h5assert_isfinite
 

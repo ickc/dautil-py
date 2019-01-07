@@ -1,5 +1,6 @@
 import os
 import sys
-sys.path.insert(0, os.path.abspath('..'))
 
-from dautil import util, date_time, path_util
+from dautil import date_time, path_util, util
+
+sys.path.insert(0, os.path.abspath('..'))

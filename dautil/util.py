@@ -1,18 +1,17 @@
 from __future__ import print_function
 
-from builtins import map
-
-from numba import jit
-import numpy as np
-import numba
 import operator
-import pandas as pd
-from functools import reduce
-import scipy
-import scipy.signal
 import sys
 import types
-from functools import wraps
+from builtins import map
+from functools import reduce, wraps
+
+import numba
+import numpy as np
+import pandas as pd
+import scipy
+import scipy.signal
+from numba import jit
 
 PY2 = sys.version_info[0] == 2
 
@@ -194,8 +193,8 @@ def get_variables(module):
     '''
     return [item for item in dir(module) if not
             (item.startswith("__") or
-             isinstance(getattr(module, item), types.ModuleType) or
-             callable(getattr(module, item)))]
+             isinstance(getattr(module, item), types.ModuleType)
+             or callable(getattr(module, item)))]
 
 
 def assert_dict(input1, input2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
@@ -557,7 +556,6 @@ def reciprocal_sum_reciprocal(*args):
     return np.reciprocal(result)
 
 
-
 @jit(nopython=True, nogil=True)
 def zero_padding_idx(in_shape, out_shape):
     '''``in_shape``: input 2d-array shape
@@ -634,6 +632,7 @@ def get_non_nan_idxs(array):
     return idxs_non_nan
 
 # KDE ##################################################################
+
 
 def get_KDE(data, num=100, **kwargs):
     '''given a distribution ``data``,

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 import argparse
-import h5py
 from functools import partial
+
+import h5py
 
 from dautil.util import get_map_parallel
 

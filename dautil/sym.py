@@ -1,5 +1,5 @@
-from sympy.ntheory import factorint
 import numpy as np
+from sympy.ntheory import factorint
 
 
 def fft_nice(n):

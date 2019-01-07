@@ -10,8 +10,9 @@ find high_0_3_full -name '*.hdf5' | sed -e 's/^high_0_3_full\(.*\)$/h5diff\.py -
 from __future__ import print_function
 
 import argparse
-import h5py
 import sys
+
+import h5py
 
 __version__ = '0.2'
 

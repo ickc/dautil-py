@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
 import argparse
-from itertools import chain
-from glob import iglob as glob
 import os
-from functools import partial
-
 import sys
+from functools import partial
+from glob import iglob as glob
+from itertools import chain
+
+from dautil.IO import makedirs
+from dautil.util import map_parallel
+
 PY2 = sys.version_info[0] == 2
 if PY2:
     import cPickle as pickle
 else:
     import pickle
 
-from dautil.util import map_parallel
-from dautil.IO import makedirs
 
 __version__ = '0.1'
 

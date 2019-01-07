@@ -1,11 +1,10 @@
 from __future__ import print_function
 
-from numba import jit, prange
-
 import numpy as np
 import pandas as pd
 import scipy
 import scipy.signal as signal
+from numba import jit, prange
 
 
 @jit(nopython=True)

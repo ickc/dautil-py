@@ -1,9 +1,9 @@
 from collections import Counter
 
 from bs4 import BeautifulSoup
-from nltk.corpus import wordnet, stopwords
-from nltk.stem import LancasterStemmer, WordNetLemmatizer
 from nltk import word_tokenize
+from nltk.corpus import stopwords, wordnet
+from nltk.stem import LancasterStemmer, WordNetLemmatizer
 
 STEMMER = LancasterStemmer()
 LEMMATIZER = WordNetLemmatizer()

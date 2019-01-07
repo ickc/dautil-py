@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 import argparse
-import numpy as np
-from pathlib import Path
-import pandas as pd
 from concurrent.futures import ProcessPoolExecutor
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
 from moviepy.editor import VideoFileClip
 
 __version__ = '0.1.1'

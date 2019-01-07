@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
 import argparse
-from itertools import chain
-from collections import deque
-from glob import iglob as glob
-import numpy as np
 import os
 import re
+from collections import deque
+from glob import iglob as glob
+from itertools import chain
+
+import numpy as np
+
 from word2number import w2n
 
 __version__ = 0.1

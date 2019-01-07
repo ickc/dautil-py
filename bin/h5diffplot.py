@@ -7,11 +7,12 @@ find smallest-test -path '*/coadd/*' -name '*.hdf5' | sed 's/^smallest-test\(.*\
 '''
 
 import argparse
-import h5py
 import os
 
-from dautil.IO.h5 import plot_h5diff
+import h5py
+
 from dautil.IO import makedirs
+from dautil.IO.h5 import plot_h5diff
 
 __version__ = '0.1'
 

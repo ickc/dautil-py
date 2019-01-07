@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import argparse
-from glob import iglob as glob
 import os
 from functools import partial
+from glob import iglob as glob
 
 from dautil.util import compose
 

@@ -4,8 +4,8 @@ from __future__ import print_function
 
 import argparse
 import os
-from functools import partial
 import sys
+from functools import partial
 
 from dautil.parser import cli_sort
 

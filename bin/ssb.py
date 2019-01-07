@@ -3,10 +3,11 @@
 '''Pretty print output from ``scontrol show burst``
 '''
 
-from collections import OrderedDict
 import os
-import pandas as pd
 import subprocess
+from collections import OrderedDict
+
+import pandas as pd
 
 AB = '  Allocated Buffers:'
 PUBU = '  Per User Buffer Use:'

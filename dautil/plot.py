@@ -1,13 +1,16 @@
+import os
+from functools import wraps
+
 import matplotlib
-matplotlib.use('pgf')
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
 
 from dautil.IO import makedirs
-import numpy as np
-import os
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-from functools import wraps
+
+matplotlib.use('pgf')
+
 # from matplotlib2tikz import save as tikz_save
 
 
