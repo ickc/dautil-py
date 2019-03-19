@@ -413,12 +413,23 @@ def unpackbits(data, flags):
     return (data[:, None] & flags) != 0
 
 
+def running_mean_axis(xs, n, axis=0):
+    '''
+    axis: must be positive
+    return: array of the moving average of x with bins of width n along given axis
+    '''
+    cumsums = xs.cumsum(axis)
+    results = cumsums[(slice(None),) * axis + (slice(n - 1, None, None),)].copy()
+    results[(slice(None),) * axis + (slice(1, None, None),)] -= cumsums[(slice(None),) * axis + (slice(None, -n, None),)]
+    return results / n
+
+
 @jit(nopython=True, nogil=True)
 def running_mean(x, n):
     '''
-    return: array of the moving average of x with bins of width n
+    special case of ``running_mean_axis`` for 1d-array
     '''
-    cumsum = np.cumsum(x)
+    cumsum = x.cumsum()
     result = cumsum[(n - 1):].copy()
     result[1:] -= cumsum[:-n]
     return result / n
