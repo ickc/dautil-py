@@ -1,6 +1,5 @@
-from ipywidgets import interact
-
 from IPython.display import display
+from ipywidgets import interact
 
 
 def scrolling_dataframe(df, height=40, width=10):
@@ -9,7 +8,7 @@ def scrolling_dataframe(df, height=40, width=10):
 
     @interact(m=(0, M), n=(0, N))
     def f_display(m, n):
-        return display(df.iloc[m*height:(m+1)*height, n*width:(n+1)*height])
+        return display(df.iloc[m * height:(m + 1) * height, n * width:(n + 1) * height])
 
     return f_display
 
@@ -19,6 +18,6 @@ def scrolling_dataframe_row(df, height=40):
 
     @interact(m=(0, M))
     def f_display(m):
-        return display(df.iloc[m*height:(m+1)*height])
+        return display(df.iloc[m * height:(m + 1) * height])
 
     return f_display
