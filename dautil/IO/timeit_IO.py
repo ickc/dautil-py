@@ -29,7 +29,7 @@ def timeit_IO(f):
     return f_decorated
 
 
-def slowdown(f, second=1):
+def slowdown(f, second=1, verbose=False):
     '''decorator to guarantee function ``f`` takes at least
     ``second`` to finish.
     '''
@@ -42,6 +42,8 @@ def slowdown(f, second=1):
         second_to_sleep = start - end + second
         if second_to_sleep > 0:
             time.sleep(second_to_sleep)
+        elif verbose:
+            print('Not slowdowned because the functions takes {}s to finish.'.format(end - start))
         return result
 
     return f_decorated
