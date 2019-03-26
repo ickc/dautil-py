@@ -39,7 +39,9 @@ def slowdown(f, second=1):
         result = f(*args, **kwargs)
         end = time.time()
 
-        time.sleep(start - end + second)
+        second_to_sleep = start - end + second
+        if second_to_sleep > 0:
+            time.sleep(second_to_sleep)
         return result
 
     return f_decorated
