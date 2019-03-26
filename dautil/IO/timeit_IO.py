@@ -1,7 +1,7 @@
 from __future__ import print_function
 
-import timeit
 import time
+import timeit
 from functools import wraps
 
 
@@ -30,15 +30,16 @@ def timeit_IO(f):
 
 
 def slowdown(f, second=1):
+    '''decorator to guarantee function ``f`` takes at least
+    ``second`` to finish.
+    '''
     @wraps(f)
     def f_decorated(*args, **kwargs):
         start = time.time()
         result = f(*args, **kwargs)
         end = time.time()
 
-        time_elapsed = end - start
-        print(time_elapsed)
-        time.sleep(second - time_elapsed)
+        time.sleep(start - end + second)
         return result
 
     return f_decorated
