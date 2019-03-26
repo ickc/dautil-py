@@ -1,5 +1,6 @@
 from __future__ import print_function
 
+import sys
 import time
 import timeit
 from functools import wraps
@@ -43,7 +44,7 @@ def slowdown(f, second=1, verbose=False):
         if second_to_sleep > 0:
             time.sleep(second_to_sleep)
         elif verbose:
-            print('Not slowdowned because the functions takes {}s to finish.'.format(end - start))
+            print('Not slowdowned because the functions takes {}s to finish.'.format(end - start), file=sys.stderr)
         return result
 
     return f_decorated
