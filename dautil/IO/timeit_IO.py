@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import timeit
+import time
 from functools import wraps
 
 
@@ -24,5 +25,20 @@ def timeit_IO(f):
                 print('{},{}'.format(timeit_filename, -time), file=file)
 
             return result
+
+    return f_decorated
+
+
+def slowdown(f, second=1):
+    @wraps(f)
+    def f_decorated(*args, **kwargs):
+        start = time.time()
+        result = f(*args, **kwargs)
+        end = time.time()
+
+        time_elapsed = end - start
+        print(time_elapsed)
+        time.sleep(second - time_elapsed)
+        return result
 
     return f_decorated
