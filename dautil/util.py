@@ -5,6 +5,7 @@ import sys
 import types
 from builtins import map
 from functools import reduce, wraps
+from collections import defaultdict
 
 import numba
 import numpy as np
@@ -185,6 +186,19 @@ def summarize(data):
         return summarize_ndarray(data)
     else:
         return type(data)
+
+
+def summarize_dicts(dicts):
+    '''``dicts``: iterable of dict
+    per key per dict, form a set of possible types across all element of ``dicts``
+    This is useful to inspect a bunch of dict sharing the same structure with slightly
+    different types (e.g. NoneType or list)
+    '''
+    result = defaultdict(set)
+    for dict_ in dicts:
+        for key, value in dict_.items():
+            result[key].add(type(value))
+    return result
 
 
 def get_variables(module):
