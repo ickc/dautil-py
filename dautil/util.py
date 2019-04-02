@@ -285,6 +285,27 @@ def sum_(*args):
         return start
 
 
+def product_(*args):
+    '''first argument: ``iterable``.
+
+    second argument: ``start`` (default: 0)
+
+    similar to ``sum_`` but reduce by product
+    '''
+    from copy import deepcopy
+
+    iterable = iter(args[0])
+    try:
+        # avoid mutating the input, both during and after this function call
+        result = deepcopy(next(iterable))
+        for i in iterable:
+            result *= i
+        return result
+    except StopIteration:
+        start = args[1] if len(args) > 1 else 0
+        return start
+
+
 def split_list(list_, n):
     '''split list into n chunks
     first n - 1 elements are of equal length
