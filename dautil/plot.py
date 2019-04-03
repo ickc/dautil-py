@@ -1,6 +1,7 @@
 import os
 from functools import wraps
 
+import holoviews as hv
 import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
@@ -196,6 +197,7 @@ def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', fo
 
 # plot.ly
 
+
 def iplot_column_slider(df, active=0):
     '''similar to cufflinks' iplot method
     but apply a slider scross the columns so that only 1 column
@@ -242,3 +244,32 @@ def iplot_column_slider(df, active=0):
         'data': data,
         'layout': {'sliders': sliders, 'showlegend': True}
     }
+
+
+def plot_column_slider(df, error=False, label=None, chart=hv.Curve):
+    '''create a Holoviews dynamic map that slice through each column
+
+    ``error``: if True, take the real part as the value and imaginary part as the error bar
+
+    ``label``: if not None, str if ``error`` is False else a iterable of str of length 2.
+    labeling the plots
+
+    hint: add ``%%opts Curve {+framewise}`` to readjust the frame on each selection
+    '''
+    def plot(*args):
+        series = df.loc[:, tuple(map(lambda x: slice(x, x), args))]
+        x = series.index
+        y = series.values
+        curve = chart(np.column_stack((x, y)), label='' if label is None else label)
+        return curve
+
+    def plot_complex(*args):
+        series = df.loc[:, tuple(map(lambda x: slice(x, x), args))]
+        x = series.index
+        y = series.values
+        curve = chart(np.column_stack((x, y.real)), label='' if label is None else label[0])
+        curve_err = chart(np.column_stack((x, y.imag)), label='' if label is None else label[1])
+        return curve * curve_err
+
+    dmap = hv.DynamicMap(plot_complex if error else plot, kdims=df.columns.names)
+    return dmap.redim.values(**dict(zip(df.columns.names, df.columns.levels)))
