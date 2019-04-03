@@ -4,8 +4,8 @@ import operator
 import sys
 import types
 from builtins import map
-from functools import reduce, wraps
 from collections import defaultdict
+from functools import reduce, wraps
 
 import numba
 import numpy as np
