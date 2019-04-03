@@ -193,3 +193,52 @@ def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', fo
         font = ImageFont.truetype(fontname, fontsize)
         draw.text((0, 0), text, (255,), font=font)
     img.save(filename)
+
+# plot.ly
+
+def iplot_column_slider(df, active=0):
+    '''similar to cufflinks' iplot method
+    but apply a slider scross the columns so that only 1 column
+    is shown at a time
+
+    returns a figure object to be consumed by iplot
+
+    e.g. ``iplot(iplot_column_slider(df))``
+    '''
+    data = [
+        {
+            'visible': False,
+            'name': key,
+            'x': value.index,
+            'y': value.values
+        }
+        for key, value in df.items()
+    ]
+
+    data[active]['visible'] = True
+
+    n = df.shape[1]
+
+    steps = [
+        {
+            'method': 'restyle',
+            'args': [
+                'visible',
+                [False] * i + [True] + [False] * (n - i - 1)
+            ],
+            'label': col
+        }
+        for i, col in enumerate(df.columns)
+    ]
+
+    sliders = [{
+        'active': active,
+        'currentvalue': {'prefix': 'Column: '},
+        'pad': {'t': 50},
+        'steps': steps,
+    }]
+
+    return {
+        'data': data,
+        'layout': {'sliders': sliders, 'showlegend': True}
+    }
