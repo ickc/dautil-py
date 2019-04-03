@@ -244,7 +244,7 @@ def iplot_column_slider(df, active=0):
     }
 
 
-def plot_column_slider(df, error=False, chart=hv.Curve, slider=False):
+def plot_column_slider(df, error=False, chart=hv.Curve, slider=False, imag_label='error'):
     '''create a Holoviews dynamic map that slice through each column
 
     ``error``: if True, take the real part as the value and imaginary part as the error bar
@@ -252,6 +252,8 @@ def plot_column_slider(df, error=False, chart=hv.Curve, slider=False):
     ``chart``: any Holoview Chart class such as Curve, Scatter
 
     ``slider``: if True, force slider
+
+    ``imag_label``: label for the curve in the imaginary part
 
     hint: add ``%%opts Curve {+framewise}`` to readjust the frame on each selection
     '''
@@ -276,7 +278,7 @@ def plot_column_slider(df, error=False, chart=hv.Curve, slider=False):
         y = series.values
         label = ', '.join(map(str, _args))
         _chart = chart(np.column_stack((x, y.real)), label=label)
-        _chart_err = chart(np.column_stack((x, y.imag)), label='error')
+        _chart_err = chart(np.column_stack((x, y.imag)), label=imag_label)
         if slider:
             _chart = _chart.opts(title=label)
         return _chart * _chart_err
