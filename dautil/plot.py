@@ -10,8 +10,6 @@ import seaborn as sns
 
 from dautil.IO import makedirs
 
-matplotlib.use('pgf')
-
 # from matplotlib2tikz import save as tikz_save
 
 
