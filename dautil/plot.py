@@ -208,11 +208,11 @@ def iplot_column_slider(df, active=0):
     data = [
         {
             'visible': False,
-            'name': key,
-            'x': value.index,
-            'y': value.values
+            'name': ', '.join(map(str, col)),
+            'x': series.index,
+            'y': series.values
         }
-        for key, value in df.items()
+        for col, series in df.items()
     ]
 
     data[active]['visible'] = True
@@ -226,7 +226,7 @@ def iplot_column_slider(df, active=0):
                 'visible',
                 [False] * i + [True] + [False] * (n - i - 1)
             ],
-            'label': col
+            'label': ', '.join(map(str, col))
         }
         for i, col in enumerate(df.columns)
     ]
