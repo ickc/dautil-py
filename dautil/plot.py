@@ -110,7 +110,6 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth, **kwargs):
     indexslice = [slice(None)] * df.index.nlevels
 
     values = df.index.levels[idx_select]
-    n = values.shape[0]
     idx_current = values[0]
     idx_end = values[-1]
 
