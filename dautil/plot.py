@@ -70,7 +70,11 @@ def plot_unique(df, col_select, col_plot, **kwargs):
     per unique value in col_select
     '''
     for value in df[col_select].unique():
-        sns.kdeplot(df[df[col_select] == value][col_plot], label=value, **kwargs)
+        sns.kdeplot(
+            df[df[col_select] == value][col_plot],
+            label=value,
+            **kwargs
+        )
     plt.title(col_plot)
 
 
@@ -84,7 +88,11 @@ def plot_unique_index(df, idx_select, col_plot, **kwargs):
     for value in df.index.levels[idx_select]:
         # choose the current value
         indexslice[idx_select] = slice(value)
-        sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=value, **kwargs)
+        sns.kdeplot(
+            df.loc[tuple(indexslice), :][col_plot],
+            label=value,
+            **kwargs
+        )
 
     plt.title(col_plot)
 
@@ -111,7 +119,11 @@ def plot_unique_index_binned(df, idx_select, col_plot, binwidth, **kwargs):
         # choose the current value
         indexslice[idx_select] = slice(idx_current, idx_new)
         try:
-            sns.kdeplot(df.loc[tuple(indexslice), :][col_plot], label=idx_current, **kwargs)
+            sns.kdeplot(
+                df.loc[tuple(indexslice), :][col_plot],
+                label=idx_current,
+                **kwargs
+            )
         except (ValueError, ZeroDivisionError):
             print('No data between {} and {}.'.format(idx_current, idx_new))
         idx_current = idx_new
