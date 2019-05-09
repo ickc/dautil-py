@@ -213,22 +213,29 @@ def iplot_column_slider(df, active=0):
 
     returns a figure object to be consumed by iplot
 
-    e.g. ``iplot(iplot_column_slider(df))``
+    Example
+    -------
+
+    ```py
+    import plotly.offline as py
+    py.init_notebook_mode()
+    py.iplot(iplot_column_slider(df))
+    ```
     '''
+    is_multi = isinstance(df.columns, pd.core.indexes.multi.MultiIndex)
+
     data = [
         {
             'visible': False,
-            'name': ', '.join(map(str, col)),
+            'name': ', '.join(map(str, col)) if is_multi else str(col),
             'x': series.index,
             'y': series.values
         }
         for col, series in df.items()
     ]
-
     data[active]['visible'] = True
 
     n = df.shape[1]
-
     steps = [
         {
             'method': 'restyle',
@@ -236,7 +243,7 @@ def iplot_column_slider(df, active=0):
                 'visible',
                 [False] * i + [True] + [False] * (n - i - 1)
             ],
-            'label': ', '.join(map(str, col))
+            'label': ', '.join(map(str, col)) if is_multi else str(col)
         }
         for i, col in enumerate(df.columns)
     ]
@@ -254,47 +261,62 @@ def iplot_column_slider(df, active=0):
     }
 
 
-def plot_column_slider(df, error=False, chart=hv.Curve, slider=False, imag_label='error'):
+def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
     '''create a Holoviews dynamic map that slice through each column
 
-    ``error``: if True, take the real part as the value and imaginary part as the error bar
+    `df`: DataFrame. if complex, take the real part as the value and imaginary part as the error bar
 
-    ``chart``: any Holoview Chart class such as Curve, Scatter
+    `chart`: any Holoview Chart class such as Curve, Scatter
 
-    ``slider``: if True, force slider
+    `slider`: if True, force slider
 
-    ``imag_label``: label for the curve in the imaginary part
+    `imag_label`: label for the curve in the imaginary part
 
     hint: add ``%%opts Curve {+framewise}`` to readjust the frame on each selection
     '''
+    # dispatch MultiIndex or not
+    is_multi = isinstance(df.columns, pd.core.indexes.multi.MultiIndex)
+    is_complex = pd.api.types.is_complex_dtype(df)
 
     def plot(*args):
-        _args = [levels[arg] for levels, arg in zip(df.columns.levels, args)] if slider else args
-        _slice = tuple(map(lambda x: slice(x, x), _args))
-        series = df.loc[:, _slice]
+        # get series from a slice and its label
+        if is_multi:
+            _args = [
+                levels[arg]
+                for levels, arg in zip(df.columns.levels, args)
+            ] if slider else args
+            _slice = tuple(map(lambda x: slice(x, x), _args))
+            series = df.loc[:, _slice]
+            label = ', '.join(map(str, _args))
+            del _args, _slice
+        # since it is not a MultiIndex, args is of length 1
+        else:
+            arg = args[0]
+            _arg = df.columns[arg] if slider else arg
+            series = df[_arg]
+            label = str(_arg)
+            del arg, _arg
+
         x = series.index
         y = series.values
-        label = ', '.join(map(str, _args))
-        _chart = chart(np.column_stack((x, y)), label=label)
+        del series
+
+        if is_complex:
+            _chart = chart(np.column_stack((x, y.real)), label=label)
+            _chart *= chart(np.column_stack((x, y.imag)), label=imag_label)
+        else:
+            _chart = chart(np.column_stack((x, y)), label=label)
+
         if slider:
             _chart = _chart.opts(title=label)
         return _chart
 
-    def plot_complex(*args):
-        _args = [levels[arg] for levels, arg in zip(df.columns.levels, args)] if slider else args
-        _slice = tuple(map(lambda x: slice(x, x), _args))
-        series = df.loc[:, _slice]
-        x = series.index
-        y = series.values
-        label = ', '.join(map(str, _args))
-        _chart = chart(np.column_stack((x, y.real)), label=label)
-        _chart_err = chart(np.column_stack((x, y.imag)), label=imag_label)
-        if slider:
-            _chart = _chart.opts(title=label)
-        return _chart * _chart_err
+    dmap = hv.DynamicMap(plot, kdims=df.columns.names)
 
-    dmap = hv.DynamicMap(plot_complex if error else plot, kdims=df.columns.names)
-    values = {name: range(len(level)) for name, level in zip(df.columns.names, df.columns.levels)} \
-        if slider else \
-        dict(zip(df.columns.names, df.columns.levels))
+    values = dict(zip(df.columns.names, df.columns.levels)) \
+        if is_multi else \
+        {df.columns.name: df.columns.values}
+    if slider:
+        values = {name: range(len(value)) for name, value in values}
+
     return dmap.redim.values(**values)
