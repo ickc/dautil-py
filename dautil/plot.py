@@ -10,8 +10,6 @@ import seaborn as sns
 
 from dautil.IO import makedirs
 
-# from matplotlib2tikz import save as tikz_save
-
 
 def sns_heatmap_xy(mask, **kwargs):
     '''``mask``: 2d-array
@@ -55,6 +53,7 @@ def save(f):
 
         if filename:
             if ext == "tikz":
+                from matplotlib2tikz import save as tikz_save
                 tikz_save(filename,
                           figureheight='\\figureheight',
                           figurewidth='\\figurewidth')
