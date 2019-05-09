@@ -276,7 +276,7 @@ def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
     '''
     # dispatch MultiIndex or not
     is_multi = isinstance(df.columns, pd.core.indexes.multi.MultiIndex)
-    is_complex = pd.api.types.is_complex_dtype(df)
+    is_complex = np.iscomplexobj(df)
 
     def plot(*args):
         # get series from a slice and its label
