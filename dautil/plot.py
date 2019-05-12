@@ -317,6 +317,6 @@ def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
         if is_multi else \
         {df.columns.name: df.columns.values}
     if slider:
-        values = {name: range(len(value)) for name, value in values}
+        values = {name: range(len(value)) for name, value in values.items()}
 
     return dmap.redim.values(**values)
