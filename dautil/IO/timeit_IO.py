@@ -25,7 +25,7 @@ def timeit_IO(f):
             with open(timeit_filename, 'w') as file:
                 print('{},{}'.format(timeit_filename, -time), file=file)
 
-            return result
+        return result
 
     return f_decorated
 
