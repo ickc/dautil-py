@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def get_slice(df, name, no_levels=False, no_indexslice=False):
     '''Given ``name`` of an index from the MultiIndex
     from ``df``, return the ``level`` this name is at,
