@@ -122,3 +122,11 @@ def h5split(in_file, out_dir, verbose=False, groups=None, attrs=None):
                     if verbose:
                         print(h5_path)
                     f_in.copy(h5_path, f_out)
+
+def h5_to_dict(f):
+    '''convert h5 file into a dictionary
+    '''
+    if isinstance(f, h5py._hl.dataset.Dataset):
+        return f[:]
+    elif isinstance(f, h5py._hl.group.Group):
+        return {key: h5_to_dict(f[key]) for key in f}
