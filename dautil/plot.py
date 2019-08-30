@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+import plotly.express as px
 
 from dautil.IO import makedirs
 
@@ -320,3 +321,13 @@ def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
         values = {name: range(len(value)) for name, value in values.items()}
 
     return dmap.redim.values(**values)
+
+
+def iplot(df, y='y'):
+    '''emulate iplot from cufflinks using plotly.express
+    `df`: A dataframe without MultiIndex
+    `y`: the name of the y-axis
+    '''
+    df_temp = df.stack().to_frame(y).reset_index()
+    col = df_temp.columns
+    return px.line(df_temp, x=col[0], color=col[1], y=col[2])
