@@ -2,6 +2,6 @@ dautil.parser module
 ====================
 
 .. automodule:: dautil.parser
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

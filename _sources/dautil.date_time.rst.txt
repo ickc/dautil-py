@@ -2,6 +2,6 @@ dautil.date\_time module
 ========================
 
 .. automodule:: dautil.date_time
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

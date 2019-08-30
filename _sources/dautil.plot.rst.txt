@@ -2,6 +2,6 @@ dautil.plot module
 ==================
 
 .. automodule:: dautil.plot
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

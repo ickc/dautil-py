@@ -1,0 +1,7 @@
+dautil.pandas\_display module
+=============================
+
+.. automodule:: dautil.pandas_display
+   :members:
+   :undoc-members:
+   :show-inheritance:

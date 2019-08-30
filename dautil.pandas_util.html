@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>dautil.pandas_util module &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -12,18 +11,18 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dautil.parser module" href="dautil.parser.html" />
-    <link rel="prev" title="dautil.date_time module" href="dautil.date_time.html" />
+    <link rel="prev" title="dautil.pandas_display module" href="dautil.pandas_display.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -81,7 +80,7 @@
               
                 
   <li>
-    <a href="dautil.date_time.html" title="Previous Chapter: dautil.date_time module"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; dautil.date_t...</span>
+    <a href="dautil.pandas_display.html" title="Previous Chapter: dautil.pandas_display module"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; dautil.pandas...</span>
     </a>
   </li>
   <li>
@@ -117,13 +116,25 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="module-dautil.pandas_util">
 <span id="dautil-pandas-util-module"></span><h1>dautil.pandas_util module<a class="headerlink" href="#module-dautil.pandas_util" title="Permalink to this headline">¶</a></h1>
 <dl class="function">
+<dt id="dautil.pandas_util.df_to_ndarray">
+<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">df_to_ndarray</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">unique=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#df_to_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.df_to_ndarray" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert DataFrame with MultiIndex to ndarray</p>
+<p><cite>unique</cite>: if True, take only the unique values from the MultiIndex levels</p>
+<p>columns and index can be either MultiIndex of Index (all combinations allowed)</p>
+<p>assume the MultiIndex is a product, else error occurs when reshape</p>
+<p>return values, levels, names</p>
+<p>essentially values should equals to df.to_xarray().to_array().values
+but faster (and less safe)</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.pandas_util.get_slice">
-<code class="descclassname">dautil.pandas_util.</code><code class="descname">get_slice</code><span class="sig-paren">(</span><em>df</em>, <em>name</em>, <em>no_levels=False</em>, <em>no_indexslice=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#get_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.get_slice" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">get_slice</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">name</em>, <em class="sig-param">no_levels=False</em>, <em class="sig-param">no_indexslice=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#get_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.get_slice" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given <code class="docutils literal notranslate"><span class="pre">name</span></code> of an index from the MultiIndex
 from <code class="docutils literal notranslate"><span class="pre">df</span></code>, return the <code class="docutils literal notranslate"><span class="pre">level</span></code> this name is at,
 <code class="docutils literal notranslate"><span class="pre">levels</span></code> of all levels except this name is at,
@@ -132,6 +143,17 @@ and an <code class="docutils literal notranslate"><span class="pre">indexslice</
 reassigned at <code class="docutils literal notranslate"><span class="pre">level</span></code> to another slice.
 When passed to pandas.DataFrame, need to be casted to
 tuple first.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.pandas_util.ndarray_to_series">
+<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">ndarray_to_series</code><span class="sig-paren">(</span><em class="sig-param">values</em>, <em class="sig-param">levels</em>, <em class="sig-param">names</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#ndarray_to_series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.ndarray_to_series" title="Permalink to this definition">¶</a></dt>
+<dd><p>convert ndarray to Series</p>
+<p>almost inverse of df_to_ndarray but return a Series instead.
+unstack can be used to freely move some of the index to columns
+to recover the original df.</p>
+<p>i.e. ndarray_to_series(<a href="#id1"><span class="problematic" id="id2">*</span></a>df_to_ndarray(df)) ~ df.stack()
+where all the levels in columns are stacked in the beginning of the MultiIndex levels</p>
 </dd></dl>
 
 </div>
@@ -149,7 +171,7 @@ tuple first.</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.<br/>
     </p>
   </div>
 </footer>

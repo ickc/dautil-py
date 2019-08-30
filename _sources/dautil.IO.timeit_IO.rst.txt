@@ -2,6 +2,6 @@ dautil.IO.timeit\_IO module
 ===========================
 
 .. automodule:: dautil.IO.timeit_IO
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

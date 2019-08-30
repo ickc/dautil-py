@@ -2,8 +2,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>dautil.util module &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -12,10 +11,6 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="dautil.sym module" href="dautil.sym.html" />
@@ -23,6 +18,10 @@
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js "></script>
 
   </head><body>
 
@@ -112,28 +111,25 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12 content">
+    <div class="body col-md-12 content" role="main">
       
   <div class="section" id="module-dautil.util">
 <span id="dautil-util-module"></span><h1>dautil.util module<a class="headerlink" href="#module-dautil.util" title="Permalink to this headline">¶</a></h1>
 <dl class="attribute">
 <dt id="dautil.util.arange_inv">
-<code class="descclassname">dautil.util.</code><code class="descname">arange_inv</code><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">arange_inv</code><a class="reference internal" href="_modules/dautil/util.html#arange_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.arange_inv" title="Permalink to this definition">¶</a></dt>
 <dd><p>assumed to be an output of numpy.arange
 return (start, stop, step) which used to create this array</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.assert_arrays">
-<code class="descclassname">dautil.util.</code><code class="descname">assert_arrays</code><span class="sig-paren">(</span><em>arrays</em>, <em>assert_func=&lt;function assert_array_equal&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_arrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_arrays" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">assert_arrays</code><span class="sig-paren">(</span><em class="sig-param">arrays</em>, <em class="sig-param">assert_func=&lt;function assert_array_equal&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_arrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_arrays" title="Permalink to this definition">¶</a></dt>
 <dd><p>arrays: an iterable of numpy.ndarray
 this function assert each of them are equal
 assert_func can be defined to use other assertions from numpy
@@ -142,14 +138,14 @@ beware that all other arrays are comparing to the first array</p>
 
 <dl class="function">
 <dt id="dautil.util.assert_dict">
-<code class="descclassname">dautil.util.</code><code class="descname">assert_dict</code><span class="sig-paren">(</span><em>input1</em>, <em>input2</em>, <em>rtol=1.5e-09</em>, <em>atol=1.5e-09</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">assert_dict</code><span class="sig-paren">(</span><em class="sig-param">input1</em>, <em class="sig-param">input2</em>, <em class="sig-param">rtol=1.5e-09</em>, <em class="sig-param">atol=1.5e-09</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#assert_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.assert_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>recursively assert into a dictionary
 if the value is a numpy array, assert_allclose, else assert equal.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.clamp_edge">
-<code class="descclassname">dautil.util.</code><code class="descname">clamp_edge</code><a class="reference internal" href="_modules/dautil/util.html#clamp_edge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.clamp_edge" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">clamp_edge</code><a class="reference internal" href="_modules/dautil/util.html#clamp_edge"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.clamp_edge" title="Permalink to this definition">¶</a></dt>
 <dd><p>taper <code class="docutils literal notranslate"><span class="pre">mask</span></code> with <code class="docutils literal notranslate"><span class="pre">width</span></code> in-place,
 using <code class="docutils literal notranslate"><span class="pre">planck_taper</span></code>
 assume mask’s size bigger than 2 * width
@@ -158,14 +154,14 @@ in-place in <code class="docutils literal notranslate"><span class="pre">mask</s
 
 <dl class="function">
 <dt id="dautil.util.compose">
-<code class="descclassname">dautil.util.</code><code class="descname">compose</code><span class="sig-paren">(</span><em>*functions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#compose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.compose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">compose</code><span class="sig-paren">(</span><em class="sig-param">*functions</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#compose"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.compose" title="Permalink to this definition">¶</a></dt>
 <dd><p>composing functions. For example,</p>
 <p>compose(f, g, h)(x) == f(g(h(x)))</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.df_linregress">
-<code class="descclassname">dautil.util.</code><code class="descname">df_linregress</code><span class="sig-paren">(</span><em>df</em>, <em>grouplevel=0</em>, <em>regresslevel=1</em>, <em>regressindex=2</em>, <em>regressorder=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_linregress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_linregress" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">df_linregress</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">grouplevel=0</em>, <em class="sig-param">regresslevel=1</em>, <em class="sig-param">regressindex=2</em>, <em class="sig-param">regressorder=2</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_linregress"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_linregress" title="Permalink to this definition">¶</a></dt>
 <dd><p>per level <code class="docutils literal notranslate"><span class="pre">grouplevel</span></code>, perform a linregress of each column vs. level <code class="docutils literal notranslate"><span class="pre">regresslevel</span></code>
 assumes df has MultiIndex of 2 levels, behavior undefined otherwise.</p>
 <p><code class="docutils literal notranslate"><span class="pre">regressindex</span></code> and <code class="docutils literal notranslate"><span class="pre">regressorder</span></code> control which amount the 5 outputs from scipy.stats.linregress is returned
@@ -176,7 +172,7 @@ TODO: if regressindex is None, return a DataFrame that the 5 elements returned a
 
 <dl class="function">
 <dt id="dautil.util.df_unpackbits">
-<code class="descclassname">dautil.util.</code><code class="descname">df_unpackbits</code><span class="sig-paren">(</span><em>data</em>, <em>flag_dict</em>, <em>index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_unpackbits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">df_unpackbits</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">flag_dict</em>, <em class="sig-param">index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#df_unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.df_unpackbits" title="Permalink to this definition">¶</a></dt>
 <dd><p>data: 1d-array of type int
 flag_dict: a dict with keys as name of the flag and values as the bit of the flag (e.g. 1024)
 similar to unpackbits, but return a DataFrame instead.</p>
@@ -184,7 +180,7 @@ similar to unpackbits, but return a DataFrame instead.</p>
 
 <dl class="function">
 <dt id="dautil.util.flatten_list">
-<code class="descclassname">dautil.util.</code><code class="descname">flatten_list</code><span class="sig-paren">(</span><em>data</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.flatten_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">flatten_list</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#flatten_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.flatten_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>flatten nested list/tuple to arbitrary depth</p>
 <p>Algorithm:</p>
 <p>keep flatten and data list
@@ -198,23 +194,22 @@ def flatten_list(data):</p>
 <div><p>result = []
 for datum in data:</p>
 <blockquote>
-<div><dl class="docutils">
-<dt>if isinstance(datum, (list, tuple)):</dt>
-<dd>result += flatten_list(datum)</dd>
-<dt>else:</dt>
-<dd>result.append(datum)</dd>
+<div><dl class="simple">
+<dt>if isinstance(datum, (list, tuple)):</dt><dd><p>result += flatten_list(datum)</p>
+</dd>
+<dt>else:</dt><dd><p>result.append(datum)</p>
+</dd>
 </dl>
 </div></blockquote>
 <p>return result</p>
 </div></blockquote>
-<dl class="docutils">
-<dt>def flatten_list(data):</dt>
-<dd><dl class="first last docutils">
-<dt>return [item</dt>
-<dd><blockquote class="first">
-<div>for datum in data
-for item in (flatten(datum) if isinstance(datum, list) else [datum])</div></blockquote>
-<p class="last">]</p>
+<dl>
+<dt>def flatten_list(data):</dt><dd><dl>
+<dt>return [item</dt><dd><blockquote>
+<div><p>for datum in data
+for item in (flatten(datum) if isinstance(datum, list) else [datum])</p>
+</div></blockquote>
+<p>]</p>
 </dd>
 </dl>
 </dd>
@@ -224,7 +219,7 @@ for item in (flatten(datum) if isinstance(datum, list) else [datum])</div></bloc
 
 <dl class="function">
 <dt id="dautil.util.get_KDE">
-<code class="descclassname">dautil.util.</code><code class="descname">get_KDE</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_KDE</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">num=100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE" title="Permalink to this definition">¶</a></dt>
 <dd><p>given a distribution <code class="docutils literal notranslate"><span class="pre">data</span></code>,
 return the KDE estimation as a 2d-array,
 where the columns are the x, y values repsectively</p>
@@ -234,14 +229,14 @@ where the columns are the x, y values repsectively</p>
 
 <dl class="function">
 <dt id="dautil.util.get_KDE_der">
-<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_der</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_KDE_der</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">num=100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <code class="docutils literal notranslate"><span class="pre">get_KDE</span></code>, but return the first
 derivative of it instead.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.get_KDE_der_max">
-<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_der_max</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der_max" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_KDE_der_max</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">num=100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_der_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_der_max" title="Permalink to this definition">¶</a></dt>
 <dd><p>Similar to <code class="docutils literal notranslate"><span class="pre">get_KDE_min</span></code>, but
 get the maximum of the first derivatives
 of the Gaussian KDE.</p>
@@ -251,7 +246,7 @@ minimum.</p>
 
 <dl class="function">
 <dt id="dautil.util.get_KDE_min">
-<code class="descclassname">dautil.util.</code><code class="descname">get_KDE_min</code><span class="sig-paren">(</span><em>data</em>, <em>num=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_min" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_KDE_min</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">num=100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_KDE_min"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_KDE_min" title="Permalink to this definition">¶</a></dt>
 <dd><p>given a distribution <code class="docutils literal notranslate"><span class="pre">data</span></code>,
 return the minimum of the KDE estimation as a 2d-array.</p>
 <p><code class="docutils literal notranslate"><span class="pre">num</span></code>: number of points between data.min() and data.max(),
@@ -262,7 +257,7 @@ this controls the resolution of the minimum
 
 <dl class="function">
 <dt id="dautil.util.get_box">
-<code class="descclassname">dautil.util.</code><code class="descname">get_box</code><span class="sig-paren">(</span><em>array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_box" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_box</code><span class="sig-paren">(</span><em class="sig-param">array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>array: numpy.ndarray
 return: per dim. in array, find the min. and max. index s.t.
 the other dim. are identically zero.</p>
@@ -270,70 +265,68 @@ the other dim. are identically zero.</p>
 In principle, a trimmed array with this attribute can reconstruct the original array.</p>
 <p>Note:</p>
 <ul class="simple">
-<li>This might not make sense if ndim = 1</li>
-<li>This is relatively slow, that uses numpy only to walk through the array.</li>
+<li><p>This might not make sense if ndim = 1</p></li>
+<li><p>This is relatively slow, that uses numpy only to walk through the array.</p></li>
 </ul>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.get_map_parallel">
-<code class="descclassname">dautil.util.</code><code class="descname">get_map_parallel</code><span class="sig-paren">(</span><em>processes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_map_parallel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_map_parallel</code><span class="sig-paren">(</span><em class="sig-param">processes</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_map_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a map function
 uses multiprocessing’s Pool if processes != 1</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.get_non_nan_idxs">
-<code class="descclassname">dautil.util.</code><code class="descname">get_non_nan_idxs</code><a class="reference internal" href="_modules/dautil/util.html#get_non_nan_idxs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_non_nan_idxs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_non_nan_idxs</code><a class="reference internal" href="_modules/dautil/util.html#get_non_nan_idxs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_non_nan_idxs" title="Permalink to this definition">¶</a></dt>
 <dd><p>return the idxs that is not nan</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.get_outer_box">
-<code class="descclassname">dautil.util.</code><code class="descname">get_outer_box</code><span class="sig-paren">(</span><em>x</em>, <em>y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_outer_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_outer_box" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_outer_box</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_outer_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_outer_box" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given boxes from the output of get_box,
 return the smallest box that contains both.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.get_variables">
-<code class="descclassname">dautil.util.</code><code class="descname">get_variables</code><span class="sig-paren">(</span><em>module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_variables" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">get_variables</code><span class="sig-paren">(</span><em class="sig-param">module</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#get_variables"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.get_variables" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of variable names from <code class="docutils literal notranslate"><span class="pre">module</span></code>.
 Currently, callables and modules are ignored.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.insert_index_level">
-<code class="descclassname">dautil.util.</code><code class="descname">insert_index_level</code><span class="sig-paren">(</span><em>df</em>, <em>level</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#insert_index_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.insert_index_level" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">insert_index_level</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">level</em>, <em class="sig-param">name</em>, <em class="sig-param">value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#insert_index_level"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.insert_index_level" title="Permalink to this definition">¶</a></dt>
 <dd><p>For DataFrame df, add an index with name and value between level &amp; (level + 1)</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.linspace_inv">
-<code class="descclassname">dautil.util.</code><code class="descname">linspace_inv</code><a class="reference internal" href="_modules/dautil/util.html#linspace_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.linspace_inv" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">linspace_inv</code><a class="reference internal" href="_modules/dautil/util.html#linspace_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.linspace_inv" title="Permalink to this definition">¶</a></dt>
 <dd><p>assumed to be an output of numpy.linspace
 return (start, stop, num) which used to create this array</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">array</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.map_parallel">
-<code class="descclassname">dautil.util.</code><code class="descname">map_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.map_parallel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">map_parallel</code><span class="sig-paren">(</span><em class="sig-param">f</em>, <em class="sig-param">*args</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#map_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.map_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>equivalent to map(f, <a href="#id13"><span class="problematic" id="id14">*</span></a>args)
 processes: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
 <ul class="simple">
-<li>mpi: using mpi4py.futures</li>
-<li>multiprocessing: using multiprocessing from standard library</li>
-<li>serial: using map</li>
+<li><p>mpi: using mpi4py.futures</p></li>
+<li><p>multiprocessing: using multiprocessing from standard library</p></li>
+<li><p>multithreading: using multithreading from standard library</p></li>
+<li><p>serial: using map</p></li>
 </ul>
 <p>Note: this is for Python 2 compatibility,
 else map_parallel(f, <a href="#id15"><span class="problematic" id="id16">*</span></a>args, mode=’multiprocessing’, processes=1)</p>
@@ -341,7 +334,7 @@ else map_parallel(f, <a href="#id15"><span class="problematic" id="id16">*</span
 
 <dl class="function">
 <dt id="dautil.util.mask">
-<code class="descclassname">dautil.util.</code><code class="descname">mask</code><span class="sig-paren">(</span><em>f</em>, <em>idxs=(0</em>, <em>)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.mask" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">mask</code><span class="sig-paren">(</span><em class="sig-param">f</em>, <em class="sig-param">idxs=(0</em>, <em class="sig-param">)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#mask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.mask" title="Permalink to this definition">¶</a></dt>
 <dd><p>f: a function with args where the idx-th arguments are numpy.ndarray
 a decorator to add keyword mask of type boolean array
 if mask is not None, mask the first positional argument
@@ -351,62 +344,56 @@ TODO: add options for other default values</p>
 
 <dl class="attribute">
 <dt id="dautil.util.max_offdiag">
-<code class="descclassname">dautil.util.</code><code class="descname">max_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#max_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">max_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#max_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d-array
 return 1d-array of the maximum per row excluding the diagonal.
 Note that the result doesn’t make sense if array is of shape (1, 1)
 same as max_offdiag_general(array, axis=1) but faster</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">array</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.max_offdiag_general">
-<code class="descclassname">dautil.util.</code><code class="descname">max_offdiag_general</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#max_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag_general" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">max_offdiag_general</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#max_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.max_offdiag_general" title="Permalink to this definition">¶</a></dt>
 <dd><p>works similar to <code class="docutils literal notranslate"><span class="pre">np.amax(array,</span> <span class="pre">**kwargs)</span></code>
 except that the off-diagonal items is ignored when finding maximum</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.min_nan">
-<code class="descclassname">dautil.util.</code><code class="descname">min_nan</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_nan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_nan" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">min_nan</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_nan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_nan" title="Permalink to this definition">¶</a></dt>
 <dd><p>same as <code class="docutils literal notranslate"><span class="pre">numpy.amin(array,</span> <span class="pre">**kwargs)</span></code>
 except if the array is empty, it returns <code class="docutils literal notranslate"><span class="pre">numpy.nan</span></code> instead.</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.min_offdiag">
-<code class="descclassname">dautil.util.</code><code class="descname">min_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#min_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">min_offdiag</code><a class="reference internal" href="_modules/dautil/util.html#min_offdiag"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d-array
 return 1d-array of the minimum per row excluding the diagonal.
 Note that the result doesn’t make sense if array is of shape (1, 1)
 same as min_offdiag_general(array, axis=1) but faster</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">array</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">array</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.min_offdiag_general">
-<code class="descclassname">dautil.util.</code><code class="descname">min_offdiag_general</code><span class="sig-paren">(</span><em>array</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag_general" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">min_offdiag_general</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#min_offdiag_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.min_offdiag_general" title="Permalink to this definition">¶</a></dt>
 <dd><p>works similar to <code class="docutils literal notranslate"><span class="pre">np.amin(array,</span> <span class="pre">**kwargs)</span></code>
 except that the off-diagonal items is ignored when finding minimum</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.planck_taper">
-<code class="descclassname">dautil.util.</code><code class="descname">planck_taper</code><a class="reference internal" href="_modules/dautil/util.html#planck_taper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.planck_taper" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">planck_taper</code><a class="reference internal" href="_modules/dautil/util.html#planck_taper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.planck_taper" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a planck taper window, mapping from 0..m to 0..1,
 excluding 0, m index (which equals to 0, and 1 respectively)
 i.e. the returned array has length m - 1
@@ -416,31 +403,36 @@ where the 0 at the boundary is granted.</p>
 
 <dl class="attribute">
 <dt id="dautil.util.polynomials">
-<code class="descclassname">dautil.util.</code><code class="descname">polynomials</code><a class="reference internal" href="_modules/dautil/util.html#polynomials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.polynomials" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">polynomials</code><a class="reference internal" href="_modules/dautil/util.html#polynomials"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.polynomials" title="Permalink to this definition">¶</a></dt>
 <dd><p>1d-array
 <code class="docutils literal notranslate"><span class="pre">k</span></code>: maximum order
 :returns:
 :rtype: 2d-array, where each column corresponse to x**i, i from 1 to k</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">x</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">x</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.util.product_">
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">product_</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#product_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.product_" title="Permalink to this definition">¶</a></dt>
+<dd><p>first argument: <code class="docutils literal notranslate"><span class="pre">iterable</span></code>.</p>
+<p>second argument: <code class="docutils literal notranslate"><span class="pre">start</span></code> (default: 0)</p>
+<p>similar to <code class="docutils literal notranslate"><span class="pre">sum_</span></code> but reduce by product</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.reciprocal_sum_reciprocal">
-<code class="descclassname">dautil.util.</code><code class="descname">reciprocal_sum_reciprocal</code><a class="reference internal" href="_modules/dautil/util.html#reciprocal_sum_reciprocal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.reciprocal_sum_reciprocal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">reciprocal_sum_reciprocal</code><a class="reference internal" href="_modules/dautil/util.html#reciprocal_sum_reciprocal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.reciprocal_sum_reciprocal" title="Permalink to this definition">¶</a></dt>
 <dd><p>reciprocal of sum of reciprocal of args
 <code class="docutils literal notranslate"><span class="pre">len(args)</span> <span class="pre">&gt;</span> <span class="pre">1</span></code> for this to make sense</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.remove_key">
-<code class="descclassname">dautil.util.</code><code class="descname">remove_key</code><span class="sig-paren">(</span><em>data</em>, <em>key</em>, <em>level=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#remove_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.remove_key" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">remove_key</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">key</em>, <em class="sig-param">level=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#remove_key"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.remove_key" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: dictionary. If <code class="docutils literal notranslate"><span class="pre">level</span></code> &gt; 1, assumes
 it is a dictionary of dictionaries of at least this much level.
 This function remove the key of the dictionary at this level.
@@ -451,29 +443,28 @@ so on so forth.</p>
 
 <dl class="attribute">
 <dt id="dautil.util.running_mean">
-<code class="descclassname">dautil.util.</code><code class="descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>array of the moving average of x with bins of width n</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">return</td>
-</tr>
-</tbody>
-</table>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">running_mean</code><a class="reference internal" href="_modules/dautil/util.html#running_mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>special case of <code class="docutils literal notranslate"><span class="pre">running_mean_axis</span></code> for 1d-array</p>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.running_mean_arange">
-<code class="descclassname">dautil.util.</code><code class="descname">running_mean_arange</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_arange" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">running_mean_arange</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_arange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_arange" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume start, stop, step as in the input of arange
 given binning of width n
 return the start, stop, step of the resultant arange after binning</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="dautil.util.running_mean_axis">
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">running_mean_axis</code><span class="sig-paren">(</span><em class="sig-param">xs</em>, <em class="sig-param">n</em>, <em class="sig-param">axis=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#running_mean_axis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_axis" title="Permalink to this definition">¶</a></dt>
+<dd><p>axis: must be positive
+return: array of the moving average of x with bins of width n along given axis</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="dautil.util.running_mean_linspace">
-<code class="descclassname">dautil.util.</code><code class="descname">running_mean_linspace</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_linspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_linspace" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">running_mean_linspace</code><a class="reference internal" href="_modules/dautil/util.html#running_mean_linspace"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.running_mean_linspace" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume start, stop, num as in the input of linspace
 given binning of width n
 return the start, stop, num of the resultant arange after binning</p>
@@ -481,7 +472,7 @@ return the start, stop, num of the resultant arange after binning</p>
 
 <dl class="function">
 <dt id="dautil.util.shape_list">
-<code class="descclassname">dautil.util.</code><code class="descname">shape_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#shape_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.shape_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">shape_list</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#shape_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.shape_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume data is list/tuple
 may be nested list/tuple
 return the shape of nested list/tuple, if regular
@@ -496,7 +487,7 @@ note that it will return the shape up to the inner most regular interval</p>
 
 <dl class="function">
 <dt id="dautil.util.split_list">
-<code class="descclassname">dautil.util.</code><code class="descname">split_list</code><span class="sig-paren">(</span><em>list_</em>, <em>n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#split_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.split_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">split_list</code><span class="sig-paren">(</span><em class="sig-param">list_</em>, <em class="sig-param">n</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#split_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.split_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>split list into n chunks
 first n - 1 elements are of equal length
 and last element is the remainder</p>
@@ -504,21 +495,22 @@ and last element is the remainder</p>
 
 <dl class="function">
 <dt id="dautil.util.starmap_parallel">
-<code class="descclassname">dautil.util.</code><code class="descname">starmap_parallel</code><span class="sig-paren">(</span><em>f</em>, <em>args</em>, <em>mode='multiprocessing'</em>, <em>processes=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#starmap_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.starmap_parallel" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">starmap_parallel</code><span class="sig-paren">(</span><em class="sig-param">f</em>, <em class="sig-param">args</em>, <em class="sig-param">mode='multiprocessing'</em>, <em class="sig-param">processes=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#starmap_parallel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.starmap_parallel" title="Permalink to this definition">¶</a></dt>
 <dd><p>equivalent to starmap(f, args)
 processes: no. of parallel processes when multiprocessing is used
 (in the case of mpi, it is determined by mpiexec/mpirun args)
 mode:</p>
 <ul class="simple">
-<li>mpi: using mpi4py.futures</li>
-<li>multiprocessing: using multiprocessing from standard library</li>
-<li>serial: using starmap</li>
+<li><p>mpi: using mpi4py.futures</p></li>
+<li><p>multiprocessing: using multiprocessing from standard library</p></li>
+<li><p>multithreading: using multithreading from standard library</p></li>
+<li><p>serial: using starmap</p></li>
 </ul>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.sum_">
-<code class="descclassname">dautil.util.</code><code class="descname">sum_</code><span class="sig-paren">(</span><em>*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#sum_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.sum_" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">sum_</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#sum_"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.sum_" title="Permalink to this definition">¶</a></dt>
 <dd><p>first argument: <code class="docutils literal notranslate"><span class="pre">iterable</span></code>.</p>
 <p>second argument: <code class="docutils literal notranslate"><span class="pre">start</span></code> (default: 0)</p>
 <p>A drop-in replacement of <code class="docutils literal notranslate"><span class="pre">sum</span></code> with arbitrary type.
@@ -530,21 +522,30 @@ is returned.</p>
 
 <dl class="function">
 <dt id="dautil.util.summarize">
-<code class="descclassname">dautil.util.</code><code class="descname">summarize</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">summarize</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize" title="Permalink to this definition">¶</a></dt>
 <dd><p>summarize according to type
 see summarize_dict, summarize_list, summarize_ndarray</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.summarize_dict">
-<code class="descclassname">dautil.util.</code><code class="descname">summarize_dict</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_dict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">summarize_dict</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_dict" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume data is dict
 return a dict with values of types of values in data</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.util.summarize_dicts">
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">summarize_dicts</code><span class="sig-paren">(</span><em class="sig-param">dicts</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_dicts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_dicts" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">dicts</span></code>: iterable of dict
+per key per dict, form a set of possible types across all element of <code class="docutils literal notranslate"><span class="pre">dicts</span></code>
+This is useful to inspect a bunch of dict sharing the same structure with slightly
+different types (e.g. NoneType or list)</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.util.summarize_list">
-<code class="descclassname">dautil.util.</code><code class="descname">summarize_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">summarize_list</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume data is list/tuple
 if types are not uniform, return ‘mixed’ instead
 if shape is not regular to the innermost levels, shape is ended with None</p>
@@ -552,14 +553,14 @@ if shape is not regular to the innermost levels, shape is ended with None</p>
 
 <dl class="function">
 <dt id="dautil.util.summarize_ndarray">
-<code class="descclassname">dautil.util.</code><code class="descname">summarize_ndarray</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_ndarray" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">summarize_ndarray</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#summarize_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.summarize_ndarray" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume data is ndarray
 return its type, dtype and shape</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="dautil.util.to_levels">
-<code class="descclassname">dautil.util.</code><code class="descname">to_levels</code><span class="sig-paren">(</span><em>array</em>, <em>dtype=&lt;class 'numpy.uint8'&gt;</em>, <em>ranges=(0</em>, <em>255)</em>, <em>fix_origin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">to_levels</code><span class="sig-paren">(</span><em class="sig-param">array</em>, <em class="sig-param">dtype=&lt;class 'numpy.uint8'&gt;</em>, <em class="sig-param">ranges=(0</em>, <em class="sig-param">255)</em>, <em class="sig-param">fix_origin=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#to_levels"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.to_levels" title="Permalink to this definition">¶</a></dt>
 <dd><p>array: of type numpy.ndarray
 mask: optional mask when scaling <code class="docutils literal notranslate"><span class="pre">array</span></code>
 dtype: output dtype
@@ -570,7 +571,7 @@ fix_origin: if True, 0 stays 0</p>
 
 <dl class="function">
 <dt id="dautil.util.type_list">
-<code class="descclassname">dautil.util.</code><code class="descname">type_list</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#type_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.type_list" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">type_list</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#type_list"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.type_list" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume data is list/tuple
 may be nested list/tuple
 return the type of all elements, if they are the same
@@ -579,49 +580,43 @@ else return None</p>
 
 <dl class="function">
 <dt id="dautil.util.unpackbits">
-<code class="descclassname">dautil.util.</code><code class="descname">unpackbits</code><span class="sig-paren">(</span><em>data</em>, <em>flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.unpackbits" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">unpackbits</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">flags</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/util.html#unpackbits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.unpackbits" title="Permalink to this definition">¶</a></dt>
 <dd><p>data: 1d-array of type int
 flags: 1d-array of “bits”, e.g. numpy.array([1, 2, 4, 8, …])
 :returns:
 :rtype: 2d-array, where each element is the unpacked array of bits per datum.</p>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">With flags = 2**numpy.arange(7, -1, -1), and data has dype = uint8,
+<p class="admonition-title">Note</p>
+<p>With flags = 2**numpy.arange(7, -1, -1), and data has dype = uint8,
 this is the same as numpy.unpackbits</p>
 </div>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.zero_padding">
-<code class="descclassname">dautil.util.</code><code class="descname">zero_padding</code><a class="reference internal" href="_modules/dautil/util.html#zero_padding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.zero_padding" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">zero_padding</code><a class="reference internal" href="_modules/dautil/util.html#zero_padding"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.zero_padding" title="Permalink to this definition">¶</a></dt>
 <dd><p>2d-array
 zero-padding <code class="docutils literal notranslate"><span class="pre">mask</span></code> to target shape</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">mask</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">mask</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="dautil.util.zero_padding_idx">
-<code class="descclassname">dautil.util.</code><code class="descname">zero_padding_idx</code><a class="reference internal" href="_modules/dautil/util.html#zero_padding_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.zero_padding_idx" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.util.</code><code class="sig-name descname">zero_padding_idx</code><a class="reference internal" href="_modules/dautil/util.html#zero_padding_idx"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.util.zero_padding_idx" title="Permalink to this definition">¶</a></dt>
 <dd><p>input 2d-array shape
 <code class="docutils literal notranslate"><span class="pre">out_shape</span></code>: output 2d-array shape</p>
 <p>return i_min, i_max, j_min, j_max that defines
 the box within the output array to be copied from
 the input array</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><code class="docutils literal notranslate"><span class="pre">in_shape</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><code class="docutils literal notranslate"><span class="pre">in_shape</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -639,7 +634,7 @@ the input array</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.<br/>
     </p>
   </div>
 </footer>

@@ -2,6 +2,6 @@ dautil.path\_util module
 ========================
 
 .. automodule:: dautil.path_util
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

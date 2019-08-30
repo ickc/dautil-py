@@ -2,6 +2,6 @@ dautil.IO.h5 module
 ===================
 
 .. automodule:: dautil.IO.h5
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:

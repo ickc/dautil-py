@@ -2,6 +2,6 @@ dautil.IO.pandas module
 =======================
 
 .. automodule:: dautil.IO.pandas
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
