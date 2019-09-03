@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import plotly.express as px
 
 from dautil.IO import makedirs
 
@@ -328,6 +327,8 @@ def iplot(df, y='y'):
     `df`: A dataframe without MultiIndex
     `y`: the name of the y-axis
     '''
+    import plotly.express as px
+
     df_temp = df.stack().to_frame(y).reset_index()
     col = df_temp.columns
     return px.line(df_temp, x=col[0], color=col[1], y=col[2])
