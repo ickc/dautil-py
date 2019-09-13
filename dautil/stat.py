@@ -197,6 +197,54 @@ def get_cutoffs(data, num=50, mode='aggressive'):
     return cutoffs
 
 
+@jit(float64(float64[::1]), nopython=True, nogil=True)
+def chi_sq_sum(array):
+    return np.square(array).sum()
+
+
+def get_PTE(reduction_func=chi_sq_sum):
+    '''return a PTE function given a reduction function
+
+    `reduction_func`: reduce a 1d-array to a float.
+
+    return `PTE` func. with the following sign.:
+
+    `estimates`: 2D-array
+    `empiricals`: 3D-array
+
+    1st axis of both array are independent cases. i.e. it is vectorized per element in this axis.
+    last axis of both array are different measurements that will be aggregated over by the `reduction_func`.
+    middle axis of `empiricals` is different realizations of this random distributions.
+    '''
+
+    @jit(float64[::1](float64[:, ::1], float64[:, :, ::1]), nopython=True, nogil=True)
+    def PTE(estimates, empiricals):
+        '''
+        `estimates`: 2D-array
+        `empiricals`: 3D-array
+
+        1st axis of both array are independent cases. i.e. it is vectorized per element in this axis.
+        last axis of both array are different measurements that will be aggregated over by the `reduction_func`.
+        middle axis of `empiricals` is different realizations of this random distributions.
+        '''
+        m, n = estimates.shape
+        M, K, N = empiricals.shape
+        assert m == M
+        assert n == N
+
+        # different vars
+        hit = np.zeros(M, dtype=np.int64)
+        for i in range(M):
+            estimate = reduction_func(estimates[i])
+            for j in range(K):
+                empirical = reduction_func(empiricals[i, j])
+                if empirical >= estimate:
+                    hit[i] += 1
+        return hit / K
+
+    return PTE
+
+
 def chi_sq_test_null(array):
     '''estimate null-hypothesis of PTE of emprical chi-sq sum
 
