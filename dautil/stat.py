@@ -195,3 +195,20 @@ def get_cutoffs(data, num=50, mode='aggressive'):
     except ValueError:
         cutoffs[1] = np.inf
     return cutoffs
+
+
+def chi_sq_test_null(array):
+    '''estimate null-hypothesis of PTE of emprical chi-sq sum
+
+    `array`: 2d-array, each row are independent measurement
+
+    it estimates the emprical distribution of the sum of chi-sq
+    under the null hypothesis that its mean is zero (i.e. mean subtracted)
+
+    then calculate the PTE of the mean vector under this distribution.
+    '''
+    mu = array.mean(axis=0)
+    std = array.std(axis=0)
+    chi_sq = np.square((array - mu) / std).sum(axis=1)
+    chi_null_sq = np.square(mu / std).sum()
+    return (chi_sq >= chi_null_sq).mean()
