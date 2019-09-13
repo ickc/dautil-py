@@ -299,6 +299,23 @@
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
         <span class="n">cutoffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
     <span class="k">return</span> <span class="n">cutoffs</span></div>
+
+
+<div class="viewcode-block" id="chi_sq_test_null"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.chi_sq_test_null">[docs]</a><span class="k">def</span> <span class="nf">chi_sq_test_null</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;estimate null-hypothesis of PTE of emprical chi-sq sum</span>
+
+<span class="sd">    `array`: 2d-array, each row are independent measurement</span>
+
+<span class="sd">    it estimates the emprical distribution of the sum of chi-sq</span>
+<span class="sd">    under the null hypothesis that its mean is zero (i.e. mean subtracted)</span>
+
+<span class="sd">    then calculate the PTE of the mean vector under this distribution.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">chi_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="n">array</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">chi_null_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">mu</span> <span class="o">/</span> <span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">chi_sq</span> <span class="o">&gt;=</span> <span class="n">chi_null_sq</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div>
 </pre></div>
 
     </div>

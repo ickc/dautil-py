@@ -129,6 +129,16 @@ Return the average of the correlations of the (k + 1)-th neighbor,
 where k ranges from 0 to neighbor_max</p>
 </dd></dl>
 
+<dl class="function">
+<dt id="dautil.stat.chi_sq_test_null">
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">chi_sq_test_null</code><span class="sig-paren">(</span><em class="sig-param">array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#chi_sq_test_null"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.chi_sq_test_null" title="Permalink to this definition">¶</a></dt>
+<dd><p>estimate null-hypothesis of PTE of emprical chi-sq sum</p>
+<p><cite>array</cite>: 2d-array, each row are independent measurement</p>
+<p>it estimates the emprical distribution of the sum of chi-sq
+under the null hypothesis that its mean is zero (i.e. mean subtracted)</p>
+<p>then calculate the PTE of the mean vector under this distribution.</p>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="dautil.stat.corr_custom">
 <code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_custom</code><a class="reference internal" href="_modules/dautil/stat.html#corr_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_custom" title="Permalink to this definition">¶</a></dt>
