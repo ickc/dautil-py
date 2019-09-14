@@ -116,14 +116,41 @@
         <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">if</span> <span class="n">PY2</span> <span class="k">else</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span><span class="p">)</span></div>
 
 
+<span class="k">def</span> <span class="nf">_read_pkl_f</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;read pkl from f, unsure if it was saved in py2 or py3.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span><span class="p">)</span>
+
+
 <div class="viewcode-block" id="read_pkl"><a class="viewcode-back" href="../../dautil.IO.html#dautil.IO.read_pkl">[docs]</a><span class="k">def</span> <span class="nf">read_pkl</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;read pkl, unsure if it was saved in py2 or py3.</span>
+    <span class="sd">&#39;&#39;&#39;read pkl from path, unsure if it was saved in py2 or py3.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">UnicodeDecodeError</span><span class="p">:</span>
-            <span class="k">return</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin1&#39;</span><span class="p">)</span></div>
+        <span class="n">_read_pkl_f</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="read_pkl_all_iter"><a class="viewcode-back" href="../../dautil.IO.html#dautil.IO.read_pkl_all_iter">[docs]</a><span class="k">def</span> <span class="nf">read_pkl_all_iter</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;read all pkl from path, unsure if it was saved in py2 or py3.</span>
+
+<span class="sd">    this one will keep reading until EOF</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">_read_pkl_f</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+                <span class="k">break</span></div>
+
+
+<div class="viewcode-block" id="read_pkl_all"><a class="viewcode-back" href="../../dautil.IO.html#dautil.IO.read_pkl_all">[docs]</a><span class="k">def</span> <span class="nf">read_pkl_all</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;read all pkl from path, unsure if it was saved in py2 or py3.</span>
+
+<span class="sd">    this one will keep reading until EOF</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">read_pkl_all_iter</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
 
 
 <div class="viewcode-block" id="read_h5_dataset"><a class="viewcode-back" href="../../dautil.IO.html#dautil.IO.read_h5_dataset">[docs]</a><span class="k">def</span> <span class="nf">read_h5_dataset</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
