@@ -12,14 +12,41 @@ def read_pkl2(path):
         return pickle.load(f) if PY2 else pickle.load(f, encoding='latin1')
 
 
+def _read_pkl_f(f):
+    '''read pkl from f, unsure if it was saved in py2 or py3.
+    '''
+    try:
+        return pickle.load(f)
+    except UnicodeDecodeError:
+        return pickle.load(f, encoding='latin1')
+
+
 def read_pkl(path):
-    '''read pkl, unsure if it was saved in py2 or py3.
+    '''read pkl from path, unsure if it was saved in py2 or py3.
     '''
     with open(path, 'rb') as f:
-        try:
-            return pickle.load(f)
-        except UnicodeDecodeError:
-            return pickle.load(f, encoding='latin1')
+        _read_pkl_f(f)
+
+
+def read_pkl_all_iter(path):
+    '''read all pkl from path, unsure if it was saved in py2 or py3.
+
+    this one will keep reading until EOF
+    '''
+    with open(path, 'rb') as f:
+        while True:
+            try:
+                yield _read_pkl_f(f)
+            except EOFError:
+                break
+
+
+def read_pkl_all(path):
+    '''read all pkl from path, unsure if it was saved in py2 or py3.
+
+    this one will keep reading until EOF
+    '''
+    return list(read_pkl_all_iter(path))
 
 
 def read_h5_dataset(path, dataset):
