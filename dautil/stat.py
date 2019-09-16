@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import scipy
 import scipy.signal as signal
-from numba import jit, prange
+from numba import jit, prange, float64
 
 
 @jit(nopython=True)
