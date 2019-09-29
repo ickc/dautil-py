@@ -1,3 +1,4 @@
+import numpy as np
 import pandas as pd
 
 
@@ -88,3 +89,66 @@ def ndarray_to_series(values, levels, names):
     s = pd.Series(values.flatten(), index=pd.MultiIndex.from_product(levels))
     s.index.names = names
     return s
+
+
+def df_auto_dtypes(df, debug=False):
+    '''convert each column of the DataFrame to a smaller dtype inplace
+    '''
+    # I think less that a byte of different values should be
+    # good candidate of being categorical data
+    # n_sqrt is just to avoid the case that someone passes a
+    # small DataFrame, e.g. with < 256 no. of rows
+    n = min(256, int(round(np.sqrt(df.shape[0]))))
+
+    if debug:
+        memory = df.memory_usage(deep=True).sum()
+        print(f'Initial memory use is {memory}.')
+
+    for name in df:
+        col = df[name]
+
+        dtype_cur = col.dtype
+        if debug:
+            print(f'Found column {name} with dtype {dtype_cur}.')
+
+        # shrink int sizes
+        if dtype_cur == np.int64:
+            for dtype in (np.int8, np.int16, np.int32):
+                if debug:
+                    print(f'Try to convert it to {dtype}.')
+                values = col.values
+                temp = np.asarray(values, dtype=dtype)
+                # replace the original column if the shrinked
+                # array has no overflow
+                if np.array_equal(values, temp):
+                    if debug:
+                        print(f'Successfully convert it to {dtype}.')
+                    df[name] = temp
+                    break
+                elif debug:
+                    print(f'Fail to convert it to {dtype}. Moving on...')
+        # shrink object
+        elif dtype_cur == np.object:
+            # datatime
+            try:
+                df[name] = pd.to_datetime(col)
+                if debug:
+                    print('Successfully convert it to datetime.')
+            except:
+                if debug:
+                    print('Fail to convert it to datetime. Moving on...')
+
+            # categorical
+            n_unique = col.unique().size
+            if n_unique <= n:
+                if debug:
+                    print(f"Converting it to categorical data as it has only {n_unique} unique values.")
+                df[name] = col.astype('category')
+            elif debug:
+                print(f"Not converting it to categorical data as it has {n_unique} unique values.")
+
+    if debug:
+        temp = df.memory_usage(deep=True).sum()
+        print(f'Final memory use is {temp}. {(memory - temp) * 100 / memory:.3g}% of original.')
+
+    return df
