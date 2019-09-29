@@ -385,6 +385,13 @@ def get_outer_box(x, y):
     return np.column_stack((np.minimum(x, y)[:, 0], np.maximum(x, y)[:, 1]))
 
 
+def filter_box(array):
+    '''filter out empty edges of a 2d-array
+    '''
+    box = get_box(array)
+    return array[box[0, 0]:box[0, 1], box[1, 0]:box[1, 1]]
+
+
 def mask(f, idxs=(0,)):
     '''f: a function with args where the idx-th arguments are numpy.ndarray
     a decorator to add keyword mask of type boolean array
