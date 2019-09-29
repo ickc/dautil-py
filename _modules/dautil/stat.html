@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>dautil.stat &#8212; dautil  documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js "></script>
+<script type="text/javascript" src="../../_static/js/jquery-fix.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js "></script>
+<script type="text/javascript" src="../../_static/bootstrap-sphinx.js "></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          dautil</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#installation">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../dautil.html">dautil package</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <h1>Source code for dautil.stat</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scipy</span>
+<span class="kn">import</span> <span class="nn">scipy.signal</span> <span class="k">as</span> <span class="nn">signal</span>
+<span class="kn">from</span> <span class="nn">numba</span> <span class="k">import</span> <span class="n">jit</span><span class="p">,</span> <span class="n">prange</span><span class="p">,</span> <span class="n">float64</span>
+
+
+<div class="viewcode-block" id="corr_custom"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.corr_custom">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corr_custom</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;x, y: ndarray of dtype bool</span>
+<span class="sd">    return: the difference between counts of x and y being agree or disagree.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="mf">2.</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mf">1.</span></div>
+
+
+<div class="viewcode-block" id="corr_pearson"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.corr_pearson">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corr_pearson</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;x, y: ndarray of dtype bool</span>
+<span class="sd">    return: pearson correlation between x, y</span>
+<span class="sd">    Note: a.k.a. phi correlation, Matthews correlation</span>
+<span class="sd">    Assume ``x.size == y.size``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">3</span><span class="p">,))</span>
+
+    <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="n">n</span> <span class="o">/=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<div class="viewcode-block" id="corr_kendall"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.corr_kendall">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">corr_kendall</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;x, y: ndarray of dtype bool</span>
+<span class="sd">    return: Kendall correlation between x, y</span>
+<span class="sd">    Assume ``x.size == y.size``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">n_01</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="o">~</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">n_10</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">x</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">n_11</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">x</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+    <span class="n">n_00</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="n">n_01</span> <span class="o">-</span> <span class="n">n_10</span> <span class="o">-</span> <span class="n">n_11</span>
+
+    <span class="n">P</span> <span class="o">=</span> <span class="n">n_00</span> <span class="o">*</span> <span class="n">n_11</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">n_01</span> <span class="o">*</span> <span class="n">n_10</span>
+    <span class="n">X0</span> <span class="o">=</span> <span class="n">n_00</span> <span class="o">*</span> <span class="n">n_01</span> <span class="o">+</span> <span class="n">n_10</span> <span class="o">*</span> <span class="n">n_11</span>
+    <span class="n">Y0</span> <span class="o">=</span> <span class="n">n_00</span> <span class="o">*</span> <span class="n">n_10</span> <span class="o">+</span> <span class="n">n_01</span> <span class="o">*</span> <span class="n">n_11</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="n">P</span> <span class="o">-</span> <span class="n">Q</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">P</span> <span class="o">+</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">X0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">P</span> <span class="o">+</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">Y0</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_corr_matrix_func"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.get_corr_matrix_func">[docs]</a><span class="k">def</span> <span class="nf">get_corr_matrix_func</span><span class="p">(</span><span class="n">corr_func</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;a higher order function that returns</span>
+<span class="sd">    a function to calculate a correlation matrix from</span>
+<span class="sd">    a kernel function corr_func that calculates correlations</span>
+<span class="sd">    between 2 arrays</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">corr_matrix</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;array: ndarray of dtype bool</span>
+<span class="sd">        Return correlation matrix of the columns in array</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># initialize</span>
+        <span class="n">corr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">prange</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+                <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr_func</span><span class="p">(</span><span class="n">array</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="n">array</span><span class="p">[:,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="n">corr</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">corr</span>
+    <span class="k">return</span> <span class="n">corr_matrix</span></div>
+
+
+<div class="viewcode-block" id="df_corr_matrix"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.df_corr_matrix">[docs]</a><span class="k">def</span> <span class="nf">df_corr_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;pearson&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;df: DataFrame of dtypes bool</span>
+<span class="sd">    method: custom or pearson</span>
+<span class="sd">    return a DataFrame of the correlation matrix from columns of df</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># get corr_func</span>
+    <span class="k">if</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;pearson&#39;</span><span class="p">,</span> <span class="s1">&#39;spearman&#39;</span><span class="p">,</span> <span class="s1">&#39;phi&#39;</span><span class="p">,</span> <span class="s1">&#39;matthews&#39;</span><span class="p">):</span>
+        <span class="n">corr_func</span> <span class="o">=</span> <span class="n">corr_pearson</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;kendall&#39;</span><span class="p">:</span>
+        <span class="n">corr_func</span> <span class="o">=</span> <span class="n">corr_kendall</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;custom&#39;</span><span class="p">:</span>
+        <span class="n">corr_func</span> <span class="o">==</span> <span class="n">corr_custom</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">sys</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Unknown method </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">),</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">corr_matrix_func</span> <span class="o">=</span> <span class="n">get_corr_matrix_func</span><span class="p">(</span><span class="n">corr_func</span><span class="p">)</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">corr_matrix_func</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="partial_corr_matrix"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.partial_corr_matrix">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">partial_corr_matrix</span><span class="p">(</span><span class="n">inv</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;corr: inverse of a correlation matrix</span>
+<span class="sd">    return the partial correlation matrix</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">inv</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">inv</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">inv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">inv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">inv</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="df_partial_corr_matrix"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.df_partial_corr_matrix">[docs]</a><span class="k">def</span> <span class="nf">df_partial_corr_matrix</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;pinv&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;df: a correlation matrix</span>
+<span class="sd">    mode: &#39;pinv&#39; or &#39;inv&#39;, using the corresponding function in scipy.linalg</span>
+<span class="sd">    return the partial correlation matrix</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">corr</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">inv</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;pinv&#39;</span> <span class="k">else</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">corr</span><span class="p">)</span>
+    <span class="n">corr_partial</span> <span class="o">=</span> <span class="n">partial_corr_matrix</span><span class="p">(</span><span class="n">inv</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">corr_partial</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="df_inv"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.df_inv">[docs]</a><span class="k">def</span> <span class="nf">df_inv</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;pinv&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;df: a DataFrame where rows and columns are indentical</span>
+<span class="sd">    mode: &#39;pinv&#39; or &#39;inv&#39;, using the corresponding function in scipy.linalg</span>
+<span class="sd">    return a DataFrame with the pesudo inverse matrix of the values</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">inv</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">pinv</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;pinv&#39;</span> <span class="k">else</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">inv</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="max_mask_row"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.max_mask_row">[docs]</a><span class="nd">@jit</span>  <span class="c1"># (nopython=True)</span>
+<span class="k">def</span> <span class="nf">max_mask_row</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">bool_</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)):</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="corr_max"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.corr_max">[docs]</a><span class="k">def</span> <span class="nf">corr_max</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">rowonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;df: squared correlation matrix</span>
+<span class="sd">    rowonly: if True, only max per row, else max per either row or col</span>
+<span class="sd">    return: a mask that is True when the correlation is max.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># per row</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">max_mask_row</span><span class="p">((</span><span class="n">df</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">rowonly</span><span class="p">:</span>
+        <span class="c1"># or per col</span>
+        <span class="c1"># assert mask.T == df.eq(df_max, axis=1)</span>
+        <span class="n">mask</span> <span class="o">|=</span> <span class="n">mask</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="bin_corr_relative"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.bin_corr_relative">[docs]</a><span class="k">def</span> <span class="nf">bin_corr_relative</span><span class="p">(</span><span class="n">corr</span><span class="p">,</span> <span class="n">neighbor_max</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;``corr`` is a correlation matrix with columns &amp; indices sorted,</span>
+<span class="sd">    and in regular intervals.</span>
+<span class="sd">    Return the average of the correlations of the (k + 1)-th neighbor,</span>
+<span class="sd">    where k ranges from 0 to neighbor_max</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">corr</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">corr</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">corr_matrix</span> <span class="o">=</span> <span class="n">corr</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="n">neighbor_max</span><span class="p">,),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">complex</span><span class="p">)</span>
+    <span class="c1"># k-th neighbor</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">neighbor_max</span><span class="p">):</span>
+        <span class="n">neighbor</span> <span class="o">=</span> <span class="n">corr_matrix</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">k</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.</span><span class="n">j</span> <span class="o">*</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">sem</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">neighbor_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">interval</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Correlation as a function of $\Delta l$&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_cutoffs"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.get_cutoffs">[docs]</a><span class="k">def</span> <span class="nf">get_cutoffs</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;aggressive&#39;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;``data``: 1d-array</span>
+<span class="sd">    ``num``: no. of points to resolve between min and max</span>
+<span class="sd">    of ``data``.</span>
+<span class="sd">    use KDE to detect minimums and return an array</span>
+<span class="sd">    of left and right cutoff, relative to the peak of KDE</span>
+<span class="sd">    if `mode == &#39;aggressive&#39;` then choose the innermost minimums to cutoff</span>
+<span class="sd">    else outermost.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">x_mins</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">signal</span><span class="o">.</span><span class="n">argrelmin</span><span class="p">(</span><span class="n">y</span><span class="p">)]</span>
+    <span class="n">x_max</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">argmax</span><span class="p">()]</span>
+    <span class="k">del</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+    <span class="n">cutoffs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cutoffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_mins</span><span class="p">[</span><span class="n">x_mins</span> <span class="o">&lt;</span> <span class="n">x_max</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;agressive&#39;</span> <span class="k">else</span> <span class="n">x_mins</span><span class="p">[</span><span class="n">x_mins</span> <span class="o">&lt;</span> <span class="n">x_max</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">cutoffs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NINF</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cutoffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_mins</span><span class="p">[</span><span class="n">x_mins</span> <span class="o">&gt;</span> <span class="n">x_max</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;agressive&#39;</span> <span class="k">else</span> <span class="n">x_mins</span><span class="p">[</span><span class="n">x_mins</span> <span class="o">&gt;</span> <span class="n">x_max</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">cutoffs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="k">return</span> <span class="n">cutoffs</span></div>
+
+
+<div class="viewcode-block" id="chi_sq_sum"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.chi_sq_sum">[docs]</a><span class="nd">@jit</span><span class="p">(</span><span class="n">float64</span><span class="p">(</span><span class="n">float64</span><span class="p">[::</span><span class="mi">1</span><span class="p">]),</span> <span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">chi_sq_sum</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">array</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_PTE"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.get_PTE">[docs]</a><span class="k">def</span> <span class="nf">get_PTE</span><span class="p">(</span><span class="n">reduction_func</span><span class="o">=</span><span class="n">chi_sq_sum</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;return a PTE function given a reduction function</span>
+
+<span class="sd">    `reduction_func`: reduce a 1d-array to a float.</span>
+
+<span class="sd">    return `PTE` func. with the following sign.:</span>
+
+<span class="sd">    `estimates`: 2D-array</span>
+<span class="sd">    `empiricals`: 3D-array</span>
+
+<span class="sd">    1st axis of both array are independent cases. i.e. it is vectorized per element in this axis.</span>
+<span class="sd">    last axis of both array are different measurements that will be aggregated over by the `reduction_func`.</span>
+<span class="sd">    middle axis of `empiricals` is different realizations of this random distributions.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+
+    <span class="nd">@jit</span><span class="p">(</span><span class="n">float64</span><span class="p">[::</span><span class="mi">1</span><span class="p">](</span><span class="n">float64</span><span class="p">[:,</span> <span class="p">::</span><span class="mi">1</span><span class="p">],</span> <span class="n">float64</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">::</span><span class="mi">1</span><span class="p">]),</span> <span class="n">nopython</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">nogil</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">PTE</span><span class="p">(</span><span class="n">estimates</span><span class="p">,</span> <span class="n">empiricals</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        `estimates`: 2D-array</span>
+<span class="sd">        `empiricals`: 3D-array</span>
+
+<span class="sd">        1st axis of both array are independent cases. i.e. it is vectorized per element in this axis.</span>
+<span class="sd">        last axis of both array are different measurements that will be aggregated over by the `reduction_func`.</span>
+<span class="sd">        middle axis of `empiricals` is different realizations of this random distributions.</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">estimates</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">M</span><span class="p">,</span> <span class="n">K</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="n">empiricals</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">assert</span> <span class="n">m</span> <span class="o">==</span> <span class="n">M</span>
+        <span class="k">assert</span> <span class="n">n</span> <span class="o">==</span> <span class="n">N</span>
+
+        <span class="c1"># different vars</span>
+        <span class="n">hit</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">M</span><span class="p">):</span>
+            <span class="n">estimate</span> <span class="o">=</span> <span class="n">reduction_func</span><span class="p">(</span><span class="n">estimates</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">):</span>
+                <span class="n">empirical</span> <span class="o">=</span> <span class="n">reduction_func</span><span class="p">(</span><span class="n">empiricals</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">empirical</span> <span class="o">&gt;=</span> <span class="n">estimate</span><span class="p">:</span>
+                    <span class="n">hit</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="n">hit</span> <span class="o">/</span> <span class="n">K</span>
+
+    <span class="k">return</span> <span class="n">PTE</span></div>
+
+
+<div class="viewcode-block" id="chi_sq_test_null"><a class="viewcode-back" href="../../dautil.stat.html#dautil.stat.chi_sq_test_null">[docs]</a><span class="k">def</span> <span class="nf">chi_sq_test_null</span><span class="p">(</span><span class="n">array</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;estimate null-hypothesis of PTE of emprical chi-sq sum</span>
+
+<span class="sd">    `array`: 2d-array, each row are independent measurement</span>
+
+<span class="sd">    it estimates the emprical distribution of the sum of chi-sq</span>
+<span class="sd">    under the null hypothesis that its mean is zero (i.e. mean subtracted)</span>
+
+<span class="sd">    then calculate the PTE of the mean vector under this distribution.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">std</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">chi_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">((</span><span class="n">array</span> <span class="o">-</span> <span class="n">mu</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">chi_null_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">mu</span> <span class="o">/</span> <span class="n">std</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">chi_sq</span> <span class="o">&gt;=</span> <span class="n">chi_null_sq</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span></div>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2017–2018, Kolen Cheung.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
