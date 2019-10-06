@@ -8,6 +8,11 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
+from pandas.api.types import is_string_dtype
+from pandas.api.types import is_numeric_dtype
+
+import plotly.express as px
+
 from dautil.IO import makedirs
 
 
@@ -332,3 +337,81 @@ def iplot(df, y='y'):
     df_temp = df.stack().to_frame(y).reset_index()
     col = df_temp.columns
     return px.line(df_temp, x=col[0], color=col[1], y=col[2])
+
+# These functions plot all columns conditioned on one column ###################
+
+def distplot_with_hue(data=None, x=None, hue=None, row=None, col=None, legend=True, height=None, **kwargs):
+    '''enhance seaborn's distplot with hue support
+
+    c.f. https://github.com/mwaskom/seaborn/issues/861
+    '''
+    g = sns.FacetGrid(data, hue=hue, row=row, col=col, height=height)
+    g.map(sns.distplot, x, **kwargs)
+    if legend and (hue is not None) and (hue not in [x, row, col]):
+        g.add_legend(title=hue)
+    return g
+
+
+def plot_all_col_seaborn(df, hue=None, numeric_only=False, string_only=False, height=None):
+    '''plot all columns conditioned on one, using seaborn
+    '''
+    for name, col in df.items():
+        if name == hue:
+            pass
+        elif is_numeric_dtype(col):
+            if not string_only:
+                distplot_with_hue(x=name, data=df, hue=hue, height=height)
+                plt.show()
+        elif is_string_dtype(col):
+            if not numeric_only:
+                sns.catplot(y=name, hue=hue, data=df, kind='count', height=height)
+#                 sns.countplot(y=name, hue=hue, data=df)
+                plt.show()
+        else:
+            raise ValueError
+
+
+
+
+def plot_all_col_plotly(df, hue=None, numeric_only=False, string_only=False, bin_width=None):
+    '''plot all columns conditioned on one, using plotly.express
+
+    `bin_width`: for numeric data only.
+    If None, pass nbins=None to plotly,
+    if 'freedman', use Freedman–Diaconis rule,
+    else use Scott's normal reference rule.
+    '''
+    for name, col in df.items():
+        if name == hue:
+            pass
+        elif is_numeric_dtype(col):
+            if not string_only:
+                if bin_width is None:
+                    nbins = None
+                else:
+                    from astropy.stats import freedman_bin_width, scott_bin_width
+
+                    values = col.values
+                    width = freedman_bin_width(values) if bin_width == 'freedman' else scott_bin_width(values)
+                    nbins = int(np.round((values.max() - values.min()) / width)) if width else None
+                fig = px.histogram(df, y=name, color=hue, orientation='h', barmode='overlay', histnorm='probability density', nbins=nbins)
+                fig.show()
+        elif is_string_dtype(col):
+            if not numeric_only:
+                fig = px.histogram(df, y=name, color=hue, orientation='h', barmode='group', histnorm='probability density')
+                fig.show()
+        else:
+            raise ValueError
+
+
+def plot_all_col_plotly_simple(df, hue=None, orientation='h', barmode='overlay', histnorm='probability density', **kwargs):
+    '''plot all columns conditioned on one, using plotly.express
+
+    This one is simpler, that doesn't differentiate between column types.
+    '''
+    for name, col in df.items():
+        if name == hue:
+            pass
+        else:
+            fig = px.histogram(df, y=name, color=hue, orientation=orientation, barmode=barmode, histnorm=histnorm, title=f'$P(\\text{{{name}}} | \\text{{{hue}}})$', **kwargs)
+            fig.show()
