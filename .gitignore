@@ -13,3 +13,4 @@ docs/*
 !docs/requirements.txt
 
 .vscode/
+.mypy_cache
