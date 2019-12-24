@@ -60,8 +60,6 @@ def df_to_ndarray(df, unique=False):
         )
         names = index.names if multiindex else [index.name]
         return levels, names
-
-    columns = df.columns
     
     col_levels, col_names = get_index_levels_names(df.columns)
     row_levels, row_names = get_index_levels_names(df.index)
