@@ -91,14 +91,14 @@ def ndarray_to_series(values, levels, names):
     return s
 
 
-def df_auto_dtypes(df, debug=False):
+def df_auto_dtypes(df, debug=False, categorical=True):
     '''convert each column of the DataFrame to a smaller dtype inplace
     '''
     # I think less that a byte of different values should be
     # good candidate of being categorical data
     # n_sqrt is just to avoid the case that someone passes a
     # small DataFrame, e.g. with < 256 no. of rows
-    n = min(256, int(round(np.sqrt(df.shape[0]))))
+    n_cat = min(256, int(round(np.sqrt(df.shape[0])))) if categorical else 0
 
     if debug:
         memory = df.memory_usage(deep=True).sum()
@@ -140,7 +140,7 @@ def df_auto_dtypes(df, debug=False):
 
             # categorical
             n_unique = col.unique().size
-            if n_unique <= n:
+            if n_unique <= n_cat:
                 if debug:
                     print(f"Converting it to categorical data as it has only {n_unique} unique values.")
                 df[name] = col.astype('category')
