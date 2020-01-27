@@ -114,3 +114,25 @@ def parse_gnu_time_files(filenames, isdatetime=False, map_parallel=map):
     df = pd.concat(map_parallel(partial(parse_gnu_time_file, isdatetime=isdatetime), filenames))
     df.sort_index(inplace=True)
     return df
+
+
+def parse_md5sum(file):
+    '''parse md5sum output and convert to DataFrame
+
+    Example
+    -------
+
+    >>> with open(path, 'r') as f:
+            df = parse_md5sum(f)
+    # then you can see duplicated files by
+    >>> temp = df.md5sum.value_counts() > 1
+    >>> md5sums = temp[temp].index
+    >>> df[df.md5sum.isin(md5sums)]
+    '''
+    # first 32 char is the checksum
+    # then 2 spaces
+    # last char is \n
+    return pd.DataFrame(
+        ((line[:32], line[34:-1]) for line in file),
+        columns=['md5sum', 'path']
+    )
