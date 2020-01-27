@@ -102,12 +102,12 @@
     <div class="body col-md-12 content" role="main">
       
   <h1>Source code for dautil.parser</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span>
-<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -218,6 +218,28 @@
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">map_parallel</span><span class="p">(</span><span class="n">partial</span><span class="p">(</span><span class="n">parse_gnu_time_file</span><span class="p">,</span> <span class="n">isdatetime</span><span class="o">=</span><span class="n">isdatetime</span><span class="p">),</span> <span class="n">filenames</span><span class="p">))</span>
     <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="parse_md5sum"><a class="viewcode-back" href="../../dautil.parser.html#dautil.parser.parse_md5sum">[docs]</a><span class="k">def</span> <span class="nf">parse_md5sum</span><span class="p">(</span><span class="n">file</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;parse md5sum output and convert to DataFrame</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &gt;&gt;&gt; with open(path, &#39;r&#39;) as f:</span>
+<span class="sd">            df = parse_md5sum(f)</span>
+<span class="sd">    # then you can see duplicated files by</span>
+<span class="sd">    &gt;&gt;&gt; temp = df.md5sum.value_counts() &gt; 1</span>
+<span class="sd">    &gt;&gt;&gt; md5sums = temp[temp].index</span>
+<span class="sd">    &gt;&gt;&gt; df[df.md5sum.isin(md5sums)]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># first 32 char is the checksum</span>
+    <span class="c1"># then 2 spaces</span>
+    <span class="c1"># last char is \n</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">((</span><span class="n">line</span><span class="p">[:</span><span class="mi">32</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">34</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file</span><span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;md5sum&#39;</span><span class="p">,</span> <span class="s1">&#39;path&#39;</span><span class="p">]</span>
+    <span class="p">)</span></div>
 </pre></div>
 
     </div>
@@ -232,7 +254,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.0.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
     </p>
   </div>
 </footer>
