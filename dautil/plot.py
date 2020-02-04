@@ -227,7 +227,7 @@ def iplot_column_slider(df, active=0):
     py.iplot(iplot_column_slider(df))
     ```
     '''
-    is_multi = isinstance(df.columns, pd.core.indexes.multi.MultiIndex)
+    is_multi = isinstance(df.columns, pd.core.indexes.api.MultiIndex)
 
     data = [
         {
@@ -280,7 +280,7 @@ def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
     hint: add ``%%opts Curve {+framewise}`` to readjust the frame on each selection
     '''
     # dispatch MultiIndex or not
-    is_multi = isinstance(df.columns, pd.core.indexes.multi.MultiIndex)
+    is_multi = isinstance(df.columns, pd.core.indexes.api.MultiIndex)
     is_complex = np.iscomplexobj(df)
 
     def plot(*args):
