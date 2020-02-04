@@ -50,7 +50,7 @@ def df_to_ndarray(df, unique=False):
     assert df.columns.is_monotonic
 
     def get_index_levels_names(index):
-        multiindex = isinstance(index, pd.core.index.MultiIndex)
+        multiindex = isinstance(index, pd.core.indexes.api.MultiIndex)
         levels = (
             [index.get_level_values(i).unique() for i in range(index.nlevels)]
             if unique else
