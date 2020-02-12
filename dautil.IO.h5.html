@@ -6,11 +6,11 @@
     <title>dautil.IO.h5 module &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dautil.IO.pandas module" href="dautil.IO.pandas.html" />
@@ -151,6 +151,43 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="dautil.IO.h5.h5link_recursive">
+<code class="sig-prename descclassname">dautil.IO.h5.</code><code class="sig-name descname">h5link_recursive</code><span class="sig-paren">(</span><em class="sig-param">path: pathlib.Path</em>, <em class="sig-param">f: h5py._hl.files.File</em>, <em class="sig-param">f_out: h5py._hl.files.File</em>, <em class="sig-param">verbose: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5link_recursive"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5link_recursive" title="Permalink to this definition">¶</a></dt>
+<dd><p>create ExternalLink in <cite>f_out</cite> from <cite>f</cite> with <cite>path</cite> recursively</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>Path</em>) – input path</p></li>
+<li><p><strong>f</strong> (<em>h5py.File</em>) – file obj of <cite>path</cite> with relative path to dataset</p></li>
+<li><p><strong>f_out</strong> (<em>h5py.File</em>) – file obj of output path at its root</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – if True verbose.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="dautil.IO.h5.h5link_recursive_cli">
+<code class="sig-prename descclassname">dautil.IO.h5.</code><code class="sig-name descname">h5link_recursive_cli</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5link_recursive_cli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5link_recursive_cli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="dautil.IO.h5.h5link_recursive_main">
+<code class="sig-prename descclassname">dautil.IO.h5.</code><code class="sig-name descname">h5link_recursive_main</code><span class="sig-paren">(</span><em class="sig-param">basedir: pathlib.Path</em>, <em class="sig-param">path: pathlib.Path</em>, <em class="sig-param">out_path: pathlib.Path</em>, <em class="sig-param">*</em>, <em class="sig-param">verbose: bool = False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5link_recursive_main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5link_recursive_main" title="Permalink to this definition">¶</a></dt>
+<dd><p>create HDF5 ExternalLink in basedir/out_path from basedir/path recursively</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>basedir</strong> (<em>Path</em>) – base input directory</p></li>
+<li><p><strong>path</strong> (<em>Path</em>) – relative path of input from basedir</p></li>
+<li><p><strong>out_path</strong> (<em>Path</em>) – relative path of output from basedir</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – if True verbose.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="dautil.IO.h5.h5split">
 <code class="sig-prename descclassname">dautil.IO.h5.</code><code class="sig-name descname">h5split</code><span class="sig-paren">(</span><em class="sig-param">in_file</em>, <em class="sig-param">out_dir</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">groups=None</em>, <em class="sig-param">attrs=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/IO/h5.html#h5split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.IO.h5.h5split" title="Permalink to this definition">¶</a></dt>
 <dd><p>split each of the HDF5 group from in_file to individual ones in out_dir
@@ -179,7 +216,7 @@ attrs: if not None, copy HDF5 attributes per item in attrs</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
     </p>
   </div>
 </footer>

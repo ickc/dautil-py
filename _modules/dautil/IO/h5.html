@@ -6,11 +6,11 @@
     <title>dautil.IO.h5 &#8212; dautil  documentation</title>
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
 <meta charset='utf-8'>
@@ -106,6 +106,7 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 
 <span class="kn">import</span> <span class="nn">h5py</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -183,6 +184,55 @@
                 <span class="k">raise</span> <span class="ne">AssertionError</span></div>
 
 
+<div class="viewcode-block" id="h5link_recursive"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5link_recursive">[docs]</a><span class="k">def</span> <span class="nf">h5link_recursive</span><span class="p">(</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">f</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">,</span>
+    <span class="n">f_out</span><span class="p">:</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;create ExternalLink in `f_out` from `f` with `path` recursively</span>
+
+<span class="sd">    :param Path path: input path</span>
+<span class="sd">    :param h5py.File f: file obj of `path` with relative path to dataset</span>
+<span class="sd">    :param h5py.File f_out: file obj of output path at its root</span>
+<span class="sd">    :param bool verbose: if True verbose.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">dataset</span><span class="o">.</span><span class="n">Dataset</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{f}</span><span class="s1"> is dataset, creating ExternalLink...&#39;</span><span class="p">)</span>
+        <span class="n">f_out</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">ExternalLink</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">_hl</span><span class="o">.</span><span class="n">group</span><span class="o">.</span><span class="n">Group</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{f}</span><span class="s1"> is group, entering...&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">h5link_recursive</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">f_out</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="h5link_recursive_main"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5link_recursive_main">[docs]</a><span class="k">def</span> <span class="nf">h5link_recursive_main</span><span class="p">(</span>
+    <span class="n">basedir</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="n">out_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">verbose</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;create HDF5 ExternalLink in basedir/out_path from basedir/path recursively</span>
+
+<span class="sd">    :param Path basedir: base input directory</span>
+<span class="sd">    :param Path path: relative path of input from basedir</span>
+<span class="sd">    :param Path out_path: relative path of output from basedir</span>
+<span class="sd">    :param bool verbose: if True verbose.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">with</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">basedir</span> <span class="o">/</span> <span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">,</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">basedir</span> <span class="o">/</span> <span class="n">out_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f_out</span><span class="p">:</span>
+        <span class="n">h5link_recursive</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">f_out</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="n">verbose</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="h5link_recursive_cli"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5link_recursive_cli">[docs]</a><span class="k">def</span> <span class="nf">h5link_recursive_cli</span><span class="p">():</span>
+    <span class="kn">import</span> <span class="nn">defopt</span>
+
+    <span class="n">defopt</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">h5link_recursive_main</span><span class="p">)</span></div>
+
+
 <div class="viewcode-block" id="plot_h5diff"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.plot_h5diff">[docs]</a><span class="k">def</span> <span class="nf">plot_h5diff</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">out_dir</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;plot the diff. of the arrays in the file objects f1 and f2 to the out_dir</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -227,6 +277,7 @@
                         <span class="nb">print</span><span class="p">(</span><span class="n">h5_path</span><span class="p">)</span>
                     <span class="n">f_in</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">h5_path</span><span class="p">,</span> <span class="n">f_out</span><span class="p">)</span></div>
 
+
 <div class="viewcode-block" id="h5_to_dict"><a class="viewcode-back" href="../../../dautil.IO.h5.html#dautil.IO.h5.h5_to_dict">[docs]</a><span class="k">def</span> <span class="nf">h5_to_dict</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;convert h5 file into a dictionary</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -248,7 +299,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.3.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
     </p>
   </div>
 </footer>
