@@ -2,6 +2,7 @@ from __future__ import print_function
 
 import os
 import sys
+from pathlib import Path
 
 import h5py
 import matplotlib.pyplot as plt
@@ -79,6 +80,55 @@ def h5assert_recursive(f1, f2, rtol=1.5e-09, atol=1.5e-09, verbose=False):
                 raise AssertionError
 
 
+def h5link_recursive(
+    path: Path,
+    f: h5py.File,
+    f_out: h5py.File,
+    verbose: bool = False,
+):
+    '''create ExternalLink in `f_out` from `f` with `path` recursively
+
+    :param Path path: input path
+    :param h5py.File f: file obj of `path` with relative path to dataset
+    :param h5py.File f_out: file obj of output path at its root
+    :param bool verbose: if True verbose.
+    '''
+    if isinstance(f, h5py._hl.dataset.Dataset):
+        name = f.name
+        if verbose:
+            print(f'{f} is dataset, creating ExternalLink...')
+        f_out[name] = h5py.ExternalLink(path, name)
+    elif isinstance(f, h5py._hl.group.Group):
+        if verbose:
+            print(f'{f} is group, entering...')
+        for i in f:
+            h5link_recursive(path, f[i], f_out, verbose=verbose)
+
+
+def h5link_recursive_main(
+    basedir: Path,
+    path: Path,
+    out_path: Path,
+    *,
+    verbose: bool = False,
+):
+    '''create HDF5 ExternalLink in basedir/out_path from basedir/path recursively
+
+    :param Path basedir: base input directory
+    :param Path path: relative path of input from basedir
+    :param Path out_path: relative path of output from basedir
+    :param bool verbose: if True verbose.
+    '''
+    with h5py.File(basedir / path, 'r') as f, h5py.File(basedir / out_path) as f_out:
+        h5link_recursive(path, f, f_out, verbose=verbose)
+
+
+def h5link_recursive_cli():
+    import defopt
+
+    defopt.run(h5link_recursive_main)
+
+
 def plot_h5diff(f1, f2, out_dir, prefix='', verbose=False):
     '''plot the diff. of the arrays in the file objects f1 and f2 to the out_dir
     '''
@@ -122,6 +172,7 @@ def h5split(in_file, out_dir, verbose=False, groups=None, attrs=None):
                     if verbose:
                         print(h5_path)
                     f_in.copy(h5_path, f_out)
+
 
 def h5_to_dict(f):
     '''convert h5 file into a dictionary
