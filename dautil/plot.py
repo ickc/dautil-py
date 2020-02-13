@@ -12,6 +12,7 @@ from pandas.api.types import is_string_dtype
 from pandas.api.types import is_numeric_dtype
 
 import plotly.express as px
+import plotly.graph_objects as go
 
 from dautil.IO import makedirs
 
@@ -216,16 +217,7 @@ def iplot_column_slider(df, active=0):
     but apply a slider scross the columns so that only 1 column
     is shown at a time
 
-    returns a figure object to be consumed by iplot
-
-    Example
-    -------
-
-    ```py
-    import plotly.offline as py
-    py.init_notebook_mode()
-    py.iplot(iplot_column_slider(df))
-    ```
+    returns a figure object
     '''
     is_multi = isinstance(df.columns, pd.core.indexes.api.MultiIndex)
 
@@ -260,10 +252,10 @@ def iplot_column_slider(df, active=0):
         'steps': steps,
     }]
 
-    return {
+    return go.Figure({
         'data': data,
         'layout': {'sliders': sliders, 'showlegend': True}
-    }
+    })
 
 
 def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
