@@ -1,0 +1,17 @@
+dautil.script package
+=====================
+
+Submodules
+----------
+
+.. toctree::
+
+   dautil.script.tree_html_at_level
+
+Module contents
+---------------
+
+.. automodule:: dautil.script
+   :members:
+   :undoc-members:
+   :show-inheritance:

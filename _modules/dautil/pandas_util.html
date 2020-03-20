@@ -204,31 +204,31 @@
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
         <span class="n">memory</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initial memory use is </span><span class="si">{memory}</span><span class="s1">.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Initial memory use is </span><span class="si">{</span><span class="n">memory</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
 
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">df</span><span class="p">:</span>
         <span class="n">col</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
 
         <span class="n">dtype_cur</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">dtype</span>
         <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found column </span><span class="si">{name}</span><span class="s1"> with dtype </span><span class="si">{dtype_cur}</span><span class="s1">.&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found column </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> with dtype </span><span class="si">{</span><span class="n">dtype_cur</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
 
         <span class="c1"># shrink int sizes</span>
         <span class="k">if</span> <span class="n">dtype_cur</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">int64</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">):</span>
                 <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Try to convert it to </span><span class="si">{dtype}</span><span class="s1">.&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Try to convert it to </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
                 <span class="n">values</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">values</span>
                 <span class="n">temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
                 <span class="c1"># replace the original column if the shrinked</span>
                 <span class="c1"># array has no overflow</span>
                 <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">temp</span><span class="p">):</span>
                     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Successfully convert it to </span><span class="si">{dtype}</span><span class="s1">.&#39;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Successfully convert it to </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s1">.&#39;</span><span class="p">)</span>
                     <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
                     <span class="k">break</span>
                 <span class="k">elif</span> <span class="n">debug</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fail to convert it to </span><span class="si">{dtype}</span><span class="s1">. Moving on...&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Fail to convert it to </span><span class="si">{</span><span class="n">dtype</span><span class="si">}</span><span class="s1">. Moving on...&#39;</span><span class="p">)</span>
         <span class="c1"># shrink object</span>
         <span class="k">elif</span> <span class="n">dtype_cur</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">object</span><span class="p">:</span>
             <span class="c1"># datatime</span>
@@ -245,14 +245,14 @@
                 <span class="n">n_unique</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">size</span>
                 <span class="k">if</span> <span class="n">n_unique</span> <span class="o">&lt;=</span> <span class="n">n_cat</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Converting it to categorical data as it has only </span><span class="si">{n_unique}</span><span class="s2"> unique values.&quot;</span><span class="p">)</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Converting it to categorical data as it has only </span><span class="si">{</span><span class="n">n_unique</span><span class="si">}</span><span class="s2"> unique values.&quot;</span><span class="p">)</span>
                     <span class="n">df</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">col</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">)</span>
                 <span class="k">elif</span> <span class="n">debug</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not converting it to categorical data as it has </span><span class="si">{n_unique}</span><span class="s2"> unique values.&quot;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Not converting it to categorical data as it has </span><span class="si">{</span><span class="n">n_unique</span><span class="si">}</span><span class="s2"> unique values.&quot;</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">debug</span><span class="p">:</span>
         <span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">memory_usage</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final memory use is </span><span class="si">{temp}</span><span class="s1">. {(memory - temp) * 100 / memory:.3g}</span><span class="si">% o</span><span class="s1">f original.&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Final memory use is </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s1">. </span><span class="si">{</span><span class="p">(</span><span class="n">memory</span> <span class="o">-</span> <span class="n">temp</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">memory</span><span class="si">:</span><span class="s1">.3g</span><span class="si">}</span><span class="s1">% of original.&#39;</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">df</span></div>
 </pre></div>
@@ -269,7 +269,7 @@
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
     </p>
   </div>
 </footer>
