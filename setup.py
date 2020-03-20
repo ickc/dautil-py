@@ -115,7 +115,8 @@ setup(
     # pip to create the appropriate form of executable for the target platform.
     entry_points={
         'console_scripts': [
-            'h5link_recursive = dautil.IO.h5:h5link_recursive_cli'
+            'h5link_recursive = dautil.IO.h5:h5link_recursive_cli',
+            'tree_html_at_level = dautil.script.tree_html_at_level:cli',
         ],
     },
 )
