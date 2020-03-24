@@ -3,13 +3,14 @@
 from pathlib import Path
 from collections import OrderedDict
 from typing import List
+import sys
 
 from subprocess import getoutput
 
 import pandas as pd
 import defopt
 
-def main(outpath: Path, *, level: int = 3, names: List[str] = ['Year', 'Author', 'Name']):
+def main(*, outpath: Path = None, level: int = 3, names: List[str] = ['Year', 'Author', 'Name']):
     '''Create an HTML page of the directory tree at a certain level
 
     :param Path outpath: the output path of the HTML file
@@ -38,8 +39,12 @@ def main(outpath: Path, *, level: int = 3, names: List[str] = ['Year', 'Author',
     # last level from the index becomes the text in the link
     df['link'] = [f'<a href="{row[1]}">{row[0]}</a>' for row in df.reset_index(level=-1).values]
 
-    with open(outpath, 'w') as f:
+    if outpath is None:
+        f = sys.stdout
         df[['link']].to_html(f, escape=False)
+    else:
+        with open(outpath, 'w') as f:
+            df[['link']].to_html(f, escape=False)
 
 def cli():
     defopt.run(main)
