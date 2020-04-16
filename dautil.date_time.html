@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>dautil.date_time module &#8212; dautil  documentation</title>
@@ -120,41 +120,41 @@
       
   <div class="section" id="module-dautil.date_time">
 <span id="dautil-date-time-module"></span><h1>dautil.date_time module<a class="headerlink" href="#module-dautil.date_time" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.date_time.npptime">
-<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">npptime</code><span class="sig-paren">(</span><em class="sig-param">datetime64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#npptime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.npptime" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">npptime</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datetime64</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#npptime"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.npptime" title="Permalink to this definition">¶</a></dt>
 <dd><p>datetime64: of type numpy.datetime64
 return: Python’s datetime format of it</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.date_time.strptime_np">
-<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strptime_np</code><span class="sig-paren">(</span><em class="sig-param">string</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strptime_np"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strptime_np" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strptime_np</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strptime_np"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strptime_np" title="Permalink to this definition">¶</a></dt>
 <dd><p>string: a datetime in format ‘%Y%m%d_%H%M%S’
 return: numpy.datetime64 representation of it
 equiv. to strtime_np_general
 but faster by over an order of magnitude</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.date_time.strptime_np_general">
-<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strptime_np_general</code><span class="sig-paren">(</span><em class="sig-param">string</em>, <em class="sig-param">fmt='%Y%m%d_%H%M%S'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strptime_np_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strptime_np_general" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strptime_np_general</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">string</span></em>, <em class="sig-param"><span class="n">fmt</span><span class="o">=</span><span class="default_value">'%Y%m%d_%H%M%S'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strptime_np_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strptime_np_general" title="Permalink to this definition">¶</a></dt>
 <dd><p>string: a datetime in format <code class="docutils literal notranslate"><span class="pre">fmt</span></code>
 return: numpy.datetime64 representation of it</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.date_time.strttime_np">
-<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strttime_np</code><span class="sig-paren">(</span><em class="sig-param">datetime64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strttime_np"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strttime_np" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strttime_np</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datetime64</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strttime_np"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strttime_np" title="Permalink to this definition">¶</a></dt>
 <dd><p>datetime64: of type numpy.datetime64
 return: datetime in format ‘%Y%m%d_%H%M%S’
 equiv. to datetime.utcfromtimestamp(datetime64.astype(int)).strftime(‘%Y%m%d_%H%M%S’)
 but faster by almost an order of magnitude</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.date_time.strttime_np_general">
-<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strttime_np_general</code><span class="sig-paren">(</span><em class="sig-param">datetime64</em>, <em class="sig-param">fmt='%Y%m%d_%H%M%S'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strttime_np_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strttime_np_general" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.date_time.</code><code class="sig-name descname">strttime_np_general</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datetime64</span></em>, <em class="sig-param"><span class="n">fmt</span><span class="o">=</span><span class="default_value">'%Y%m%d_%H%M%S'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/date_time.html#strttime_np_general"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.date_time.strttime_np_general" title="Permalink to this definition">¶</a></dt>
 <dd><p>datetime64: of type numpy.datetime64
 return: datetime in format <code class="docutils literal notranslate"><span class="pre">fmt</span></code></p>
 </dd></dl>
@@ -174,7 +174,7 @@ return: datetime in format <code class="docutils literal notranslate"><span clas
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.<br/>
     </p>
   </div>
 </footer>

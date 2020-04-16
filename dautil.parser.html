@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>dautil.parser module &#8212; dautil  documentation</title>
@@ -120,9 +120,9 @@
       
   <div class="section" id="module-dautil.parser">
 <span id="dautil-parser-module"></span><h1>dautil.parser module<a class="headerlink" href="#module-dautil.parser" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.parser.cli_sort">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">cli_sort</code><span class="sig-paren">(</span><em class="sig-param">cli</em>, <em class="sig-param">n_command</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#cli_sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.cli_sort" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">cli_sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cli</span></em>, <em class="sig-param"><span class="n">n_command</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#cli_sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.cli_sort" title="Permalink to this definition">¶</a></dt>
 <dd><p>assume cli is a command with args
 where <code class="docutils literal notranslate"><span class="pre">n_command</span></code> is not number of positional arguments in the beginning
 including the command itself
@@ -141,15 +141,15 @@ Limitations:</p>
 </ul>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.parser.parse_gnu_time_file">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">isdatetime=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">isdatetime</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the output of GNU time
 filename: a path to the GNU time output
 Returns a DataFrame</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.parser.parse_gnu_time_files">
 <code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_files</code><span class="sig-paren">(</span><em class="sig-param">filenames</em>, <em class="sig-param">isdatetime=False</em>, <em class="sig-param">map_parallel=&lt;class 'map'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse the outputs of GNU time
@@ -157,16 +157,16 @@ filenames: an iterator of paths to GNU time’s outputs
 Returns a DataFrame</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.parser.parse_gnu_time_line">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_line</code><span class="sig-paren">(</span><em class="sig-param">text</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a line of GNU time’s output
 Returns a list of 2 elements as the key-value pair</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.parser.parse_md5sum">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_md5sum</code><span class="sig-paren">(</span><em class="sig-param">file</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_md5sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_md5sum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_md5sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_md5sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_md5sum" title="Permalink to this definition">¶</a></dt>
 <dd><p>parse md5sum output and convert to DataFrame</p>
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -194,7 +194,7 @@ Returns a list of 2 elements as the key-value pair</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.<br/>
     </p>
   </div>
 </footer>

@@ -5,6 +5,7 @@ Submodules
 ----------
 
 .. toctree::
+   :maxdepth: 10
 
    dautil.IO.h5
    dautil.IO.pandas

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>dautil.stat module &#8212; dautil  documentation</title>
@@ -120,23 +120,23 @@
       
   <div class="section" id="module-dautil.stat">
 <span id="dautil-stat-module"></span><h1>dautil.stat module<a class="headerlink" href="#module-dautil.stat" title="Permalink to this headline">¶</a></h1>
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.bin_corr_relative">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">bin_corr_relative</code><span class="sig-paren">(</span><em class="sig-param">corr</em>, <em class="sig-param">neighbor_max</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#bin_corr_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.bin_corr_relative" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">bin_corr_relative</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">corr</span></em>, <em class="sig-param"><span class="n">neighbor_max</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#bin_corr_relative"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.bin_corr_relative" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">corr</span></code> is a correlation matrix with columns &amp; indices sorted,
 and in regular intervals.
 Return the average of the correlations of the (k + 1)-th neighbor,
 where k ranges from 0 to neighbor_max</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.chi_sq_sum">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">chi_sq_sum</code><a class="reference internal" href="_modules/dautil/stat.html#chi_sq_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.chi_sq_sum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">chi_sq_sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#chi_sq_sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.chi_sq_sum" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.chi_sq_test_null">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">chi_sq_test_null</code><span class="sig-paren">(</span><em class="sig-param">array</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#chi_sq_test_null"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.chi_sq_test_null" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">chi_sq_test_null</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#chi_sq_test_null"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.chi_sq_test_null" title="Permalink to this definition">¶</a></dt>
 <dd><p>estimate null-hypothesis of PTE of emprical chi-sq sum</p>
 <p><cite>array</cite>: 2d-array, each row are independent measurement</p>
 <p>it estimates the emprical distribution of the sum of chi-sq
@@ -144,78 +144,63 @@ under the null hypothesis that its mean is zero (i.e. mean subtracted)</p>
 <p>then calculate the PTE of the mean vector under this distribution.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.corr_custom">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_custom</code><a class="reference internal" href="_modules/dautil/stat.html#corr_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_custom" title="Permalink to this definition">¶</a></dt>
-<dd><p>ndarray of dtype bool
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_custom</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_custom"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_custom" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
 return: the difference between counts of x and y being agree or disagree.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>x, y</p>
-</dd>
-</dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.corr_kendall">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_kendall</code><a class="reference internal" href="_modules/dautil/stat.html#corr_kendall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_kendall" title="Permalink to this definition">¶</a></dt>
-<dd><p>ndarray of dtype bool
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_kendall</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_kendall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_kendall" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
 return: Kendall correlation between x, y
 Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>x, y</p>
-</dd>
-</dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.corr_max">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_max</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">rowonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_max" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_max</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">rowonly</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_max"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_max" title="Permalink to this definition">¶</a></dt>
 <dd><p>df: squared correlation matrix
 rowonly: if True, only max per row, else max per either row or col
 return: a mask that is True when the correlation is max.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.corr_pearson">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_pearson</code><a class="reference internal" href="_modules/dautil/stat.html#corr_pearson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_pearson" title="Permalink to this definition">¶</a></dt>
-<dd><p>ndarray of dtype bool
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">corr_pearson</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#corr_pearson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.corr_pearson" title="Permalink to this definition">¶</a></dt>
+<dd><p>x, y: ndarray of dtype bool
 return: pearson correlation between x, y
 Note: a.k.a. phi correlation, Matthews correlation
 Assume <code class="docutils literal notranslate"><span class="pre">x.size</span> <span class="pre">==</span> <span class="pre">y.size</span></code></p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>x, y</p>
-</dd>
-</dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.df_corr_matrix">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_corr_matrix</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">method='pearson'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_corr_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'pearson'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_corr_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>df: DataFrame of dtypes bool
 method: custom or pearson
 return a DataFrame of the correlation matrix from columns of df</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.df_inv">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_inv</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">mode='pinv'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_inv" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_inv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'pinv'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_inv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_inv" title="Permalink to this definition">¶</a></dt>
 <dd><p>df: a DataFrame where rows and columns are indentical
 mode: ‘pinv’ or ‘inv’, using the corresponding function in scipy.linalg
 return a DataFrame with the pesudo inverse matrix of the values</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.df_partial_corr_matrix">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_partial_corr_matrix</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">mode='pinv'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">df_partial_corr_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'pinv'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#df_partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.df_partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>df: a correlation matrix
 mode: ‘pinv’ or ‘inv’, using the corresponding function in scipy.linalg
 return the partial correlation matrix</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.get_PTE">
 <code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">get_PTE</code><span class="sig-paren">(</span><em class="sig-param">reduction_func=CPUDispatcher(&lt;function chi_sq_sum&gt;)</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_PTE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_PTE" title="Permalink to this definition">¶</a></dt>
 <dd><p>return a PTE function given a reduction function</p>
@@ -228,18 +213,18 @@ last axis of both array are different measurements that will be aggregated over 
 middle axis of <cite>empiricals</cite> is different realizations of this random distributions.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.get_corr_matrix_func">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">get_corr_matrix_func</code><span class="sig-paren">(</span><em class="sig-param">corr_func</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_corr_matrix_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_corr_matrix_func" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">get_corr_matrix_func</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">corr_func</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_corr_matrix_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_corr_matrix_func" title="Permalink to this definition">¶</a></dt>
 <dd><p>a higher order function that returns
 a function to calculate a correlation matrix from
 a kernel function corr_func that calculates correlations
 between 2 arrays</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="dautil.stat.get_cutoffs">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">get_cutoffs</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">num=50</em>, <em class="sig-param">mode='aggressive'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_cutoffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_cutoffs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">get_cutoffs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">num</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="n">mode</span><span class="o">=</span><span class="default_value">'aggressive'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#get_cutoffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.get_cutoffs" title="Permalink to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: 1d-array
 <code class="docutils literal notranslate"><span class="pre">num</span></code>: no. of points to resolve between min and max
 of <code class="docutils literal notranslate"><span class="pre">data</span></code>.
@@ -249,21 +234,16 @@ if <cite>mode == ‘aggressive’</cite> then choose the innermost minimums to c
 else outermost.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.max_mask_row">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">max_mask_row</code><a class="reference internal" href="_modules/dautil/stat.html#max_mask_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.max_mask_row" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">max_mask_row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">array</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#max_mask_row"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.max_mask_row" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="attribute">
+<dl class="py function">
 <dt id="dautil.stat.partial_corr_matrix">
-<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">partial_corr_matrix</code><a class="reference internal" href="_modules/dautil/stat.html#partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>inverse of a correlation matrix
+<code class="sig-prename descclassname">dautil.stat.</code><code class="sig-name descname">partial_corr_matrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">inv</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/stat.html#partial_corr_matrix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.stat.partial_corr_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>corr: inverse of a correlation matrix
 return the partial correlation matrix</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p>corr</p>
-</dd>
-</dl>
 </dd></dl>
 
 </div>
@@ -281,7 +261,7 @@ return the partial correlation matrix</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.4.4.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.0.1.<br/>
     </p>
   </div>
 </footer>
