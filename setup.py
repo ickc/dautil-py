@@ -117,6 +117,7 @@ setup(
         'console_scripts': [
             'h5link_recursive = dautil.IO.h5:h5link_recursive_cli',
             'tree_html_at_level = dautil.script.tree_html_at_level:cli',
+            'detect_missing_track_type = dautil.script.detect_missing_track_type:cli',
         ],
     },
 )
