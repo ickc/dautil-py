@@ -1,0 +1,7 @@
+dautil.script.glom\_yaml module
+===============================
+
+.. automodule:: dautil.script.glom_yaml
+   :members:
+   :undoc-members:
+   :show-inheritance:
