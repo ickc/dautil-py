@@ -212,10 +212,12 @@ def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', fo
 # plot.ly
 
 
-def iplot_column_slider(df, active=0):
+def iplot_column_slider(df, active=0, mode='lines'):
     '''similar to cufflinks' iplot method
     but apply a slider scross the columns so that only 1 column
     is shown at a time
+
+    :param str mode: 'lines', 'markers', or 'lines+markers'
 
     returns a figure object
     '''
@@ -225,8 +227,17 @@ def iplot_column_slider(df, active=0):
         {
             'visible': False,
             'name': ', '.join(map(str, col)) if is_multi else str(col),
-            'x': series.index,
-            'y': series.values
+            'mode': mode,
+            'x': series.index.values.astype(np.complex).real,
+            'error_x': {
+                'type': 'data',
+                'array': series.index.values.astype(np.complex).imag,
+            },
+            'y': series.values.real,
+            'error_y': {
+                'type': 'data',
+                'array': series.values.imag,
+            },
         }
         for col, series in df.items()
     ]
