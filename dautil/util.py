@@ -16,6 +16,22 @@ from numba import jit
 
 PY2 = sys.version_info[0] == 2
 
+
+def summarize_types(data):
+    '''return a set of all types within a dict/iterable
+
+    :param data: possibly nested dict/list/tuple structure
+
+    :return: set of types of values inside `data`
+    :rtype: set
+    '''
+    if isinstance(data, dict):
+        return set().union(*(get_types(value) for value in data.values()))
+    elif isinstance(data, (list, tuple)):
+        return set().union(*(get_types(value) for value in data))
+    else:
+        return {type(data)}
+
 # summarize ############################################################
 
 
