@@ -22,6 +22,7 @@ Submodules
    dautil.parser
    dautil.path_util
    dautil.plot
+   dautil.scrape_web
    dautil.stat
    dautil.string
    dautil.sym

@@ -1,0 +1,7 @@
+dautil.scrape\_web module
+=========================
+
+.. automodule:: dautil.scrape_web
+   :members:
+   :undoc-members:
+   :show-inheritance:
