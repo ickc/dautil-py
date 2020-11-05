@@ -54,7 +54,8 @@ def requests_readable(urls, texts=None, idxs=None, titles=None, headers=HEADERS,
     return res
 
 
-def to_markdown(res, outpath, logos=False, meta=None):
+def to_markdown(res, outpath, logos=False, meta=None, heading_level=1):
+    heading_prefix = '#' * heading_level
     with open(outpath, 'w') as f:
         _print = partial(print, file=f, end='\n\n')
         if meta:
@@ -63,7 +64,7 @@ def to_markdown(res, outpath, logos=False, meta=None):
             if logos:
                 _print(f'[[@Headword+en:{idx}]]')
             if idx:
-                _print(f'# {idx} {title}')
+                _print(f'{heading_prefix} {idx} {title}')
             else:
-                _print(f'# {title}')
+                _print(f'{heading_prefix} {title}')
             _print(pypandoc.convert_text(summary, 'md', format='html'))
