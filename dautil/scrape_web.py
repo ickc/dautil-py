@@ -1,5 +1,8 @@
 import sys
 from functools import partial
+from typing import List, Callable, Optional, Union, Tuple
+from collections.abc import Iterable
+from pathlib import Path
 
 import requests
 from readability import Document
@@ -11,7 +14,15 @@ HEADERS = {
 }
 
 
-def requests_readable(urls, texts=None, idxs=None, titles=None, headers=HEADERS, encoding=None):
+def requests_readable(
+    urls: List[str],
+    texts: List[str] = None,
+    idxs: Optional[Union[List[Union[int, str]], Callable]] = None,
+    titles: Optional[List[str]] = None,
+    headers: dict = HEADERS,
+    encoding: Optional[str] = None,
+    is_path: bool = False,
+) -> List[Tuple[Union[int, str], str, str]]:
     '''request web and scrape for content by readability algorithm
 
     :param list urls: list of urls
@@ -19,6 +30,7 @@ def requests_readable(urls, texts=None, idxs=None, titles=None, headers=HEADERS,
     :param idxs: can be None, list, or function of url
     :param titles: can be None, list
     :param HEADERS: pass to requests.get
+    :param bool is_path: if True, assume urls are local paths instead
     '''
     res = []
     for i, url in enumerate(urls):
@@ -26,20 +38,32 @@ def requests_readable(urls, texts=None, idxs=None, titles=None, headers=HEADERS,
         if idxs is None:
             idx = None
         else:
-            if isinstance(idxs, list):
+            if isinstance(idxs, Iterable):
                 idx = idxs[i]
             else:
                 idx = idxs(url)
         # text
         if texts is None:
-            req = requests.get(url, headers=headers)
-            if encoding is None:
-                apparent_encoding = req.apparent_encoding
-                print(f'Setting {url} encoding to {apparent_encoding}...', file=sys.stderr)
-                req.encoding = apparent_encoding
+            if is_path:
+                if encoding is None:
+                    with open(url, 'r') as f:
+                        text = f.read()
+                else:
+                    with open(url, 'rb') as f:
+                        try:
+                            text = f.read().decode(encoding)
+                        except UnicodeDecodeError as e:
+                            print((f'Cannot decode text in {url} with encoding {encoding}.'), file=sys.stderr)
+                            raise e
             else:
-                req.encoding = encoding
-            text = req.text
+                req = requests.get(url, headers=headers)
+                if encoding is None:
+                    apparent_encoding = req.apparent_encoding
+                    print(f'Setting {url} encoding to {apparent_encoding}...', file=sys.stderr)
+                    req.encoding = apparent_encoding
+                else:
+                    req.encoding = encoding
+                text = req.text
         else:
             text = texts[i]
         # readability
@@ -54,7 +78,13 @@ def requests_readable(urls, texts=None, idxs=None, titles=None, headers=HEADERS,
     return res
 
 
-def to_markdown(res, outpath, logos=False, meta=None, heading_level=1):
+def to_markdown(
+    res: List[Tuple[Union[int, str], str, str]],
+    outpath: Union[Path, str],
+    logos: bool = False,
+    meta: str = None,
+    heading_level: int = 1,
+):
     heading_prefix = '#' * heading_level
     with open(outpath, 'w') as f:
         _print = partial(print, file=f, end='\n\n')
