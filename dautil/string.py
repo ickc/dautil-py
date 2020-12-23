@@ -5,9 +5,9 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords, wordnet
 from nltk.stem import LancasterStemmer, WordNetLemmatizer
 
-STEMMER = LancasterStemmer()
-LEMMATIZER = WordNetLemmatizer()
-WORDS = wordnet.words()
+STEMMER = None
+LEMMATIZER = None
+WORDS = None
 
 
 def strip_html(text):
@@ -17,10 +17,25 @@ def strip_html(text):
     return soup.get_text()
 
 
-def normalize_word(word, words=WORDS, stemmer=STEMMER, lemmatizer=LEMMATIZER):
+def normalize_word(word, words=None, stemmer=None, lemmatizer=None):
     '''normalize_word to its stem form,
     if not a dictionary word, return ''
     '''
+    # initialize once
+    global WORDS, STEMMER, LEMMATIZER
+    if words is None:
+        if WORDS is None:
+            WORDS = wordnet.words()
+        words = WORDS
+    if stemmer is None:
+        if STEMMER is None:
+            STEMMER = LancasterStemmer()
+        stemmer = STEMMER
+    if lemmatizer is None:
+        if LEMMATIZER is None:
+            LEMMATIZER = WordNetLemmatizer()
+        lemmatizer = LEMMATIZER
+
     if word in words:
         return word
     temp = lemmatizer.lemmatize(word)
