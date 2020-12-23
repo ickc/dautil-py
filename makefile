@@ -21,7 +21,7 @@ docs/%.rst: %.md
 # TODO set version
 .PHONY: docs
 docs: docs/README.rst
-	sphinx-apidoc -d 10 -f -e -o $@ . tests
+	sphinx-apidoc -d 10 -f -e -o $@ dautil
 	cd $@ && make html
 
 # Deploy to PyPI
