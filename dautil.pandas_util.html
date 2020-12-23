@@ -11,7 +11,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dautil.parser module" href="dautil.parser.html" />
@@ -119,50 +118,8 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="module-dautil.pandas_util">
-<span id="dautil-pandas-util-module"></span><h1>dautil.pandas_util module<a class="headerlink" href="#module-dautil.pandas_util" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt id="dautil.pandas_util.df_auto_dtypes">
-<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">df_auto_dtypes</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">categorical</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#df_auto_dtypes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.df_auto_dtypes" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert each column of the DataFrame to a smaller dtype inplace</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.pandas_util.df_to_ndarray">
-<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">df_to_ndarray</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">unique</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#df_to_ndarray"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.df_to_ndarray" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert DataFrame with MultiIndex to ndarray</p>
-<p><cite>unique</cite>: if True, take only the unique values from the MultiIndex levels</p>
-<p>columns and index can be either MultiIndex of Index (all combinations allowed)</p>
-<p>assume the MultiIndex is a product, else error occurs when reshape</p>
-<p>return values, levels, names</p>
-<p>essentially values should equals to df.to_xarray().to_array().values
-but faster (and less safe)</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.pandas_util.get_slice">
-<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">get_slice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">name</span></em>, <em class="sig-param"><span class="n">no_levels</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">no_indexslice</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#get_slice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.get_slice" title="Permalink to this definition">¶</a></dt>
-<dd><p>Given <code class="docutils literal notranslate"><span class="pre">name</span></code> of an index from the MultiIndex
-from <code class="docutils literal notranslate"><span class="pre">df</span></code>, return the <code class="docutils literal notranslate"><span class="pre">level</span></code> this name is at,
-<code class="docutils literal notranslate"><span class="pre">levels</span></code> of all levels except this name is at,
-and an <code class="docutils literal notranslate"><span class="pre">indexslice</span></code> that slices all MultiIndex</p>
-<p>Note: <code class="docutils literal notranslate"><span class="pre">indexslice</span></code> is of type list. Useful to be
-reassigned at <code class="docutils literal notranslate"><span class="pre">level</span></code> to another slice.
-When passed to pandas.DataFrame, need to be casted to
-tuple first.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.pandas_util.ndarray_to_series">
-<code class="sig-prename descclassname">dautil.pandas_util.</code><code class="sig-name descname">ndarray_to_series</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span></em>, <em class="sig-param"><span class="n">levels</span></em>, <em class="sig-param"><span class="n">names</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/pandas_util.html#ndarray_to_series"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.pandas_util.ndarray_to_series" title="Permalink to this definition">¶</a></dt>
-<dd><p>convert ndarray to Series</p>
-<p>almost inverse of df_to_ndarray but return a Series instead.
-unstack can be used to freely move some of the index to columns
-to recover the original df.</p>
-<p>i.e. ndarray_to_series(<a href="#id1"><span class="problematic" id="id2">*</span></a>df_to_ndarray(df)) ~ df.stack()
-where all the levels in columns are stacked in the beginning of the MultiIndex levels</p>
-</dd></dl>
-
+  <div class="section" id="dautil-pandas-util-module">
+<h1>dautil.pandas_util module<a class="headerlink" href="#dautil-pandas-util-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -178,7 +135,7 @@ where all the levels in columns are stacked in the beginning of the MultiIndex l
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.0.<br/>
     </p>
   </div>
 </footer>

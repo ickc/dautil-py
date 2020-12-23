@@ -11,7 +11,6 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="dautil.path_util module" href="dautil.path_util.html" />
@@ -119,67 +118,8 @@
   <div class="row">
     <div class="body col-md-12 content" role="main">
       
-  <div class="section" id="module-dautil.parser">
-<span id="dautil-parser-module"></span><h1>dautil.parser module<a class="headerlink" href="#module-dautil.parser" title="Permalink to this headline">¶</a></h1>
-<dl class="py function">
-<dt id="dautil.parser.cli_sort">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">cli_sort</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cli</span></em>, <em class="sig-param"><span class="n">n_command</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#cli_sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.cli_sort" title="Permalink to this definition">¶</a></dt>
-<dd><p>assume cli is a command with args
-where <code class="docutils literal notranslate"><span class="pre">n_command</span></code> is not number of positional arguments in the beginning
-including the command itself
-return a sorted cli.
-It might be useful to normalize 2 commands for taking diff.</p>
-<p># TODO
-Limitations:</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt>assume space always is the seperator of command/args/options</dt><dd><ul>
-<li><p>what if more than single space? space in options, etc.</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-</ul>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.parser.parse_gnu_time_file">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_file</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">isdatetime</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse the output of GNU time
-filename: a path to the GNU time output
-Returns a DataFrame</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.parser.parse_gnu_time_files">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_files</code><span class="sig-paren">(</span><em class="sig-param">filenames</em>, <em class="sig-param">isdatetime=False</em>, <em class="sig-param">map_parallel=&lt;class 'map'&gt;</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_files" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse the outputs of GNU time
-filenames: an iterator of paths to GNU time’s outputs
-Returns a DataFrame</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.parser.parse_gnu_time_line">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_gnu_time_line</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">text</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_gnu_time_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_gnu_time_line" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a line of GNU time’s output
-Returns a list of 2 elements as the key-value pair</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="dautil.parser.parse_md5sum">
-<code class="sig-prename descclassname">dautil.parser.</code><code class="sig-name descname">parse_md5sum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/dautil/parser.html#parse_md5sum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#dautil.parser.parse_md5sum" title="Permalink to this definition">¶</a></dt>
-<dd><p>parse md5sum output and convert to DataFrame</p>
-<p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-<span class="go">        df = parse_md5sum(f)</span>
-<span class="go"># then you can see duplicated files by</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">md5sum</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">md5sums</span> <span class="o">=</span> <span class="n">temp</span><span class="p">[</span><span class="n">temp</span><span class="p">]</span><span class="o">.</span><span class="n">index</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">md5sum</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">md5sums</span><span class="p">)]</span>
-</pre></div>
-</div>
-</dd></dl>
-
+  <div class="section" id="dautil-parser-module">
+<h1>dautil.parser module<a class="headerlink" href="#dautil-parser-module" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -195,7 +135,7 @@ Returns a list of 2 elements as the key-value pair</p>
     </p>
     <p>
         &copy; Copyright 2017–2018, Kolen Cheung.<br/>
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.3.1.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 3.4.0.<br/>
     </p>
   </div>
 </footer>
