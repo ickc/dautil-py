@@ -22,7 +22,9 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies—pip
-      run: pip install -U setuptools sphinx
+      run: |
+        pip install -U setuptools
+        pip install -r docs/requirements.txt
     - name: Install dependencies—pandoc
       run: |
         # pandoc
