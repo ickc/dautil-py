@@ -6,7 +6,6 @@ https://github.com/ickc/dautil-py
 
 # To use a consistent encoding
 from io import open
-from os import path
 
 # Always prefer setuptools over distutils
 from setuptools import find_packages, setup
@@ -19,7 +18,7 @@ try:
 except: # FileNotFoundError: Python 2 doesn't has this error
     long_description = None
 
-version = '0.1.1'
+version = '0.2'
 
 setup(
     name='dautilpy',
@@ -61,13 +60,10 @@ setup(
         # Specify the Python versions you support here. In particular, ensure
         # that you indicate whether you support Python 2, Python 3 or both.
         # https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
 
