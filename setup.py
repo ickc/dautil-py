@@ -18,7 +18,7 @@ try:
 except: # FileNotFoundError: Python 2 doesn't has this error
     long_description = None
 
-version = '0.2'
+version = '0.2.0'
 
 setup(
     name='dautilpy',
