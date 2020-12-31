@@ -57,12 +57,7 @@ def requests_readable(
                             raise e
             else:
                 req = requests.get(url, headers=headers)
-                if encoding is None:
-                    apparent_encoding = req.apparent_encoding
-                    print(f'Setting {url} encoding to {apparent_encoding}...', file=sys.stderr)
-                    req.encoding = apparent_encoding
-                else:
-                    req.encoding = encoding
+                req.encoding = encoding
                 text = req.text
         else:
             text = texts[i]
