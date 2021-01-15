@@ -17,6 +17,7 @@ Submodules
    :maxdepth: 10
 
    dautil.date_time
+   dautil.html_util
    dautil.pandas_display
    dautil.pandas_util
    dautil.parser

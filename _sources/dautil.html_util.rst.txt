@@ -1,0 +1,7 @@
+dautil.html\_util module
+========================
+
+.. automodule:: dautil.html_util
+   :members:
+   :undoc-members:
+   :show-inheritance:
