@@ -1,9 +1,15 @@
+from __future__ import annotations
+
 import os
-from functools import wraps
+from pathlib import Path
+from functools import wraps, partial
+from typing import TYPE_CHECKING
+import math
 
 import holoviews as hv
-import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
+from matplotlib import animation
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -14,7 +20,12 @@ from pandas.api.types import is_numeric_dtype
 import plotly.express as px
 import plotly.graph_objects as go
 
+from ipywidgets import interact, FloatSlider
+
 from dautil.IO import makedirs
+
+if TYPE_CHECKING:
+    from typing import Iterator
 
 
 def sns_heatmap_xy(mask, **kwargs):
@@ -46,14 +57,14 @@ def save(f):
 
         if ext in ('pdf', 'pgf'):
             # setup fonts using Latin Modern
-            matplotlib.rcParams.update({
+            mpl.rcParams.update({
                 "font.family": ["serif"],
                 "font.serif": ["Latin Modern Roman"],
                 "font.sans-serif": ["Latin Modern Sans"],
                 "font.monospace": ["Latin Modern Mono"]
             })
         elif ext == 'png':
-            matplotlib.rcParams.update({"savefig.dpi": 240})
+            mpl.rcParams.update({"savefig.dpi": 240})
 
         f(*args, **kwargs)
 
@@ -418,3 +429,87 @@ def plot_all_col_plotly_simple(df, hue=None, orientation='h', barmode='overlay',
         else:
             fig = px.histogram(df, y=name, color=hue, orientation=orientation, barmode=barmode, histnorm=histnorm, title=f'$P(\\text{{{name}}} | \\text{{{hue}}})$', **kwargs)
             fig.show()
+
+
+# HWP ##########################################################################
+
+
+def _draw_HWP(
+    colors: sns.palettes._ColorPalette,
+    ax: mpl.axes._subplots.AxesSubplot,
+    theta_in: float,
+    theta_fast_axis: float,
+) -> List[mpl.axes._subplots.AxesSubplot]:
+    w = 1.1
+    r = 1.
+    d2r = np.pi / 180.
+
+    theta_in_rad = d2r * theta_in
+    theta_fast_axis_rad = d2r * theta_fast_axis
+    theta_out_rad = theta_fast_axis_rad - (theta_in_rad - theta_fast_axis_rad)
+
+    ax.axes.set_aspect(1.)
+    ax.set_xlim(-w, w)
+    ax.set_ylim(-w, w)
+
+    ax.axes.axis('off')
+
+    # add circle
+    cir = plt.Circle((0, 0), r, color='k', fill=False)
+    ax.add_patch(cir)
+
+    res = [cir]
+    # add incoming
+    x = r * np.cos(theta_in_rad)
+    y = r * np.sin(theta_in_rad)
+    res += ax.plot([-x, x], [-y, y], label='Incoming polarization', color=colors[0])
+
+    # add fast axis
+    x = r * np.cos(theta_fast_axis_rad)
+    y = r * np.sin(theta_fast_axis_rad)
+    res += ax.plot([-x, x], [-y, y], label='Fast axis', color=colors[1], linestyle='--')
+
+    # add outgoing
+    x = r * np.cos(theta_out_rad)
+    y = r * np.sin(theta_out_rad)
+    res += ax.plot([-x, x], [-y, y], label='Outgoing polarization', color=colors[2])
+    return res
+
+
+def draw_HWP(
+    theta_fast_axis: float,
+    theta_in: float = 120.,
+    colors: sns.palettes._ColorPalette = sns.color_palette("husl", 3),
+):
+    """Plot HWP diagram
+    For interactive plot, try
+
+    @interact(theta_fast_axis=FloatSlider(min=-180., max=180., step=1.))
+    def draw_HWP_interact(
+        theta_fast_axis,
+        theta_in=120.,
+    ):
+        fig, ax = plt.subplots()
+        colors = sns.color_palette("husl", 3)
+        _draw_HWP(colors, ax, theta_in, theta_fast_axis)
+    """
+    fig, ax = plt.subplots()
+    _draw_HWP(colors, ax, theta_in, theta_fast_axis)
+    return fig
+
+
+def draw_HWP_video(
+    path: Path,
+    artist: str,
+    thetas_fast_axis: Iterator[float],
+    theta_in: float = 120.,
+    fps: int = 60,
+    width: int = 1920,
+    height: int = 1080,
+    colors: sns.palettes._ColorPalette = sns.color_palette("husl", 3),
+):
+    dpi = math.gcd(width, height)
+    fig, ax = plt.subplots(figsize=(width // dpi, height // dpi))
+    writer = animation.FFMpegWriter(fps=fps, metadata=dict(artist=artist))
+    ani = animation.ArtistAnimation(fig, list(map(partial(_draw_HWP, colors, ax, theta_in), thetas_fast_axis)))
+    ani.save(path, writer=writer, dpi=dpi)
