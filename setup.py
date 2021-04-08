@@ -115,6 +115,7 @@ setup(
             'tree_html_at_level = dautil.script.tree_html_at_level:cli',
             'detect_missing_track_type = dautil.script.detect_missing_track_type:cli',
             'glom_yaml = dautil.script.glom_yaml:cli',
+            'texcount_processing = dautil.script.texcount_processing:cli'
         ],
     },
 )
