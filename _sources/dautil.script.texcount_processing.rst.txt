@@ -1,0 +1,7 @@
+dautil.script.texcount\_processing module
+=========================================
+
+.. automodule:: dautil.script.texcount_processing
+   :members:
+   :undoc-members:
+   :show-inheritance:
