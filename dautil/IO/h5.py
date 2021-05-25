@@ -119,7 +119,7 @@ def h5link_recursive_main(
     :param Path out_path: relative path of output from basedir
     :param bool verbose: if True verbose.
     '''
-    with h5py.File(basedir / path, 'r') as f, h5py.File(basedir / out_path) as f_out:
+    with h5py.File(basedir / path, 'r') as f, h5py.File(basedir / out_path, 'w') as f_out:
         h5link_recursive(path, f, f_out, verbose=verbose)
 
 

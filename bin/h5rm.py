@@ -11,7 +11,7 @@ __version__ = 0.1
 
 
 def del_dataset(dataset, h5path):
-    with h5py.File(h5path) as f:
+    with h5py.File(h5path, 'w') as f:
         for i in dataset:
             try:
                 del f[i]
