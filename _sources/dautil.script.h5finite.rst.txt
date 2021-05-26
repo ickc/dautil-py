@@ -1,0 +1,7 @@
+dautil.script.h5finite module
+=============================
+
+.. automodule:: dautil.script.h5finite
+   :members:
+   :undoc-members:
+   :show-inheritance:
