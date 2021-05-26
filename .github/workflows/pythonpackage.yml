@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies—pip for Python 2 only
       if: ${{ matrix.python-version == 2.7 }}
       run: |
-        pip install wheel llvmlite<0.32
+        pip install wheel 'llvmlite<0.32'
     - name: Install dependencies—pip
       run: |
         pip install -r requirements.txt
