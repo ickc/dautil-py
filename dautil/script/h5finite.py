@@ -37,13 +37,13 @@ def main(args):
     if args.use_mpi:
         from mpi4py.futures import MPIPoolExecutor
         with MPIPoolExecutor() as executor:
-            executor.map(_h5assert_isfinite, in_paths)
+            executor.map(__h5assert_isfinite, in_paths)
     elif args.p > 1:
         from dautil.util import get_map_parallel
         map_parallel = get_map_parallel(args.p)
-        map_parallel(_h5assert_isfinite, in_paths)
+        map_parallel(__h5assert_isfinite, in_paths)
     else:
-        list(map(_h5assert_isfinite, in_paths))
+        list(map(__h5assert_isfinite, in_paths))
 
 
 def cli():
@@ -55,7 +55,7 @@ def cli():
                         help='glob pattern. Can be more than 1.')
     parser.add_argument('-v', '--version', action='version',
                         version='%(prog)s {}'.format(__version__))
-    parser.add_argument('-V', '--verbose')
+    parser.add_argument('-V', '--verbose', action='store_true')
     parser.add_argument('-p', type=int, default=1,
                         help="No. of parallel processes using multiprocessing.")
     parser.add_argument('--use-mpi', action='store_true',
