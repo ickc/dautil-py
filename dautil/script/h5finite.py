@@ -31,7 +31,7 @@ def _h5assert_isfinite(filename, verbose=False):
 
 
 def main(args):
-    in_paths = chain(*(glob(glob_i) for glob_i in args.input))
+    in_paths = chain(*(glob(glob_i, recursive=True) for glob_i in args.input))
 
     __h5assert_isfinite = partial(_h5assert_isfinite, verbose=args.verbose)
     if args.use_mpi:
