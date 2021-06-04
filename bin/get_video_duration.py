@@ -44,7 +44,7 @@ def main(args):
             'Path': pathnames,
             'duration': durations
         }
-    ).to_hdf(args.output, 'df', mode='w', complevel=9, fletcher32=True)
+    ).to_hdf(args.output, 'df', mode='w', complevel=9)
 
 
 def cli():

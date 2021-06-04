@@ -36,7 +36,6 @@ def main(args):
         'df',
         format='table',
         complevel=args.compress_level,
-        fletcher32=True
     )
 
 
