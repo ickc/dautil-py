@@ -1,0 +1,7 @@
+dautil.script.pandas\_concat module
+===================================
+
+.. automodule:: dautil.script.pandas_concat
+   :members:
+   :undoc-members:
+   :show-inheritance:
