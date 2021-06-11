@@ -120,6 +120,7 @@ setup(
             'glom_yaml = dautil.script.glom_yaml:cli',
             'texcount_processing = dautil.script.texcount_processing:cli',
             'h5finite = dautil.script.h5finite:cli',
+            'pandas_concat = dautil.script.pandas_concat:cli',
         ],
     },
 )
