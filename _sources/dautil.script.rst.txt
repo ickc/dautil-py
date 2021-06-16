@@ -9,6 +9,7 @@ Submodules
 
    dautil.script.detect_missing_track_type
    dautil.script.glom_yaml
+   dautil.script.h5delete
    dautil.script.h5finite
    dautil.script.pandas_concat
    dautil.script.texcount_processing

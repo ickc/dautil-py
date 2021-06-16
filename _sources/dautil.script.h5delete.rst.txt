@@ -1,0 +1,7 @@
+dautil.script.h5delete module
+=============================
+
+.. automodule:: dautil.script.h5delete
+   :members:
+   :undoc-members:
+   :show-inheritance:
