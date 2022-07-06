@@ -3,6 +3,7 @@
 import argparse
 import os
 import sys
+import pickle
 from functools import partial
 from glob import iglob as glob
 from itertools import chain
@@ -10,11 +11,8 @@ from itertools import chain
 from dautil.IO import makedirs
 from dautil.util import map_parallel
 
+
 PY2 = sys.version_info[0] == 2
-if PY2:
-    import cPickle as pickle
-else:
-    import pickle
 
 
 __version__ = '0.1'
