@@ -7,7 +7,7 @@ import defopt
 
 def main(glom_pattern: str, path: Path):
     with open(path, 'r') as f:
-        data = yaml.load(f)
+        data = yaml.load(f, yaml.SafeLoader)
     print(glom(data, glom_pattern))
 
 
