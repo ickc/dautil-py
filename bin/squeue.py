@@ -73,6 +73,7 @@ class Squeue:
     :param features: If specified, only show jobs that have these features.
     :param qos: If specified, only show jobs that have this qos.
     :param qos_containing: If specified, only show jobs that have qos containing this string.
+    :param partition: If specified, only show jobs that have this partition.
     """
 
     list_columns: bool = False
@@ -94,6 +95,7 @@ class Squeue:
     features: str = ""
     qos: str = ""
     qos_containing: str = ""
+    partition: str = ""
 
     def __post_init__(self) -> None:
         pd.options.display.max_rows = None
@@ -131,6 +133,9 @@ class Squeue:
             df = df[df.qos == self.qos]
         elif self.qos_containing:
             df = df[df.qos.str.contains(self.qos_containing)]
+
+        if self.partition:
+            df = df[df.partition == self.partition]
 
         return str(df[cols])
 
