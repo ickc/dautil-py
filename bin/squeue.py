@@ -10,6 +10,7 @@ from functools import cached_property
 from logging import getLogger
 
 import defopt
+import numpy as np
 import pandas as pd
 
 logger = getLogger(__name__)
@@ -18,6 +19,7 @@ version = "0.1.0"
 USER = os.environ["USER"]
 TIME_COLS = ["accrue_time", "eligible_time", "end_time", "start_time", "submit_time"]
 TIME_DELTA_COLS = ["time_limit"]
+TZ = "America/Los_Angeles"
 
 
 def squeue_data() -> pd.DataFrame:
@@ -30,13 +32,17 @@ def squeue_data() -> pd.DataFrame:
 
     # to datatime
     for col in TIME_COLS:
-        df[col] = pd.Index(
-            pd.to_datetime(
-                df[col],
-                unit="s",
-                utc=True,
-            )
-        ).tz_convert("America/Los_Angeles")
+        df[col] = np.where(
+            df[col] == 0,
+            pd.NaT,
+            pd.Index(
+                pd.to_datetime(
+                    df[col],
+                    unit="s",
+                    utc=True,
+                )
+            ).tz_convert(TZ),
+        )
 
     # to timedelta
     for col in TIME_DELTA_COLS:
@@ -58,6 +64,10 @@ def squeue_data() -> pd.DataFrame:
         job_ids.append(job_id)
     df["JOBID"] = job_ids
     df.set_index("JOBID", inplace=True)
+
+    # replicate the TIME column as shown by squeue
+    df["TIME"] = pd.Timestamp.now(tz=TZ) - df.start_time
+    df.TIME[df.TIME <= pd.Timedelta(0)] = pd.NaT
     return df
 
 
@@ -84,6 +94,7 @@ class Squeue:
         "name",
         "node_count",
         "time_limit",
+        "TIME",
         "submit_time",
         "qos",
         "start_time",
