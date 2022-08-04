@@ -67,7 +67,7 @@ def squeue_data() -> pd.DataFrame:
 
     # replicate the TIME column as shown by squeue
     df["TIME"] = pd.Timestamp.now(tz=TZ) - df.start_time
-    df.TIME[df.TIME <= pd.Timedelta(0)] = pd.NaT
+    df.loc[df.TIME <= pd.Timedelta(0), "TIME"] = pd.NaT
     return df
 
 
