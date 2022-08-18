@@ -25,7 +25,7 @@ from ipywidgets import interact, FloatSlider
 from dautil.IO import makedirs
 
 if TYPE_CHECKING:
-    from typing import Iterator
+    from typing import Iterator, Any
 
 
 def sns_heatmap_xy(mask, **kwargs):
@@ -223,14 +223,20 @@ def array_to_image(array, filename, text='', fontname='lmsans12-regular.otf', fo
 # plot.ly
 
 
-def iplot_column_slider(df, active=0, mode='lines'):
-    '''similar to cufflinks' iplot method
-    but apply a slider scross the columns so that only 1 column
-    is shown at a time
+def iplot_column_slider(
+    df: pd.DataFrame,
+    active: int = 0,
+    mode: str = 'lines',
+    imag_as_error: bool = True,
+    log_x: bool = False,
+    log_y: bool = False,
+    **kwargs: dict[str, Any],
+) -> go.Figure:
+    '''Similar to cufflinks' iplot method, but apply a slider scross the columns so that only 1 column is shown at a time.
 
     :param str mode: 'lines', 'markers', or 'lines+markers'
-
-    returns a figure object
+    :param: imag_as_error: if True, treat the imaginary part of the data as errorbars.
+    :param kwargs: pass to `go.Figure.update_layout`.
     '''
     is_multi = isinstance(df.columns, pd.core.indexes.api.MultiIndex)
 
@@ -249,6 +255,15 @@ def iplot_column_slider(df, active=0, mode='lines'):
                 'type': 'data',
                 'array': series.values.imag,
             },
+        }
+        for col, series in df.items()
+    ] if imag_as_error else [
+        {
+            'visible': False,
+            'name': ', '.join(map(str, col)) if is_multi else str(col),
+            'mode': mode,
+            'x': series.index.values,
+            'y': series.values,
         }
         for col, series in df.items()
     ]
@@ -274,10 +289,17 @@ def iplot_column_slider(df, active=0, mode='lines'):
         'steps': steps,
     }]
 
-    return go.Figure({
+    fig = go.Figure({
         'data': data,
         'layout': {'sliders': sliders, 'showlegend': True}
     })
+    if log_x:
+        fig.update_xaxes(type='log')
+    if log_y:
+        fig.update_yaxes(type='log')
+    if kwargs:
+        fig.update_layout(**kwargs)
+    return fig
 
 
 def plot_column_slider(df, chart=hv.Curve, slider=False, imag_label='error'):
