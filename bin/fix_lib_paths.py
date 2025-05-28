@@ -5,7 +5,8 @@
 #       Uses concurrent.futures.ThreadPoolExecutor for parallelism.
 #       Inspired by: https://github.com/conda-forge/numpy-feedstock/issues/347#issuecomment-2746317575
 
-import logging  # Added
+import argparse
+import logging
 import os
 import subprocess
 import sys
@@ -157,7 +158,7 @@ def process_library(library_path: Path):
             False  # Consider signing failure as a processing failure
         )
     elif codesign_process:
-        logger.debug(f"  Successfully re-signed {library_path}.")  # Was log_info
+        logger.debug(f"  Successfully re-signed {library_path}.")
     else:  # run_command itself failed for codesign
         processed_successfully = False
 
@@ -168,20 +169,14 @@ def process_library(library_path: Path):
     return processed_successfully
 
 
-def main():
-    # --- Logging Setup ---
-    # Set the overall logger level. To see DEBUG messages, set this to logging.DEBUG
-    # For example, by checking an environment variable:
-    # log_level_str = os.environ.get("LOG_LEVEL", "INFO").upper()
-    # current_log_level = getattr(logging, log_level_str, logging.INFO)
-    # logger.setLevel(current_log_level)
-    logger.setLevel(
-        logging.INFO
-    )  # Default: INFO, WARNING, ERROR. Set to logging.DEBUG to see debug messages.
+def setup_logging(log_level_str: str):
+    """Configures the global logger."""
+    current_log_level = getattr(logging, log_level_str.upper(), logging.INFO)
+    logger.setLevel(current_log_level)
 
     # Handler for DEBUG and INFO messages to stdout
     stdout_handler = logging.StreamHandler(sys.stdout)
-    stdout_handler.setLevel(logging.DEBUG)  # Process messages from DEBUG level
+    stdout_handler.setLevel(logging.DEBUG)  # Process messages from DEBUG level upwards
     # Filter to ensure only DEBUG and INFO messages are handled by this handler
     stdout_handler.addFilter(lambda record: record.levelno <= logging.INFO)
     stdout_formatter = logging.Formatter("%(message)s")  # Simple format for debug/info
@@ -190,7 +185,9 @@ def main():
 
     # Handler for WARNING, ERROR, CRITICAL messages to stderr
     stderr_handler = logging.StreamHandler(sys.stderr)
-    stderr_handler.setLevel(logging.WARNING)  # Process messages from WARNING level
+    stderr_handler.setLevel(
+        logging.WARNING
+    )  # Process messages from WARNING level upwards
     stderr_formatter = logging.Formatter(
         "%(levelname)s: %(message)s"
     )  # Prefix with level name
@@ -198,12 +195,47 @@ def main():
     logger.addHandler(stderr_handler)
 
     logger.propagate = False  # Prevent messages from being passed to the root logger
+
+
+def parse_arguments():
+    """Parses command-line arguments."""
+    parser = argparse.ArgumentParser(
+        description="Finds dylib and .so files in a Conda environment, removes duplicate RPATHs, and re-signs them.",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--conda-prefix",
+        type=str,
+        default=os.environ.get("CONDA_PREFIX"),
+        help="Path to the conda environment prefix. Defaults to the value of the CONDA_PREFIX environment variable.",
+    )
+    parser.add_argument(
+        "--log-level",
+        default="INFO",
+        choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+        help="Set the logging level.",
+    )
+    parser.add_argument(
+        "--max-workers",
+        type=int,
+        default=None,  # Uses ThreadPoolExecutor's default (typically min(32, os.cpu_count() + 4))
+        help="Maximum number of worker threads. If not set, ThreadPoolExecutor's default is used.",
+    )
+    return parser.parse_args()
+
+
+def main():
+    args = parse_arguments()
+
+    # --- Logging Setup ---
+    setup_logging(args.log_level)
     # --- End Logging Setup ---
 
-    conda_prefix_env = os.environ.get("CONDA_PREFIX")
+    conda_prefix_env = args.conda_prefix
     if not conda_prefix_env:
         logger.error(
-            "CONDA_PREFIX environment variable is not set. Please activate a conda environment."
+            "CONDA_PREFIX is not set and was not provided via --conda-prefix. "
+            "Please activate a conda environment or specify the path."
         )
         sys.exit(1)
 
@@ -225,17 +257,26 @@ def main():
     logger.info(f"Found {len(libraries_to_process)} libraries to process.")
 
     results = []
-    with ThreadPoolExecutor() as executor:
+    # If args.max_workers is 0 or negative, ThreadPoolExecutor might raise ValueError.
+    # We allow None (for default) or positive integers.
+    executor_max_workers = args.max_workers
+    if executor_max_workers is not None and executor_max_workers <= 0:
+        logger.warning(
+            f"max_workers must be a positive integer or None. Using default."
+        )
+        executor_max_workers = None
+
+    with ThreadPoolExecutor(max_workers=executor_max_workers) as executor:
         results = list(executor.map(process_library, libraries_to_process))
 
     successful_processing = sum(1 for r in results if r is True)
     failed_processing = len(libraries_to_process) - successful_processing
 
-    logger.info(f"\n--- Summary ---")  # Using info for summary
+    logger.info(f"\n--- Summary ---")
     logger.info(f"Total libraries attempted: {len(libraries_to_process)}")
     logger.info(f"Successfully processed: {successful_processing}")
     if failed_processing > 0:
-        logger.warning(  # Warning for issues
+        logger.warning(
             f"Encountered issues with {failed_processing} libraries (check logs above)."
         )
     else:
