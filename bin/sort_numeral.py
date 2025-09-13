@@ -8,28 +8,37 @@ from glob import iglob as glob
 from itertools import chain
 
 import numpy as np
-
 from word2number import w2n
 
 __version__ = 0.1
 
 
 def sort_paths(paths, patterns):
-    '''``paths``: list of strings
+    """``paths``: list of strings
     ``pattern``: iterables of patterns to match stem (filename w/o extension)
     per path. The matched pattern (1st if multiple mathced),
     assuming to be English numerals, will be converted to numbers. And the
     input iterables is sorted according and returned as list.
-    '''
+    """
     paths = np.asarray(paths)
     match_numerals = [re.compile(pattern) for pattern in patterns]
-    nums = np.array([
-        w2n.word_to_num(next(chain(
-            *(match_numeral.findall(os.path.splitext(os.path.basename(path))[0])
-              for match_numeral in match_numerals)
-        )))
-        for path in paths
-    ])
+    nums = np.array(
+        [
+            w2n.word_to_num(
+                next(
+                    chain(
+                        *(
+                            match_numeral.findall(
+                                os.path.splitext(os.path.basename(path))[0]
+                            )
+                            for match_numeral in match_numerals
+                        )
+                    )
+                )
+            )
+            for path in paths
+        ]
+    )
     idxs = nums.argsort()
     return paths[idxs]
 
@@ -42,16 +51,21 @@ def main(args):
 
 
 def cli():
-    parser = argparse.ArgumentParser(description="Find and sort filenames containing numerals.")
+    parser = argparse.ArgumentParser(
+        description="Find and sort filenames containing numerals."
+    )
 
-    parser.add_argument('path', nargs='+',
-                        help='glob patterns of files/directories.')
-    parser.add_argument('-R', '--recursive', action='store_true',
-                        help='If specified, recursive globbing, Python 3 only.')
-    parser.add_argument('-p', '--pattern', nargs='+',
-                        help="Regex patterns.")
-    parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s {}'.format(__version__))
+    parser.add_argument("path", nargs="+", help="glob patterns of files/directories.")
+    parser.add_argument(
+        "-R",
+        "--recursive",
+        action="store_true",
+        help="If specified, recursive globbing, Python 3 only.",
+    )
+    parser.add_argument("-p", "--pattern", nargs="+", help="Regex patterns.")
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s {}".format(__version__)
+    )
 
     args = parser.parse_args()
 

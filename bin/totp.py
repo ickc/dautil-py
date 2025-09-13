@@ -17,10 +17,12 @@ def main(token_file):
 def cli():
     parser = argparse.ArgumentParser(description="Generate TOTP from token.")
 
-    parser.add_argument('token_file', nargs='?', type=argparse.FileType('r'),
-                        default=sys.stdin)
-    parser.add_argument('-v', '--version', action='version',
-                        version='%(prog)s {}'.format(__version__))
+    parser.add_argument(
+        "token_file", nargs="?", type=argparse.FileType("r"), default=sys.stdin
+    )
+    parser.add_argument(
+        "-v", "--version", action="version", version="%(prog)s {}".format(__version__)
+    )
 
     args = parser.parse_args()
 
